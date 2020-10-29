@@ -9,14 +9,8 @@
     {
         
         IKEv2 = 0,
-    
-        
         IPSec = 1,
-    
-        
         L2TP = 2,
-    
-        
         PPTP = 3,
     
     }

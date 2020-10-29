@@ -6,8 +6,6 @@
 
     public partial class IdToken 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("additionalInfo", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<AdditionalInfo> AdditionalInfo { get; set; }
     
@@ -20,7 +18,5 @@
         //[Newtonsoft.Json.JsonProperty("", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public IdToken Type { get; set; }
-    
-    
     }
 }

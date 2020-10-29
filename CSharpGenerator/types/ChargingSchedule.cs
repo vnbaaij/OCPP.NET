@@ -7,8 +7,6 @@
 
     public partial class ChargingSchedule 
     {
-        
-    
         /// <summary>Identifies the ChargingSchedule.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
@@ -44,7 +42,5 @@
     
         //[Newtonsoft.Json.JsonProperty("salesTariff", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public SalesTariff SalesTariff { get; set; }
-    
-    
     }
 }

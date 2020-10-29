@@ -7,17 +7,9 @@
     {
         
         Accepted = 0,
-    
-        
         Faulted = 1,
-    
-        
         Occupied = 2,
-    
-        
         Rejected = 3,
-    
-        
         Unavailable = 4,
     
     }

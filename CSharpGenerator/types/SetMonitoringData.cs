@@ -5,8 +5,6 @@
 
     public partial class SetMonitoringData 
     {
-        
-    
         /// <summary>An id SHALL only be given to replace an existing monitor. The Charging Station handles the generation of id's for new monitors.
         /// 
         /// </summary>
@@ -63,7 +61,5 @@
     
         //[Newtonsoft.Json.JsonProperty("variable", Required = Newtonsoft.Json.Required.Always)]
         public Variable Variable { get; set; } = new Variable();
-    
-    
     }
 }

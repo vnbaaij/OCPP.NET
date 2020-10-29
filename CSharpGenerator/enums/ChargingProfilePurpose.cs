@@ -9,14 +9,8 @@
     {
         
         ChargingStationExternalConstraints = 0,
-    
-        
         ChargingStationMaxProfile = 1,
-    
-        
         TxDefaultProfile = 2,
-    
-        
         TxProfile = 3,
     
     }

@@ -7,8 +7,6 @@
 
     public partial class VPN 
     {
-        
-    
         /// <summary>VPN. Server. URI
         /// urn:x-oca:ocpp:uid:1:569272
         /// VPN Server Address
@@ -47,7 +45,5 @@
         //[Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public VPN Type { get; set; }
-    
-    
     }
 }

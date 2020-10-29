@@ -3,8 +3,6 @@ namespace OCPP
 
     public partial class GetCompositeScheduleRequest
     {
-        
-    
         /// <summary>Length of the requested schedule in seconds.
         /// 
         /// </summary>
@@ -19,7 +17,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("evseId", Required = Newtonsoft.Json.Required.Always)]
         public int EvseId { get; set; }
-    
-    
     }
 }

@@ -1,12 +1,8 @@
 namespace OCPP
 {   
     
-    
-    
     public partial class ReportChargingProfilesRequest
     {
-        
-    
         /// <summary>Id used to match the &amp;lt;&amp;lt;getchargingprofilesrequest, GetChargingProfilesRequest&amp;gt;&amp;gt; message with the resulting ReportChargingProfilesRequest messages. When the CSMS provided a requestId in the &amp;lt;&amp;lt;getchargingprofilesrequest, GetChargingProfilesRequest&amp;gt;&amp;gt;, this field SHALL contain the same value.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("requestId", Required = Newtonsoft.Json.Required.Always)]
@@ -28,7 +24,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("evseId", Required = Newtonsoft.Json.Required.Always)]
         public int EvseId { get; set; }
-    
-    
     }
 }

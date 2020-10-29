@@ -8,11 +8,7 @@
     {
         
         Alerting = 0,
-    
-        
         Delta = 1,
-    
-        
         Periodic = 2,
     
     }

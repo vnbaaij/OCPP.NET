@@ -5,8 +5,6 @@
 
     public partial class ReportData 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("component", Required = Newtonsoft.Json.Required.Always)]
         public Component Component { get; set; } = new Component();
     
@@ -18,7 +16,5 @@
     
         //[Newtonsoft.Json.JsonProperty("variableCharacteristics", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public VariableCharacteristics VariableCharacteristics { get; set; }
-    
-    
     }
 }

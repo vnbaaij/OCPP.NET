@@ -5,8 +5,6 @@
 
     public partial class SetMonitoringResult 
     {
-        
-    
         /// <summary>Id given to the VariableMonitor by the Charging Station. The Id is only returned when status is accepted. Installed VariableMonitors should have unique id's but the id's of removed Installed monitors should have unique id's but the id's of removed monitors MAY be reused.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -56,7 +54,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("severity", Required = Newtonsoft.Json.Required.Always)]
         public int Severity { get; set; }
-    
-    
     }
 }

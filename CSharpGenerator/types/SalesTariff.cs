@@ -7,8 +7,6 @@
 
     public partial class SalesTariff 
     {
-        
-    
         /// <summary>Identified_ Object. MRID. Numeric_ Identifier
         /// urn:x-enexis:ecdm:uid:1:569198
         /// SalesTariff identifier used to identify one sales tariff. An SAID remains a unique identifier for one schedule throughout a charging session.
@@ -32,7 +30,5 @@
     
         //[Newtonsoft.Json.JsonProperty("salesTariffEntry", Required = Newtonsoft.Json.Required.Always)]
         public System.Collections.Generic.ICollection<SalesTariffEntry> SalesTariffEntry { get; set; } = new System.Collections.ObjectModel.Collection<SalesTariffEntry>();
-    
-    
     }
 }

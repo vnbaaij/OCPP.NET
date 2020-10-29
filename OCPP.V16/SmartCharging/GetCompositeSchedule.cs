@@ -14,7 +14,5 @@ namespace OCPP.SmartCharging
         //[Newtonsoft.Json.JsonProperty("chargingRateUnit", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         //[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public GetCompositeScheduleRequestChargingRateUnit ChargingRateUnit { get; set; }
-    
-    
     }
 }

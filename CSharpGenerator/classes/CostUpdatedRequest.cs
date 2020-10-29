@@ -1,8 +1,6 @@
 namespace OCPP
 {public partial class CostUpdatedRequest
     {
-        
-    
         /// <summary>Current total cost, based on the information known by the CSMS, of the transaction including taxes. In the currency configured with the configuration Variable: [&amp;lt;&amp;lt;configkey-currency, Currency&amp;gt;&amp;gt;]
         /// 
         /// </summary>
@@ -14,7 +12,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("transactionId", Required = Newtonsoft.Json.Required.Always)]
         public string TransactionId { get; set; }
-    
-    
     }
 }

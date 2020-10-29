@@ -6,8 +6,6 @@
 
     public partial class RelativeTimeInterval 
     {
-        
-    
         /// <summary>Relative_ Timer_ Interval. Start. Elapsed_ Time
         /// urn:x-oca:ocpp:uid:1:569279
         /// Start of the interval, in seconds from NOW.
@@ -21,7 +19,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("duration", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int Duration { get; set; }
-    
-    
     }
 }

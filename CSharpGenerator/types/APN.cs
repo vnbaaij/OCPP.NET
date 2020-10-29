@@ -9,8 +9,6 @@
 
     public partial class APN 
     {
-        
-    
         /// <summary>APN. APN. URI
         /// urn:x-oca:ocpp:uid:1:568814
         /// The Access Point Name as an URL.
@@ -57,7 +55,5 @@
         //[Newtonsoft.Json.JsonProperty("apnAuthentication", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public APNAuthentication ApnAuthentication { get; set; }
-    
-    
     }
 }

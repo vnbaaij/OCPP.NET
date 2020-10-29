@@ -2,8 +2,6 @@ namespace OCPP
 {
     public partial class SendLocalListRequest
     {
-
-
         //[Newtonsoft.Json.JsonProperty("localAuthorizationList", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<AuthorizationData> LocalAuthorizationList { get; set; }
 
@@ -15,7 +13,5 @@ namespace OCPP
         //[Newtonsoft.Json.JsonProperty("update", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public Update Update { get; set; }
-
-
     }
 }

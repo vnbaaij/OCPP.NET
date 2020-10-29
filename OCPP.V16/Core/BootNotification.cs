@@ -28,7 +28,5 @@ namespace OCPP.Core
 
         //[Newtonsoft.Json.JsonProperty("meterSerialNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string MeterSerialNumber { get; set; }
-
-
     }
 }

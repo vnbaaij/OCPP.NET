@@ -7,17 +7,9 @@
     {
         
         Available = 0,
-    
-        
         Occupied = 1,
-    
-        
         Reserved = 2,
-    
-        
         Unavailable = 3,
-    
-        
         Faulted = 4,
     
     }

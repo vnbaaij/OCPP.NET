@@ -8,8 +8,6 @@
 
     public partial class ACChargingParameters 
     {
-        
-    
         /// <summary>AC_ Charging_ Parameters. Energy_ Amount. Energy_ Amount
         /// urn:x-oca:ocpp:uid:1:569211
         /// Amount of energy requested (in Wh). This includes energy required for preconditioning.
@@ -37,7 +35,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("evMaxVoltage", Required = Newtonsoft.Json.Required.Always)]
         public int EvMaxVoltage { get; set; }
-    
-    
     }
 }

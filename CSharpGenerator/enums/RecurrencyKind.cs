@@ -9,8 +9,6 @@
     {
         
         Daily = 0,
-    
-        
         Weekly = 1,
     
     }

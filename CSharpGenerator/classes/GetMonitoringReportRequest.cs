@@ -4,8 +4,6 @@ namespace OCPP
 
     public partial class GetMonitoringReportRequest
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("componentVariable", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<ComponentVariable> ComponentVariable { get; set; }
     
@@ -18,7 +16,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("monitoringCriteria", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore, ItemConverter = of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public System.Collections.Generic.ICollection<MonitoringCriterion> MonitoringCriteria { get; set; }
-    
-    
     }
 }

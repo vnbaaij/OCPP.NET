@@ -9,8 +9,6 @@
 
     public partial class DCChargingParameters 
     {
-        
-    
         /// <summary>DC_ Charging_ Parameters. EV_ Max. Current
         /// urn:x-oca:ocpp:uid:1:569215
         /// Maximum current (amps) supported by the electric vehicle. Includes cable capacity.
@@ -66,7 +64,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("bulkSoC", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int BulkSoC { get; set; }
-    
-    
     }
 }

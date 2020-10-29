@@ -8,11 +8,7 @@
     {
         
         Accepted = 0,
-    
-        
         Rejected = 1,
-    
-        
         NotFound = 2,
     
     }

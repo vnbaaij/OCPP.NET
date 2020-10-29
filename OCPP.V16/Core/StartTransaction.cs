@@ -17,7 +17,5 @@ namespace OCPP.Core
     
         //[Newtonsoft.Json.JsonProperty("timestamp", Required = Newtonsoft.Json.Required.Always)]
         public System.DateTimeOffset Timestamp { get; set; }
-    
-    
     }
 }

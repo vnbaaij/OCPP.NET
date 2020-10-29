@@ -17,7 +17,5 @@
     
         //[Newtonsoft.Json.JsonProperty("minChargingRate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double MinChargingRate { get; set; }
-    
-    
     }
 }

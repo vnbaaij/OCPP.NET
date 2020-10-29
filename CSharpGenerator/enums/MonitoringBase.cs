@@ -7,11 +7,7 @@
     {
         
         All = 0,
-    
-        
         FactoryDefault = 1,
-    
-        
         HardWiredOnly = 2,
     
     }

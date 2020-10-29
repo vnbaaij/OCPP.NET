@@ -9,23 +9,11 @@
     {
         
         Accepted = 0,
-    
-        
         SignatureError = 1,
-    
-        
         CertificateExpired = 2,
-    
-        
         CertificateRevoked = 3,
-    
-        
         NoCertificateAvailable = 4,
-    
-        
         CertChainError = 5,
-    
-        
         ContractCancelled = 6,
     
     }

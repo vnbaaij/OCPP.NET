@@ -7,8 +7,6 @@
     {
         
         Accepted = 0,
-    
-        
         NoProfiles = 1,
     
     }

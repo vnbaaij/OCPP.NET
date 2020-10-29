@@ -2,8 +2,6 @@ namespace OCPP
 {
     public partial class GetLogResponse
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public LogStatus Status { get; set; }
@@ -15,7 +13,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("filename", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Filename { get; set; }
-    
-    
     }
 }

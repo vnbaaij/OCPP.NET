@@ -8,32 +8,14 @@
     {
         
         Idle = 0,
-    
-        
         DownloadScheduled = 1,
-    
-        
         Downloading = 2,
-    
-        
         Downloaded = 3,
-    
-        
         Published = 4,
-    
-        
         DownloadFailed = 5,
-    
-        
         DownloadPaused = 6,
-    
-        
         InvalidChecksum = 7,
-    
-        
         ChecksumVerified = 8,
-    
-        
         PublishFailed = 9,
     
     }

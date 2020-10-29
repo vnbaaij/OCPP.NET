@@ -7,17 +7,9 @@
     {
         
         UpperThreshold = 0,
-    
-        
         LowerThreshold = 1,
-    
-        
         Delta = 2,
-    
-        
         Periodic = 3,
-    
-        
         PeriodicClockAligned = 4,
     
     }

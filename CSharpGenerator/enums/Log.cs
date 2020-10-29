@@ -8,8 +8,6 @@
     {
         
         DiagnosticsLog = 0,
-    
-        
         SecurityLog = 1,
     
     }

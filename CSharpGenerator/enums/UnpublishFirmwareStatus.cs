@@ -7,11 +7,7 @@
     {
         
         DownloadOngoing = 0,
-    
-        
         NoFirmware = 1,
-    
-        
         Unpublished = 2,
     
     }

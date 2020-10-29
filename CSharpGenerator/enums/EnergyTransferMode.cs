@@ -9,14 +9,8 @@
     {
         
         DC = 0,
-    
-        
         AC_single_phase = 1,
-    
-        
         AC_two_phase = 2,
-    
-        
         AC_three_phase = 3,
     
     }

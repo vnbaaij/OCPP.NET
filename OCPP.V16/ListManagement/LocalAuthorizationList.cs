@@ -9,7 +9,5 @@ namespace OCPP.ListManagement
     
         //[Newtonsoft.Json.JsonProperty("idTagInfo", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IdTagInfo IdTagInfo { get; set; }
-    
-    
     }
 }

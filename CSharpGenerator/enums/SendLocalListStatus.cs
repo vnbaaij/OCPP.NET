@@ -7,11 +7,7 @@
     {
         
         Accepted = 0,
-    
-        
         Failed = 1,
-    
-        
         VersionMismatch = 2,
     
     }

@@ -7,20 +7,10 @@
     {
         
         Accepted = 0,
-    
-        
         UnknownComponent = 1,
-    
-        
         UnknownVariable = 2,
-    
-        
         UnsupportedMonitorType = 3,
-    
-        
         Rejected = 4,
-    
-        
         Duplicate = 5,
     
     }

@@ -6,8 +6,6 @@
 
     public partial class Transaction
     {
-
-
         /// <summary>This contains the Id of the transaction.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("transactionId", Required = Newtonsoft.Json.Required.Always)]
@@ -32,7 +30,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("remoteStartId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int RemoteStartId { get; set; }
-
-
     }
 }

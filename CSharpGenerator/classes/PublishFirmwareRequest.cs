@@ -1,8 +1,6 @@
 namespace OCPP
 {public partial class PublishFirmwareRequest
     {
-        
-    
         /// <summary>This contains a string containing a URI pointing to a
         /// location from which to retrieve the firmware.
         /// </summary>
@@ -35,7 +33,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("retryInterval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int RetryInterval { get; set; }
-    
-    
     }
 }

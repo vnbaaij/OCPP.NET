@@ -1,8 +1,6 @@
 namespace OCPP.FirmwareManagement
 {
     
-
-    
     public partial class GetDiagnosticsRequest 
     {
         //[Newtonsoft.Json.JsonProperty("location", Required = Newtonsoft.Json.Required.Always)]
@@ -19,7 +17,5 @@ namespace OCPP.FirmwareManagement
     
         //[Newtonsoft.Json.JsonProperty("stopTime", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.DateTimeOffset StopTime { get; set; }
-    
-    
     }
 }

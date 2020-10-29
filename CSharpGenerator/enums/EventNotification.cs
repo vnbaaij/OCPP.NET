@@ -8,14 +8,8 @@
     {
         
         HardWiredNotification = 0,
-    
-        
         HardWiredMonitor = 1,
-    
-        
         PreconfiguredMonitor = 2,
-    
-        
         CustomMonitor = 3,
     
     }

@@ -7,8 +7,6 @@
 
     public partial class Firmware 
     {
-        
-    
         /// <summary>Firmware. Location. URI
         /// urn:x-enexis:ecdm:uid:1:569460
         /// URI defining the origin of the firmware.
@@ -42,7 +40,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("signature", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Signature { get; set; }
-    
-    
     }
 }

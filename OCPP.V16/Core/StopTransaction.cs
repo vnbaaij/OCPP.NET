@@ -23,11 +23,5 @@ namespace OCPP.Core
     
         //[Newtonsoft.Json.JsonProperty("transactionData", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<TransactionData> TransactionData { get; set; }
-    
-    
     }
-    
-    
-    
-
 }

@@ -7,8 +7,6 @@
 
     public partial class MessageInfo 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("display", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Component Display { get; set; }
     
@@ -50,7 +48,5 @@
     
         //[Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Always)]
         public MessageContent Message { get; set; } = new MessageContent();
-    
-    
     }
 }

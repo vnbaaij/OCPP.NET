@@ -7,14 +7,8 @@
     {
         
         Accepted = 0,
-    
-        
         Rejected = 1,
-    
-        
         UnknownMessageId = 2,
-    
-        
         UnknownVendorId = 3,
     
     }

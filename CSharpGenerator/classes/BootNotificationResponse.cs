@@ -19,7 +19,5 @@ namespace OCPP
 
         //[Newtonsoft.Json.JsonProperty("statusInfo", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public StatusInfo StatusInfo { get; set; }
-
-
     }
 }

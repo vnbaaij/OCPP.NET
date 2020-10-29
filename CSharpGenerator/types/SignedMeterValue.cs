@@ -5,8 +5,6 @@
 
     public partial class SignedMeterValue
     {
-
-
         /// <summary>Base64 encoded, contains the signed data which might contain more then just the meter value. It can contain information like timestamps, reference to a customer etc.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("signedMeterData", Required = Newtonsoft.Json.Required.Always)]
@@ -26,7 +24,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("publicKey", Required = Newtonsoft.Json.Required.Always)]
         public string PublicKey { get; set; }
-
-
     }
 }

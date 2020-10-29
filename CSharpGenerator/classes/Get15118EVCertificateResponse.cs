@@ -2,8 +2,6 @@ namespace OCPP
 {
     public partial class Get15118EVCertificateResponse
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public Iso15118EVCertificateStatus Status { get; set; }
@@ -15,7 +13,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("exiResponse", Required = Newtonsoft.Json.Required.Always)]
         public string ExiResponse { get; set; }
-    
-    
     }
 }

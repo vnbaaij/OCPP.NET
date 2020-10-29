@@ -4,14 +4,8 @@
     {
         
         Active = 0,
-    
-        
         Available = 1,
-    
-        
         Enabled = 2,
-    
-        
         Problem = 3,
     
     }

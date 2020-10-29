@@ -2,8 +2,6 @@ namespace OCPP.Reservation
 
 {
     
-
-    
     public partial class ReserveNowRequest 
     {
         //[Newtonsoft.Json.JsonProperty("connectorId", Required = Newtonsoft.Json.Required.Always)]
@@ -20,7 +18,5 @@ namespace OCPP.Reservation
     
         //[Newtonsoft.Json.JsonProperty("reservationId", Required = Newtonsoft.Json.Required.Always)]
         public int ReservationId { get; set; }
-    
-    
     }
 }

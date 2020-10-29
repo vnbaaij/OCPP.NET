@@ -3,8 +3,6 @@ namespace OCPP
 
     public partial class Get15118EVCertificateRequest
     {
-        
-    
         /// <summary>Schema version currently used for the 15118 session between EV and Charging Station. Needed for parsing of the EXI stream by the CSMS.
         /// 
         /// </summary>
@@ -19,7 +17,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("exiRequest", Required = Newtonsoft.Json.Required.Always)]
         public string ExiRequest { get; set; }
-    
-    
     }
 }

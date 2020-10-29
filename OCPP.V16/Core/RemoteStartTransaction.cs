@@ -13,7 +13,5 @@ namespace OCPP.Core
     
         //[Newtonsoft.Json.JsonProperty("chargingProfile", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public ChargingProfile ChargingProfile { get; set; }
-    
-    
     }
 }

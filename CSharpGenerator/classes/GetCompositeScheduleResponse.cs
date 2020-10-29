@@ -3,8 +3,6 @@ namespace OCPP
 
     public partial class GetCompositeScheduleResponse
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public GenericStatus Status { get; set; }
@@ -14,7 +12,5 @@ namespace OCPP
     
         //[Newtonsoft.Json.JsonProperty("schedule", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public CompositeSchedule Schedule { get; set; }
-    
-    
     }
 }

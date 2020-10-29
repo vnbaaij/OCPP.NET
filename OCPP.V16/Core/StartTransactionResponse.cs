@@ -3,8 +3,6 @@ using OCPP.Core;
 namespace OCPP.Core
 {
     
-
-    
     public partial class StartTransactionResponse 
     {
         ////[Newtonsoft.Json.JsonProperty("idTagInfo", Required = Newtonsoft.Json.Required.Always)]

@@ -3,8 +3,6 @@ namespace OCPP
 
     public partial class FirmwareStatusNotificationRequest
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public FirmwareStatus Status { get; set; }
@@ -15,7 +13,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("requestId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int RequestId { get; set; }
-    
-    
     }
 }

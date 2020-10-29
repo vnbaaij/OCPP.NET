@@ -7,14 +7,8 @@
     {
         
         Accepted = 0,
-    
-        
         Rejected = 1,
-    
-        
         NotSupported = 2,
-    
-        
         EmptyResultSet = 3,
     
     }

@@ -9,11 +9,7 @@
     {
         
         Absolute = 0,
-    
-        
         Recurring = 1,
-    
-        
         Relative = 2,
     
     }

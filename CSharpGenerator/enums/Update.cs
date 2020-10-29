@@ -7,8 +7,6 @@
     {
 
         Differential = 0,
-
-
         Full = 1,
 
     }

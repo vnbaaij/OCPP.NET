@@ -9,8 +9,6 @@
 
     public partial class SampledValue
     {
-
-
         /// <summary>Sampled_ Value. Value. Measure
         /// urn:x-oca:ocpp:uid:1:569260
         /// Indicates the measured value.
@@ -40,7 +38,5 @@
 
         //[Newtonsoft.Json.JsonProperty("unitOfMeasure", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public UnitOfMeasure UnitOfMeasure { get; set; }
-
-
     }
 }

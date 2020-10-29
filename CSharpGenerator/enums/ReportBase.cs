@@ -7,11 +7,7 @@
     {
         
         ConfigurationInventory = 0,
-    
-        
         FullInventory = 1,
-    
-        
         SummaryInventory = 2,
     
     }

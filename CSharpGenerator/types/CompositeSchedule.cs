@@ -6,8 +6,6 @@
 
     public partial class CompositeSchedule 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("chargingSchedulePeriod", Required = Newtonsoft.Json.Required.Always)]
         public System.Collections.Generic.ICollection<ChargingSchedulePeriod> ChargingSchedulePeriod { get; set; } = new System.Collections.ObjectModel.Collection<ChargingSchedulePeriod>();
     
@@ -34,7 +32,5 @@
         //[Newtonsoft.Json.JsonProperty("chargingRateUnit", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public ChargingRateUnit ChargingRateUnit { get; set; }
-    
-    
     }
 }

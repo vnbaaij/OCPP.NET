@@ -17,7 +17,5 @@ namespace OCPP.SmartCharging
     
         //[Newtonsoft.Json.JsonProperty("stackLevel", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int StackLevel { get; set; }
-    
-    
     }
 }

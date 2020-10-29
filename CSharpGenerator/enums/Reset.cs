@@ -7,8 +7,6 @@
     {
         
         Immediate = 0,
-    
-        
         OnIdle = 1,
     
     }

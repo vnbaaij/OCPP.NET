@@ -12,8 +12,6 @@
     //        get { return _additionalProperties; }
     //        set { _additionalProperties = value; }
     //    }
-
-
     //}
 
     /// <summary>Contains a case insensitive identifier to use for the authorization and the  of authorization to support multiple forms of identifiers.
@@ -33,16 +31,10 @@
     //    /// </summary>
     //    //[Newtonsoft.Json.JsonProperty("", Required = Newtonsoft.Json.Required.Always)]
     //    public string  { get; set; }
-
-
     //}
-
-
 
     public partial class OCSPRequestData 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("hashAlgorithm", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public HashAlgorithm HashAlgorithm { get; set; }
@@ -68,7 +60,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("responderURL", Required = Newtonsoft.Json.Required.Always)]
         public string ResponderURL { get; set; }
-    
-    
     }
 }

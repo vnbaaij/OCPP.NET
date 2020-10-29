@@ -8,8 +8,6 @@
     {
         
         Inoperative = 0,
-    
-        
         Operative = 1,
     
     }

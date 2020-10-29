@@ -7,8 +7,6 @@
     {
         
         Expired = 0,
-    
-        
         Removed = 1,
     
     }

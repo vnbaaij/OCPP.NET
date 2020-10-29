@@ -5,8 +5,6 @@
 
     public partial class GetVariableResult 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("attributeStatusInfo", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public StatusInfo AttributeStatusInfo { get; set; }
     
@@ -31,7 +29,5 @@
     
         //[Newtonsoft.Json.JsonProperty("variable", Required = Newtonsoft.Json.Required.Always)]
         public Variable Variable { get; set; } = new Variable();
-    
-    
     }
 }

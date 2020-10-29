@@ -7,8 +7,6 @@
 
     public partial class NetworkConnectionProfile 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("apn", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public APN Apn { get; set; }
     
@@ -45,7 +43,5 @@
     
         //[Newtonsoft.Json.JsonProperty("vpn", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public VPN Vpn { get; set; }
-    
-    
     }
 }

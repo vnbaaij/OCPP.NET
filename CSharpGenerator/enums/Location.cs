@@ -10,17 +10,9 @@
     {
 
         Body = 0,
-
-
         Cable = 1,
-
-
         EV = 2,
-
-
         Inlet = 3,
-
-
         Outlet = 4,
 
     }

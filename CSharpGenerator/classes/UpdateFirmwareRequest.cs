@@ -3,8 +3,6 @@ namespace OCPP
 
     public partial class UpdateFirmwareRequest
     {
-        
-    
         /// <summary>This specifies how many times Charging Station must try to download the firmware before giving up. If this field is not present, it is left to Charging Station to decide how many times it wants to retry.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("retries", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -22,7 +20,5 @@ namespace OCPP
     
         //[Newtonsoft.Json.JsonProperty("firmware", Required = Newtonsoft.Json.Required.Always)]
         public Firmware Firmware { get; set; } = new Firmware();
-    
-    
     }
 }

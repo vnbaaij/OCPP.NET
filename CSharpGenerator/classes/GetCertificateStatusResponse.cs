@@ -2,8 +2,6 @@ namespace OCPP
 {
     public partial class GetCertificateStatusResponse
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public GetCertificateStatus Status { get; set; }
@@ -15,7 +13,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("ocspResult", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string OcspResult { get; set; }
-    
-    
     }
 }

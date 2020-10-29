@@ -7,8 +7,6 @@
 
     public partial class Modem 
     {
-        
-    
         /// <summary>Wireless_ Communication_ Module. ICCID. CI20_ Text
         /// urn:x-oca:ocpp:uid:1:569327
         /// This contains the ICCID of the modem’s SIM card.
@@ -22,7 +20,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("imsi", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Imsi { get; set; }
-    
-    
     }
 }

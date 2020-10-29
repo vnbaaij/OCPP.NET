@@ -1,8 +1,6 @@
 namespace OCPP.Core
 {
 
-
-
     public partial class DataTransferRequest
     {
         //[Newtonsoft.Json.JsonProperty("vendorId", Required = Newtonsoft.Json.Required.Always)]
@@ -13,7 +11,5 @@ namespace OCPP.Core
 
         //[Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Data { get; set; }
-
-
     }
 }

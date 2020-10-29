@@ -14,7 +14,5 @@ namespace OCPP.ListManagement
         //[Newtonsoft.Json.JsonProperty("updateType", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public SendLocalListRequestUpdateType UpdateType { get; set; }
-    
-    
     }
 }

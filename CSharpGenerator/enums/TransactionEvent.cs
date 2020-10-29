@@ -8,11 +8,7 @@
     {
 
         Ended = 0,
-
-
         Started = 1,
-
-
         Updated = 2,
 
     }

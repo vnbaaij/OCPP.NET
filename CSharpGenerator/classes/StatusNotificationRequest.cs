@@ -3,8 +3,6 @@ namespace OCPP
 
     public partial class StatusNotificationRequest
     {
-        
-    
         /// <summary>The time for which the status is reported. If absent time of receipt of the message will be assumed.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("timestamp", Required = Newtonsoft.Json.Required.Always)]
@@ -23,7 +21,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("connectorId", Required = Newtonsoft.Json.Required.Always)]
         public int ConnectorId { get; set; }
-    
-    
     }
 }

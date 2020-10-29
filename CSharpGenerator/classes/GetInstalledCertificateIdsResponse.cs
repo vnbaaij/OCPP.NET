@@ -4,8 +4,6 @@ namespace OCPP
 
     public partial class GetInstalledCertificateIdsResponse
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public GetInstalledCertificateStatus Status { get; set; }
@@ -15,7 +13,5 @@ namespace OCPP
     
         //[Newtonsoft.Json.JsonProperty("certificateHashDataChain", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<CertificateHashDataChain> CertificateHashDataChain { get; set; }
-    
-    
     }
 }

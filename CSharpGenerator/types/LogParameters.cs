@@ -7,8 +7,6 @@
 
     public partial class LogParameters 
     {
-        
-    
         /// <summary>Log. Remote_ Location. URI
         /// urn:x-enexis:ecdm:uid:1:569484
         /// The URL of the location at the remote system where the log should be stored.
@@ -29,7 +27,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("latestTimestamp", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.DateTimeOffset LatestTimestamp { get; set; }
-    
-    
     }
 }

@@ -2,8 +2,6 @@
 {
     public partial class CertificateHashData 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("hashAlgorithm", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public HashAlgorithm HashAlgorithm { get; set; }
@@ -23,7 +21,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("serialNumber", Required = Newtonsoft.Json.Required.Always)]
         public string SerialNumber { get; set; }
-    
-    
     }
 }

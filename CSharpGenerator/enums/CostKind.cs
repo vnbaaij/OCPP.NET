@@ -9,11 +9,7 @@
     {
         
         CarbonDioxideEmission = 0,
-    
-        
         RelativePricePercentage = 1,
-    
-        
         RenewableGenerationPercentage = 2,
     
     }

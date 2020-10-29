@@ -5,8 +5,6 @@
 
     public partial class VariableAttribute 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public Attribute Type { get; set; }
@@ -31,7 +29,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("constant", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool Constant { get; set; } = false;
-    
-    
     }
 }

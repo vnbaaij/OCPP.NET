@@ -7,14 +7,8 @@
     {
         
         Unlocked = 0,
-    
-        
         UnlockFailed = 1,
-    
-        
         OngoingAuthorizedTransaction = 2,
-    
-        
         UnknownConnector = 3,
     
     }

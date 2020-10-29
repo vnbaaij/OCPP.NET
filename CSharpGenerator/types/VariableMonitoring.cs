@@ -5,8 +5,6 @@
 
     public partial class VariableMonitoring 
     {
-        
-    
         /// <summary>Identifies the monitor.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
@@ -53,7 +51,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("severity", Required = Newtonsoft.Json.Required.Always)]
         public int Severity { get; set; }
-    
-    
     }
 }

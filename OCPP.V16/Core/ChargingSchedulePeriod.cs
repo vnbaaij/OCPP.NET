@@ -10,7 +10,5 @@
     
         //[Newtonsoft.Json.JsonProperty("numberPhases", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int NumberPhases { get; set; }
-    
-    
     }
 }

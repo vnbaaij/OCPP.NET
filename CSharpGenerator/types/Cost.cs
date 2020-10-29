@@ -6,8 +6,6 @@
 
     public partial class Cost 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("costKind", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public CostKind CostKind { get; set; }
@@ -25,7 +23,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("amountMultiplier", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int AmountMultiplier { get; set; }
-    
-    
     }
 }

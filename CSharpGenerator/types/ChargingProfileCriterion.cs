@@ -7,8 +7,6 @@
 
     public partial class ChargingProfileCriterion 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("chargingProfilePurpose", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public ChargingProfilePurpose ChargingProfilePurpose { get; set; }
@@ -30,7 +28,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("chargingLimitSource", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore, ItemConverter = of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public System.Collections.Generic.ICollection<ChargingLimitSource> ChargingLimitSource { get; set; }
-    
-    
     }
 }

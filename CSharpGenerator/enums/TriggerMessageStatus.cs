@@ -7,11 +7,7 @@
     {
         
         Accepted = 0,
-    
-        
         Rejected = 1,
-    
-        
         NotImplemented = 2,
     
     }

@@ -31,7 +31,5 @@
     
         //[Newtonsoft.Json.JsonProperty("chargingSchedule", Required = Newtonsoft.Json.Required.Always)]
         public ChargingSchedule ChargingSchedule { get; set; } = new ChargingSchedule();
-    
-    
     }
 }

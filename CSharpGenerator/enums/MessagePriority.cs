@@ -7,11 +7,7 @@
     {
         
         AlwaysFront = 0,
-    
-        
         InFront = 1,
-    
-        
         NormalCycle = 2,
     
     }

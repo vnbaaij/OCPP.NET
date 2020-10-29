@@ -2,8 +2,6 @@
 {
     public partial class ChargingLimit 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("chargingLimitSource", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public ChargingLimitSource ChargingLimitSource { get; set; }
@@ -14,7 +12,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("isGridCritical", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool IsGridCritical { get; set; }
-    
-    
     }
 }

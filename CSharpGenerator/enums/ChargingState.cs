@@ -10,17 +10,9 @@
     {
 
         Charging = 0,
-
-
         EVConnected = 1,
-
-
         SuspendedEV = 2,
-
-
         SuspendedEVSE = 3,
-
-
         Idle = 4,
 
     }

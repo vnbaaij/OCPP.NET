@@ -8,8 +8,6 @@
 
     public partial class MessageContent 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("format", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public MessageFormat Format { get; set; }
@@ -28,7 +26,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("content", Required = Newtonsoft.Json.Required.Always)]
         public string Content { get; set; }
-    
-    
     }
 }

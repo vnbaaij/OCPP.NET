@@ -5,8 +5,6 @@
 
     public partial class VariableCharacteristics 
     {
-        
-    
         /// <summary>Unit of the variable. When the transmitted value has a unit, this field SHALL be included.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("unit", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -46,7 +44,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("supportsMonitoring", Required = Newtonsoft.Json.Required.Always)]
         public bool SupportsMonitoring { get; set; }
-    
-    
     }
 }

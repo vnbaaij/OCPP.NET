@@ -7,8 +7,6 @@
     {
         
         Accepted = 0,
-    
-        
         Unknown = 1,
     
     }

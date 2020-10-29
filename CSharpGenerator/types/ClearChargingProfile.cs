@@ -7,8 +7,6 @@
 
     public partial class ClearChargingProfile 
     {
-        
-    
         /// <summary>Identified_ Object. MRID. Numeric_ Identifier
         /// urn:x-enexis:ecdm:uid:1:569198
         /// Specifies the id of the EVSE for which to clear charging profiles. An evseId of zero (0) specifies the charging profile for the overall Charging Station. Absence of this parameter means the clearing applies to all charging profiles that match the other criteria in the request.
@@ -27,7 +25,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("stackLevel", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int StackLevel { get; set; }
-    
-    
     }
 }

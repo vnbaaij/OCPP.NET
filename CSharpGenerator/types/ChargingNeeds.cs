@@ -6,8 +6,6 @@
 
     public partial class ChargingNeeds 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("acChargingParameters", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public ACChargingParameters AcChargingParameters { get; set; }
     
@@ -24,7 +22,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("departureTime", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.DateTimeOffset DepartureTime { get; set; }
-    
-    
     }
 }

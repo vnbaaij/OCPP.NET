@@ -4,8 +4,6 @@ namespace OCPP
 
     public partial class GetLogRequest
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("log", Required = Newtonsoft.Json.Required.Always)]
         public LogParameters LogParameters { get; set; } = new LogParameters();
     
@@ -27,7 +25,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("retryInterval", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int RetryInterval { get; set; }
-    
-    
     }
 }

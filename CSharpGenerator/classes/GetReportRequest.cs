@@ -2,8 +2,6 @@ namespace OCPP
 {
     public partial class GetReportRequest
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("componentVariable", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<ComponentVariable> ComponentVariable { get; set; }
     
@@ -16,7 +14,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("componentCriteria", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore, ItemConverter = of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public System.Collections.Generic.ICollection<ComponentCriterion> ComponentCriteria { get; set; }
-    
-    
     }
 }

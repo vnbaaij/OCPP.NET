@@ -4,8 +4,6 @@ namespace OCPP
 
     public partial class GetChargingProfilesRequest
     {
-        
-    
         /// <summary>Reference identification that is to be used by the Charging Station in the &amp;lt;&amp;lt;reportchargingprofilesrequest, ReportChargingProfilesRequest&amp;gt;&amp;gt; when provided.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("requestId", Required = Newtonsoft.Json.Required.Always)]
@@ -18,7 +16,5 @@ namespace OCPP
     
         //[Newtonsoft.Json.JsonProperty("chargingProfile", Required = Newtonsoft.Json.Required.Always)]
         public ChargingProfileCriterion ChargingProfile { get; set; } = new ChargingProfileCriterion();
-    
-    
     }
 }

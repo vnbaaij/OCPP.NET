@@ -6,8 +6,6 @@
 
     public partial class SalesTariffEntry 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("relativeTimeInterval", Required = Newtonsoft.Json.Required.Always)]
         public RelativeTimeInterval RelativeTimeInterval { get; set; } = new RelativeTimeInterval();
     
@@ -20,7 +18,5 @@
     
         //[Newtonsoft.Json.JsonProperty("consumptionCost", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<ConsumptionCost> ConsumptionCost { get; set; }
-    
-    
     }
 }

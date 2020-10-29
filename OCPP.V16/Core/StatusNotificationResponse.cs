@@ -1,6 +1,4 @@
 namespace OCPP.Core
 {
     
-
-    
 }

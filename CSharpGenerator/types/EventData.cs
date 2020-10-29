@@ -5,8 +5,6 @@
 
     public partial class EventData 
     {
-        
-    
         /// <summary>Identifies the event. This field can be referred to as a cause by other events.
         /// 
         /// </summary>
@@ -71,7 +69,5 @@
     
         //[Newtonsoft.Json.JsonProperty("variable", Required = Newtonsoft.Json.Required.Always)]
         public Variable Variable { get; set; } = new Variable();
-    
-    
     }
 }

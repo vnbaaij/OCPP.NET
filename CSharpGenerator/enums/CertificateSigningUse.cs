@@ -8,8 +8,6 @@
     {
         
         ChargingStationCertificate = 0,
-    
-        
         V2GCertificate = 1,
     
     }

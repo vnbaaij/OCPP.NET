@@ -7,8 +7,6 @@
 
     public partial class ChargingProfile 
     {
-        
-    
         /// <summary>Identified_ Object. MRID. Numeric_ Identifier
         /// urn:x-enexis:ecdm:uid:1:569198
         /// Id of ChargingProfile.
@@ -56,7 +54,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("transactionId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string TransactionId { get; set; }
-    
-    
     }
 }

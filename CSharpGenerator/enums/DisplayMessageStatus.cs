@@ -7,20 +7,10 @@
     {
         
         Accepted = 0,
-    
-        
         NotSupportedMessageFormat = 1,
-    
-        
         Rejected = 2,
-    
-        
         NotSupportedPriority = 3,
-    
-        
         NotSupportedState = 4,
-    
-        
         UnknownTransaction = 5,
     
     }

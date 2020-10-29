@@ -2,8 +2,6 @@
 {
     public partial class CertificateHashDataChain 
     {
-        
-    
         //[Newtonsoft.Json.JsonProperty("certificateHashData", Required = Newtonsoft.Json.Required.Always)]
         public CertificateHashData CertificateHashData { get; set; } = new CertificateHashData();
     
@@ -13,7 +11,5 @@
     
         //[Newtonsoft.Json.JsonProperty("childCertificateHashData", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<CertificateHashData> ChildCertificateHashData { get; set; }
-    
-    
     }
 }

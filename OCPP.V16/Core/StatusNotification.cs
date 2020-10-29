@@ -27,7 +27,5 @@ namespace OCPP.Core
     
         //[Newtonsoft.Json.JsonProperty("vendorErrorCode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string VendorErrorCode { get; set; }
-    
-    
     }
 }

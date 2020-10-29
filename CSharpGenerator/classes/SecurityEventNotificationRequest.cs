@@ -1,8 +1,6 @@
 namespace OCPP
 {public partial class SecurityEventNotificationRequest
     {
-        
-    
         /// <summary> of the security event. This value should be taken from the Security events list.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Always)]
@@ -17,7 +15,5 @@ namespace OCPP
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("techInfo", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string TechInfo { get; set; }
-    
-    
     }
 }

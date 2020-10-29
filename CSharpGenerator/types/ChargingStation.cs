@@ -7,8 +7,6 @@
 
     public partial class ChargingStation 
     {
-        
-    
         /// <summary>Device. Serial_ Number. Serial_ Number
         /// urn:x-oca:ocpp:uid:1:569324
         /// Vendor-specific device identifier.
@@ -36,7 +34,5 @@
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("firmwareVersion", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string FirmwareVersion { get; set; }
-    
-    
     }
 }
