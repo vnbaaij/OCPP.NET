@@ -44,6 +44,6 @@
     
         //[Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public VPN Type { get; set; }
+        public VPNType Type { get; set; }
     }
 }

@@ -5,13 +5,13 @@
     /// Type of VPN
     /// </summary>
 
-    public enum VPN
+    public enum VPNType
     {
-        
+
         IKEv2 = 0,
         IPSec = 1,
         L2TP = 2,
         PPTP = 3,
-    
+
     }
 }
