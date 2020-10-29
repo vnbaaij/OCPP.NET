@@ -1,15 +1,9 @@
-﻿
-
-
-
-
-
-namespace OCPP
+﻿namespace OCPP
 {
     /// <summary>Used algorithms for the hashes provided.
     /// </summary>
 
-    public enum HashAlgorithmEnumType
+    public enum HashAlgorithm
     {
         
         SHA256 = 0,

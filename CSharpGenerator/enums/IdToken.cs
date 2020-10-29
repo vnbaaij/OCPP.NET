@@ -1,15 +1,9 @@
-﻿
-
-
-
-
-
-namespace OCPP
+﻿namespace OCPP
 {
     /// <summary>Enumeration of possible idToken types.
     /// </summary>
 
-    public enum IdTokenEnumType
+    public enum IdToken
     {
         
         Central = 0,

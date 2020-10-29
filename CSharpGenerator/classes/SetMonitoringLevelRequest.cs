@@ -1,37 +1,7 @@
-
-
-
-
-
-
 namespace OCPP
-{
-    #pragma warning disable // Disable all warnings
-
-    /// <summary>This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.</summary>
-    
-    public partial class CustomDataType 
+{public partial class SetMonitoringLevelRequest
     {
-        //[Newtonsoft.Json.JsonProperty("vendorId", Required = Newtonsoft.Json.Required.Always)]
-        public string VendorId { get; set; }
-    
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-    
-        //[Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-    
-    
-    }
-    
-    
-    public partial class Anonymous 
-    {
-        //[Newtonsoft.Json.JsonProperty("customData", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public CustomDataType CustomData { get; set; }
+        
     
         /// <summary>The Charging Station SHALL only report events with a severity number lower than or equal to this severity.
         /// The severity range is 0-9, with 0 as the highest and 9 as the lowest severity level.
@@ -48,7 +18,7 @@ namespace OCPP
         /// *4-Error* +
         /// Indicates a non-urgent error. Action is required. +
         /// *5-Alert* +
-        /// Indicates an alert event. Default severity for any type of monitoring event.  +
+        /// Indicates an alert event. Default severity for any  of monitoring event.  +
         /// *6-Warning* +
         /// Indicates a warning event. Action may be required. +
         /// *7-Notice* +
