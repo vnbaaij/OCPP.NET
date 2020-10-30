@@ -5,7 +5,6 @@ namespace OCPP.V201
     /// <summary>
     /// Contains a case insensitive identifier to use for the authorization and the  of authorization to support multiple forms of identifiers.
     /// </summary>
-
     public partial class AdditionalInfo
     {
         /// <summary>
@@ -31,9 +30,9 @@ namespace OCPP.V201
         /// <param name="customData">An optional custom data object to allow to store any kind of customer specific data.</param>
         public AdditionalInfo(string additionalIdToken, string type, CustomData customData = null)
         {
-            AdditionalIdToken = AdditionalIdToken?.Trim() ?? throw new ArgumentNullException(nameof(AdditionalIdToken), "The given additional identification token must not be null or empty!");
-            Type = Type?.Trim() ?? throw new ArgumentNullException(nameof(Type), "The given type must not be null or empty!");
-            CustomData = CustomData;
+            AdditionalIdToken = additionalIdToken?.Trim() ?? throw new ArgumentNullException(nameof(AdditionalIdToken), "The given additional identification token must not be null or empty!");
+            Type = type?.Trim() ?? throw new ArgumentNullException(nameof(Type), "The given type must not be null or empty!");
+            CustomData = customData;
         }
     }
 }

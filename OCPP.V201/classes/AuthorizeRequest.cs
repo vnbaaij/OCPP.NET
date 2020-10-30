@@ -37,7 +37,6 @@ namespace OCPP.V201
             Certificate = certificate;
             Iso15118CertificateHashData = iso15118CertificateHashData ?? new OCSPRequestData[0];
             CustomData = customData;
-
         }
 
         /// <summary>
@@ -45,13 +44,13 @@ namespace OCPP.V201
         /// </summary>
         /// <param name="AuthorizeRequest">An authorize request to compare with.</param>
         /// <returns>True if both match; False otherwise.</returns>
-        public override bool Equals(AuthorizeRequest AuthorizeRequest)
-        {
+        //public override bool Equals(AuthorizeRequest AuthorizeRequest)
+        //{
 
-            if (AuthorizeRequest is null)
-                return false;
+        //    if (AuthorizeRequest is null)
+        //        return false;
 
-            return IdToken.Equals(AuthorizeRequest.IdToken);
-        }
+        //    return IdToken.Equals(AuthorizeRequest.IdToken);
+        //}
     }
 }

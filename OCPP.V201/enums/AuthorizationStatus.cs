@@ -1,10 +1,8 @@
 ﻿namespace OCPP.V201
 {
-    /// <summary>ID_ Token. Status. Authorization_ Status
-    /// urn:x-oca:ocpp:uid:1:569372
+    /// <summary>
     /// Current status of the ID Token.
     /// </summary>
-
     public enum AuthorizationStatus
     {
         Accepted = 0,

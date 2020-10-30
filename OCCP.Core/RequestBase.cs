@@ -5,7 +5,7 @@ namespace OCCP.Core
     /// <summary>
     /// An abstract OCPP request message base.
     /// </summary>
-    public abstract class RequestBase<T> : IRequest, IEquatable<T> where T : class
+    public abstract class RequestBase<T> : IRequest /*, IEquatable<T>*/ where T : class
 
     {
         /// <summary>
@@ -27,6 +27,6 @@ namespace OCCP.Core
         /// Compare two requests for equality.
         /// </summary>
         /// <param name="Request">Another abstract OCPP base request.</param>
-        public abstract bool Equals(T Request);
+        //public abstract bool Equals(T Request);
     }
 }
