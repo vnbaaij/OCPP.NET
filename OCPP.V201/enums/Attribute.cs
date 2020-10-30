@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>
     /// Attribute: Actual, MinSet, MaxSet, etc.

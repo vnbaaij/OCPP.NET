@@ -1,4 +1,4 @@
-namespace OCPP
+namespace OCPP.V201
 {public partial class UnlockConnectorRequest
     {
         /// <summary>This contains the identifier of the EVSE for which a connector needs to be unlocked.

@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Enumeration of possible idToken types.
     /// </summary>

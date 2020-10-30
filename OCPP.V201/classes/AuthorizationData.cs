@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Contains the identifier to use for authorization.
     /// </summary>

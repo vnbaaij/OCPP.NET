@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>
     /// Element providing more information about the status.

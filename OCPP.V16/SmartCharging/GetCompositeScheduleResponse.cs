@@ -1,6 +1,6 @@
-using OCPP.Core;
+using OCPP.V16.Core;
 
-namespace OCPP.SmartCharging
+namespace OCPP.V16.SmartCharging
 {
 
 

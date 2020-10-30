@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Message_ Content
     /// urn:x-enexis:ecdm:uid:2:234490

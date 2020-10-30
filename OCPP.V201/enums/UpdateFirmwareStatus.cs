@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>This field indicates whether the Charging Station was able to accept the request.
     /// 

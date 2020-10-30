@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>If provided the Charging Station shall return Display Messages with the given state only. 
     /// </summary>

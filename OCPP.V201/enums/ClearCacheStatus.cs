@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Accepted if the Charging Station has executed the request, otherwise rejected.
     /// </summary>

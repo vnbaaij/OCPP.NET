@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Transaction. State. Transaction_ State_ Code
     /// urn:x-oca:ocpp:uid:1:569419

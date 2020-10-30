@@ -1,4 +1,4 @@
-namespace OCPP
+namespace OCPP.V201
 {public partial class PublishFirmwareRequest
     {
         /// <summary>This contains a string containing a URI pointing to a

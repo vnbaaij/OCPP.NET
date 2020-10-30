@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Transaction. Stopped_ Reason. EOT_ Reason_ Code
     /// urn:x-oca:ocpp:uid:1:569413

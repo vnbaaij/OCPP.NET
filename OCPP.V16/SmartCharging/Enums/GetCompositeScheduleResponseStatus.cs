@@ -1,5 +1,5 @@
 ﻿
-namespace OCPP.SmartCharging
+namespace OCPP.V16.SmartCharging
 {
     public enum GetCompositeScheduleResponseStatus
     {

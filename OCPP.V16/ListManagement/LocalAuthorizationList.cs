@@ -1,6 +1,6 @@
-﻿using OCPP.Core;
+﻿using OCPP.V16.Core;
 
-namespace OCPP.ListManagement
+namespace OCPP.V16.ListManagement
 {
     public partial class LocalAuthorizationList 
     {

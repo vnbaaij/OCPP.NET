@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OCPP
+namespace OCPP.V201
 {
     public partial class CustomData
     {

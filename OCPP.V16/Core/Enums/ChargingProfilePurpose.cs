@@ -1,4 +1,4 @@
-﻿namespace OCPP.Core
+﻿namespace OCPP.V16.Core
 {
     public enum ChargingProfilePurpose
     {

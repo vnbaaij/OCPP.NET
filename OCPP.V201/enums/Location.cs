@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Sampled_ Value. Location. Location_ Code
     /// urn:x-oca:ocpp:uid:1:569265

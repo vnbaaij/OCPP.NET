@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Communication_ Function. OCPP_ Transport. OCPP_ Transport_ Code
     /// urn:x-oca:ocpp:uid:1:569356

@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Indicates whether the Charging Station will send the requested notification or not.
     /// </summary>

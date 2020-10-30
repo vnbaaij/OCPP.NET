@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>This contains the progress status of the firmware installation.
     /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>This contains the reason for sending this message to the CSMS.
     /// </summary>

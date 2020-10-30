@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Reason the Charging Station sends this message to the CSMS
     /// </summary>

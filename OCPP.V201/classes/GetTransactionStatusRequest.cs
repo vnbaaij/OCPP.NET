@@ -1,4 +1,4 @@
-namespace OCPP
+namespace OCPP.V201
 {public partial class GetTransactionStatusRequest
     {
         /// <summary>The Id of the transaction for which the status is requested.

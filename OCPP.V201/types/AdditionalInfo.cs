@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>
     /// Contains a case insensitive identifier to use for the authorization and the  of authorization to support multiple forms of identifiers.

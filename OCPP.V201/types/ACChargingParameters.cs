@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>AC_ Charging_ Parameters
     /// urn:x-oca:ocpp:uid:2:233250

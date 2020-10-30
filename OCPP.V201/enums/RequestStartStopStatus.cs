@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Status indicating whether the Charging Station accepts the request to start a transaction.
     /// </summary>

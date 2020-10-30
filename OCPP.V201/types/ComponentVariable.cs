@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Class to report components, variables and variable attributes and characteristics.
     /// </summary>

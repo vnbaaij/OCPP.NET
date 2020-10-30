@@ -1,4 +1,4 @@
-namespace OCPP
+namespace OCPP.V201
 {public partial class SecurityEventNotificationRequest
     {
         /// <summary> of the security event. This value should be taken from the Security events list.

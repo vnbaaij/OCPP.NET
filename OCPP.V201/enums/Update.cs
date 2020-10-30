@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>This contains the type of update (full or differential) of this request.
     /// </summary>

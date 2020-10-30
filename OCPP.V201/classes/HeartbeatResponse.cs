@@ -1,4 +1,4 @@
-namespace OCPP
+namespace OCPP.V201
 {public partial class HeartbeatResponse
     {
         /// <summary>Contains the current time of the CSMS.

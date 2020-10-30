@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>ID_ Token. Status. Authorization_ Status
     /// urn:x-oca:ocpp:uid:1:569372

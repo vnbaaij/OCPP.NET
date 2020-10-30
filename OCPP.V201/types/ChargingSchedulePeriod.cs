@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Charging_ Schedule_ Period
     /// urn:x-oca:ocpp:uid:2:233257

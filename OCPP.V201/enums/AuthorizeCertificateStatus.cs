@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Certificate status information. 
     /// - if all certificates are valid: return 'Accepted'.

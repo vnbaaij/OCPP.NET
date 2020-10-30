@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Class to hold parameters for GetVariables request.
     /// </summary>

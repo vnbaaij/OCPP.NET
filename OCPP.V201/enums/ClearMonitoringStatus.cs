@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Result of the clear request for this monitor, identified by its Id.
     /// 

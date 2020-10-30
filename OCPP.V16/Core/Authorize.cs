@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace OCPP.Core
+namespace OCPP.V16.Core
 {
     public partial class AuthorizeRequest
     {

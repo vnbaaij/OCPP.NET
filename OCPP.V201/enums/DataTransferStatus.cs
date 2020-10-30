@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>This indicates the success or failure of the data transfer.
     /// </summary>

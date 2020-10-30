@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Relative_ Timer_ Interval
     /// urn:x-oca:ocpp:uid:2:233270

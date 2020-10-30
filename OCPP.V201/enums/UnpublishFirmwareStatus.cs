@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Indicates whether the Local Controller succeeded in unpublishing the firmware.
     /// </summary>

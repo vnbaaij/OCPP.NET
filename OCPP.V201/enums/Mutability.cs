@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Defines the mutability of this attribute. Default is ReadWrite when omitted.
     /// </summary>

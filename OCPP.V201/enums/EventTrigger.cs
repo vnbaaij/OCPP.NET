@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Type of monitor that triggered this event, e.g. exceeding a threshold value.
     /// 

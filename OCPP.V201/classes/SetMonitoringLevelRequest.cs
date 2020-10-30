@@ -1,4 +1,4 @@
-namespace OCPP
+namespace OCPP.V201
 {public partial class SetMonitoringLevelRequest
     {
         /// <summary>The Charging Station SHALL only report events with a severity number lower than or equal to this severity.

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace OCPP.Core
+namespace OCPP.V16.Core
 {
     public partial class IdTagInfo
     {

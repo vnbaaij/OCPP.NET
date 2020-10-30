@@ -1,4 +1,4 @@
-﻿namespace OCPP.Reservation
+﻿namespace OCPP.V16.Reservation
 {
     public enum ReserveNowResponseStatus
     {

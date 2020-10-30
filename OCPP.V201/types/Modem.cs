@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Wireless_ Communication_ Module
     /// urn:x-oca:ocpp:uid:2:233306

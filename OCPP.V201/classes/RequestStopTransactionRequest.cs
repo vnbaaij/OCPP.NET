@@ -1,4 +1,4 @@
-namespace OCPP
+namespace OCPP.V201
 {public partial class RequestStopTransactionRequest
     {
         /// <summary>The identifier of the transaction which the Charging Station is requested to stop.

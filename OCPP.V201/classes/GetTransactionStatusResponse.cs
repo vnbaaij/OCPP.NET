@@ -1,4 +1,4 @@
-namespace OCPP
+namespace OCPP.V201
 {public partial class GetTransactionStatusResponse
     {
         /// <summary>Whether the transaction is still ongoing.

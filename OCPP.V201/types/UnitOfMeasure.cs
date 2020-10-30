@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Represents a UnitOfMeasure with a multiplier
     /// </summary>

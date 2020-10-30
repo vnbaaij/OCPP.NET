@@ -1,4 +1,4 @@
-namespace OCPP.FirmwareManagement
+namespace OCPP.V16.FirmwareManagement
 {
     public partial class FirmwareStatusNotificationRequest 
     {

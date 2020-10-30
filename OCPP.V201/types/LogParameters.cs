@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Log
     /// urn:x-enexis:ecdm:uid:2:233373

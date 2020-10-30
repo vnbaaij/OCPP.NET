@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-namespace OCPP
+namespace OCPP.V201
 {
     public partial class SetVariablesRequest
     {

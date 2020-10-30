@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>The type of this monitor, e.g. a threshold, delta or periodic monitor. 
     /// </summary>

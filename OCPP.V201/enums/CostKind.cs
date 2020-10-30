@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Cost. Cost_ Kind. Cost_ Kind_ Code
     /// urn:x-oca:ocpp:uid:1:569243

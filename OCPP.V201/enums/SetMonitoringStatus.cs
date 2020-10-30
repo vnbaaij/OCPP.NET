@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Status is OK if a value could be returned. Otherwise this will indicate the reason why a value could not be returned.
     /// </summary>

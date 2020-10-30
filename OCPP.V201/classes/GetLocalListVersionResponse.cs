@@ -1,4 +1,4 @@
-namespace OCPP
+namespace OCPP.V201
 {public partial class GetLocalListVersionResponse
     {
         /// <summary>This contains the current version number of the local authorization list in the Charging Station.

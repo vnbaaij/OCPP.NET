@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Charging_ Needs
     /// urn:x-oca:ocpp:uid:2:233249

@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>APN. APN_ Authentication. APN_ Authentication_ Code
     /// urn:x-oca:ocpp:uid:1:568828

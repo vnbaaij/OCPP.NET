@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>This indicates whether the charging station was able to retrieve the OCSP certificate status.
     /// </summary>

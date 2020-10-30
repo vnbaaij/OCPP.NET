@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>This indicates whether the Charging Station is able to perform the availability change.
     /// </summary>

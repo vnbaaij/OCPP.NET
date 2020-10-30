@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>Defines whether certificate needs to be installed or updated.
     /// </summary>

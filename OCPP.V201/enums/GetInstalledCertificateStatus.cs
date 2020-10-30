@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OCPP
+namespace OCPP.V201
 {
     /// <summary>Charging Station indicates if it can process the request.
     /// </summary>

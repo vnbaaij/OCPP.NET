@@ -1,4 +1,4 @@
-namespace OCPP.ListManagement
+namespace OCPP.V16.ListManagement
 {
     
     public partial class GetLocalListVersionResponse 

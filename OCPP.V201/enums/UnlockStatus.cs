@@ -1,4 +1,4 @@
-﻿namespace OCPP
+﻿namespace OCPP.V201
 {
     /// <summary>This indicates whether the Charging Station has unlocked the connector.
     /// </summary>
