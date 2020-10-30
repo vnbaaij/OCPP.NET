@@ -13,9 +13,9 @@ namespace CSharpGeneratorRunner
             Console.WriteLine("Generating C# for json schemas...");
 
             //var srcPath = @"C:\Source\OCPP.NET\Docs\V1.6\schemas\json";
-            var srcPath = @"C:\Source\OCPP.NET\Docs\V2.0.1\OCPP-2.0.1_part3_JSON_schemas";
+            var srcPath = @"C:\Source\OCPP\OCPP.NET\Docs\V2.0.1\OCPP-2.0.1_part3_JSON_schemas";
 
-            var destPath = @"C:\Source\OCPP.NET\CSharpGenerator\classes";
+            var destPath = @"C:\Source\OCPP\OCPP.NET\CSharpGenerator\classes";
 
             var schemaFiles = Directory.EnumerateFiles(srcPath, "*.json", SearchOption.AllDirectories);
 
@@ -28,10 +28,8 @@ namespace CSharpGeneratorRunner
 
                 var settings = new CSharpGeneratorSettings
                 {
-                    Namespace = "OCPP",
+                    Namespace = "OCPP.Generated",
                     GenerateDataAnnotations = false,
-
-
                 };
 
                 var generator = new CSharpGenerator(schema, settings);

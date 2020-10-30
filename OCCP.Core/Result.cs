@@ -10,7 +10,6 @@ namespace OCCP.Core
     public class Result : IEquatable<Result>
     {
 
-        #region Properties
 
         /// <summary>
         /// The machine-readable result code.
@@ -21,10 +20,6 @@ namespace OCCP.Core
         /// A human-readable error description.
         /// </summary>
         public string Description { get; }
-
-        #endregion
-
-        #region Constructor(s)
 
         /// <summary>
         /// Create a new generic OCPP result.
@@ -37,11 +32,6 @@ namespace OCCP.Core
 
             Description = !string.IsNullOrEmpty(description) ? description.Trim() : "";
         }
-
-        #endregion
-
-
-        #region Static methods
 
         /// <summary>
         /// Unknown result code.
@@ -91,12 +81,10 @@ namespace OCCP.Core
         /// <param name="description">A human-readable error description.</param>
         public static Result Format(string description = null) => new Result(ResultCodes.Unknown, description);
 
-        #endregion
-
 
         #region Operator overloading
 
-        #region Operator == (Result1, Result2)
+        #region Operator == (result1, result2)
 
         /// <summary>
         /// Compares two results for equality.
@@ -121,7 +109,7 @@ namespace OCCP.Core
 
         #endregion
 
-        #region Operator != (Result1, Result2)
+        #region Operator != (result1, result2)
 
         /// <summary>
         /// Compares two results for inequality.
@@ -161,7 +149,7 @@ namespace OCCP.Core
 
         #endregion
 
-        #region Equals(Result)
+        #region Equals(result)
 
         /// <summary>
         /// Compares two results for equality.

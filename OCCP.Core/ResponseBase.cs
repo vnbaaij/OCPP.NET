@@ -9,9 +9,6 @@ namespace OCCP.Core
         where TRequest : class, IRequest 
         where TResponse : class, IResponse
     {
-
-        #region Properties
-
         /// <summary>
         /// The request leading to this response.
         /// </summary>
@@ -22,26 +19,16 @@ namespace OCCP.Core
         /// </summary>
         public TimeSpan Runtime { get; }
 
-        #endregion
-
-        #region Constructor(s)
-
         /// <summary>
         /// Create a new generic response.
         /// </summary>
         /// <param name="Request">The request leading to this result.</param>
         /// <param name="Result">A generic result.</param>
         public ResponseBase(TRequest request, Result result) : base(result)
-
         {
-
             Request = request;
             Runtime = ResponseTimestamp - request.RequestTimestamp;
-
         }
-
-        #endregion
-
     }
 
 
@@ -51,10 +38,6 @@ namespace OCCP.Core
     public abstract class ResponseBase<TResponse> : IResponse, IEquatable<TResponse> 
         where TResponse : class, IResponse
     {
-
-        #region Properties
-
-        /// <summary>
         /// The machine-readable result code.
         /// </summary>
         public Result Result { get; }
@@ -64,34 +47,25 @@ namespace OCCP.Core
         /// </summary>
         public DateTime ResponseTimestamp { get; }
 
-        #endregion
-
-        #region Constructor(s)
-
         /// <summary>
         /// Create a new generic response.
         /// </summary>
         /// <param name="Result">A generic result.</param>
         public ResponseBase(Result result)
         {
-
             Result = result;
             ResponseTimestamp = DateTime.UtcNow;
-
         }
-
-        #endregion
-
 
         #region Operator overloading
 
-        #region Operator == (Response1, Response2)
+        #region Operator == (response1, response2)
 
         /// <summary>
         /// Compares two responses for equality.
         /// </summary>
-        /// <param name="response1">A response.</param>
-        /// <param name="response2">Another response.</param>
+        /// <param name="response1">response1</param>
+        /// <param name="response2">response2</param>
         /// <returns>True if both match; False otherwise.</returns>
         public static bool operator ==(ResponseBase<TResponse> response1, ResponseBase<TResponse> response2)
         {
@@ -110,13 +84,13 @@ namespace OCCP.Core
 
         #endregion
 
-        #region Operator != (Response1, Response2)
+        #region Operator != (response1, response2)
 
         /// <summary>
         /// Compares two responses for inequality.
         /// </summary>
-        /// <param name="response1">A response.</param>
-        /// <param name="response2">Another response.</param>
+        /// <param name="response1">response1</param>
+        /// <param name="response2">response2</param>
         /// <returns>False if both match; True otherwise.</returns>
         public static bool operator !=(ResponseBase<TResponse> response1, ResponseBase<TResponse> response2) => !(response1 == response2);
 
@@ -124,7 +98,7 @@ namespace OCCP.Core
 
         #endregion
 
-        #region IEquatable<GenericResponse> Members
+        #region IEquatable<ResponseBase> Members
 
         #region Equals(Object)
 
