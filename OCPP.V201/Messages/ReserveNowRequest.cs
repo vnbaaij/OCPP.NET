@@ -1,7 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-    public partial class ReserveNowRequest
+    public partial class ReserveNowRequest : RequestBase<ReserveNowRequest>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
         /// <summary>Id of reservation.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]

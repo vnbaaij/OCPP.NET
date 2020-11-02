@@ -1,8 +1,12 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-
-    public partial class Get15118EVCertificateRequest
-    {
+    public partial class Get15118EVCertificateRequest : RequestBase<Get15118EVCertificateRequest>    {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
         /// <summary>Schema version currently used for the 15118 session between EV and Charging Station. Needed for parsing of the EXI stream by the CSMS.
         /// 
         /// </summary>

@@ -1,6 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
-{public partial class PublishFirmwareRequest
+{
+    public partial class PublishFirmwareRequest : RequestBase<PublishFirmwareRequest>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
         /// <summary>This contains a string containing a URI pointing to a
         /// location from which to retrieve the firmware.
         /// </summary>

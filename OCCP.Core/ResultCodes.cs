@@ -1,4 +1,4 @@
-﻿namespace OCCP.Core
+﻿namespace OCPP.Core
 {
     /// <summary>
     /// Result and error codes for the class Result as return value for method calls.

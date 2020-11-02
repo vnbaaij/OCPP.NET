@@ -1,8 +1,12 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-
-    public partial class StatusNotificationRequest
-    {
+    public partial class StatusNotificationRequest : RequestBase<StatusNotificationRequest>    {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
         /// <summary>The time for which the status is reported. If absent time of receipt of the message will be assumed.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("timestamp", Required = Newtonsoft.Json.Required.Always)]

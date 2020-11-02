@@ -46,5 +46,9 @@ namespace OCPP.V201
             if (string.IsNullOrEmpty(Content))
                 throw new ArgumentNullException(nameof(Content), "The given message content must not be null or empty!");
         }
+
+        public MessageContent()
+        {
+        }
     }
 }

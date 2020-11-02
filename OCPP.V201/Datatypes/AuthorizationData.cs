@@ -1,6 +1,7 @@
 ﻿namespace OCPP.V201
 {
-    /// <summary>Contains the identifier to use for authorization.
+    /// <summary>
+    /// Contains the identifier to use for authorization.
     /// </summary>
 
     public partial class AuthorizationData

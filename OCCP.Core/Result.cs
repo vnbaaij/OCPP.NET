@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OCCP.Core
+namespace OCPP.Core
 
 {
 

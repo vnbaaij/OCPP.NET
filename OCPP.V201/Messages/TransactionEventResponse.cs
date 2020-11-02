@@ -1,7 +1,12 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-    public partial class TransactionEventResponse
-    {
+    public partial class TransactionEventResponse : ResponseBase<TransactionEventRequest,TransactionEventResponse>    {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
         /// <summary>SHALL only be sent when charging has ended. Final total cost of this transaction, including taxes. In the currency configured with the Configuration Variable: &amp;lt;&amp;lt;configkey-currency,`Currency`&amp;gt;&amp;gt;. When omitted, the transaction was NOT free. To indicate a free transaction, the CSMS SHALL send 0.00.
         ///
         /// </summary>
@@ -18,5 +23,10 @@ namespace OCPP.V201
 
         //[Newtonsoft.Json.JsonProperty("updatedPersonalMessage", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public MessageContent UpdatedPersonalMessage { get; set; }
+
+        public TransactionEventResponse(TransactionEventRequest request,Result result)  : base(request, result)
+        {
+
+        }
     }
 }

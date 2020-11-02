@@ -1,9 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-
-
-    public partial class GetLogRequest
+    public partial class GetLogRequest :RequestBase<GetLogRequest>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
         //[Newtonsoft.Json.JsonProperty("log", Required = Newtonsoft.Json.Required.Always)]
         public LogParameters LogParameters { get; set; } = new LogParameters();
     

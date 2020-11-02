@@ -1,7 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-    public partial class DataTransferRequest
+    public partial class DataTransferRequest : RequestBase<DataTransferRequest>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
 
 
         /// <summary>May be used to indicate a specific message or implementation.

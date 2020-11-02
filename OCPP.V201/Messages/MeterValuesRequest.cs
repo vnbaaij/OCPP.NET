@@ -1,12 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-    
-    /// <summary>Request_ Body
-    /// urn:x-enexis:ecdm:uid:2:234744
-    /// </summary>
-    
-    public partial class MeterValuesRequest
+    public partial class MeterValuesRequest : RequestBase<MeterValuesRequest>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
         /// <summary>Request_ Body. EVSEID. Numeric_ Identifier
         /// urn:x-enexis:ecdm:uid:1:571101
         /// This contains a number (&amp;gt;0) designating an EVSE of the Charging Station. ‘0’ (zero) is used to designate the main power meter.

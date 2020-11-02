@@ -1,8 +1,12 @@
+using OCPP.Core;
+
 namespace OCPP.V201
-{   
-    
-    public partial class ReportChargingProfilesRequest
-    {
+{
+    public partial class ReportChargingProfilesRequest : RequestBase<ReportChargingProfilesRequest>    {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
         /// <summary>Id used to match the &amp;lt;&amp;lt;getchargingprofilesrequest, GetChargingProfilesRequest&amp;gt;&amp;gt; message with the resulting ReportChargingProfilesRequest messages. When the CSMS provided a requestId in the &amp;lt;&amp;lt;getchargingprofilesrequest, GetChargingProfilesRequest&amp;gt;&amp;gt;, this field SHALL contain the same value.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("requestId", Required = Newtonsoft.Json.Required.Always)]

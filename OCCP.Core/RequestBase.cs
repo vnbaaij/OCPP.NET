@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OCCP.Core
+namespace OCPP.Core
 {
     /// <summary>
     /// An abstract OCPP request message base.

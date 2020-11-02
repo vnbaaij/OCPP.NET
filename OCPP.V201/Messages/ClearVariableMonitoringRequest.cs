@@ -1,7 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-    public partial class ClearVariableMonitoringRequest
+    public partial class ClearVariableMonitoringRequest : RequestBase<ClearVariableMonitoringRequest>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
 
 
         /// <summary>List of the monitors to be cleared, identified by there Id.

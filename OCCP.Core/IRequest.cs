@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OCCP.Core
+namespace OCPP.Core
 {
     /// <summary>
     /// Common interface of a request message.

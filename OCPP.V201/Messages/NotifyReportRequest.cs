@@ -1,8 +1,12 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-
-    public partial class NotifyReportRequest
-    {
+    public partial class NotifyReportRequest : RequestBase<NotifyReportRequest>    {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
 
 
         /// <summary>The id of the GetReportRequest  or GetBaseReportRequest that requested this report

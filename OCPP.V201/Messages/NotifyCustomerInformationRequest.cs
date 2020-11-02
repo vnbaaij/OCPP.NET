@@ -1,7 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-    public partial class NotifyCustomerInformationRequest
+    public partial class NotifyCustomerInformationRequest : RequestBase<NotifyCustomerInformationRequest>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
 
 
         /// <summary>(Part of) the requested data. No format specified in which the data is returned. Should be human readable.

@@ -1,7 +1,12 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-    public partial class Get15118EVCertificateResponse
-    {
+    public partial class Get15118EVCertificateResponse : ResponseBase<Get15118EVCertificateRequest,Get15118EVCertificateResponse>    {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
         //[Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(of(Newtonsoft.Json.Converters.StringEnumConverter))]
         public Iso15118EVCertificateStatus Status { get; set; }
@@ -13,5 +18,10 @@ namespace OCPP.V201
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("exiResponse", Required = Newtonsoft.Json.Required.Always)]
         public string ExiResponse { get; set; }
+
+        public Get15118EVCertificateResponse(Get15118EVCertificateRequest request,Result result)  : base(request, result)
+        {
+
+        }
     }
 }

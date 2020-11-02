@@ -1,7 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-    public partial class BootNotificationResponse
+    public partial class BootNotificationResponse : ResponseBase<BootNotificationRequest,BootNotificationResponse>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
 
         /// <summary>This contains the CSMS’s current time.
         /// </summary>
@@ -19,5 +25,15 @@ namespace OCPP.V201
 
         //[Newtonsoft.Json.JsonProperty("statusInfo", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public StatusInfo StatusInfo { get; set; }
+
+        /// <summary>
+        /// Create an boot notification response.
+        /// </summary>
+        /// <param name="request">The boot notification request leading to this response.</param>
+        /// <param name="result">The result.</param>
+        public BootNotificationResponse(BootNotificationRequest request, Result result) : base(request, result)
+        {
+            
+        }
     }
 }

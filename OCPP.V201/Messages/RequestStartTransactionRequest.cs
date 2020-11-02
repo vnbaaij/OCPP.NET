@@ -1,7 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-    public partial class RequestStartTransactionRequest
+    public partial class RequestStartTransactionRequest : RequestBase<RequestStartTransactionRequest>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
 
 
         /// <summary>Number of the EVSE on which to start the transaction. EvseId SHALL be &amp;gt; 0

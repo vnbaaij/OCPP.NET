@@ -1,9 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-
-
-    public partial class GetDisplayMessagesRequest
+    public partial class GetDisplayMessagesRequest : RequestBase<GetDisplayMessagesRequest>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
         /// <summary>If provided the Charging Station shall return Display Messages of the given ids. This field SHALL NOT contain more ids than set in &amp;lt;&amp;lt;configkey-number-of-display-messages,NumberOfDisplayMessages.maxLimit&amp;gt;&amp;gt;
         /// 
         /// </summary>

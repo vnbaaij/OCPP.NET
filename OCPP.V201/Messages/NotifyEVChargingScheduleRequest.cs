@@ -1,13 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-
-    
-
-    
-
-
-    public partial class NotifyEVChargingScheduleRequest
+    public partial class NotifyEVChargingScheduleRequest : RequestBase<NotifyEVChargingScheduleRequest>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
 
 
         /// <summary>Periods contained in the charging profile are relative to this point in time.
@@ -22,7 +22,5 @@ namespace OCPP.V201
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("evseId", Required = Newtonsoft.Json.Required.Always)]
         public int EvseId { get; set; }
-
-
     }
 }

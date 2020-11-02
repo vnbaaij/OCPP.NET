@@ -1,9 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-
-
-    public partial class SetNetworkProfileRequest
+    public partial class SetNetworkProfileRequest : RequestBase<SetNetworkProfileRequest>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
         /// <summary>Slot in which the configuration should be stored.
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("configurationSlot", Required = Newtonsoft.Json.Required.Always)]

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-using OCCP.Core;
+using OCPP.Core;
 
 namespace OCPP.V201
 {
-    public partial class AuthorizeRequest : RequestBase<AuthorizeRequest>
+    public partial class AuthorizeRequest : RequestBase<AuthorizeRequest> 
     {
         //[Newtonsoft.Json.JsonProperty("idToken", Required = Newtonsoft.Json.Required.Always)]
         public IdToken IdToken { get; set; } = new IdToken();

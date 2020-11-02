@@ -1,9 +1,9 @@
 using System;
-using OCCP.Core;
+using OCPP.Core;
 
 namespace OCPP.V201
 {
-    public partial class AuthorizeResponse : ResponseBase<AuthorizeRequest,AuthorizeResponse>
+    public partial class AuthorizeResponse : ResponseBase<AuthorizeRequest, AuthorizeResponse>
     {
         /// <summary>
         /// The identification token info.

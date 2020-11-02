@@ -1,6 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
-{public partial class SetMonitoringLevelRequest
+{
+    public partial class SetMonitoringLevelRequest : RequestBase<SetMonitoringLevelRequest>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
         /// <summary>The Charging Station SHALL only report events with a severity number lower than or equal to this severity.
         /// The severity range is 0-9, with 0 as the highest and 9 as the lowest severity level.
         /// 

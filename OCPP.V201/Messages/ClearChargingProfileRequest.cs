@@ -1,7 +1,13 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-    public partial class ClearChargingProfileRequest
+    public partial class ClearChargingProfileRequest : RequestBase<ClearChargingProfileRequest>
     {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
 
 
         /// <summary>The Id of the charging profile to clear.

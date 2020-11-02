@@ -1,8 +1,12 @@
+using OCPP.Core;
+
 namespace OCPP.V201
 {
-
-    public partial class NotifyEventRequest
-    {
+    public partial class NotifyEventRequest : RequestBase<NotifyEventRequest>    {
+        /// <summary>
+        /// The custom data object to allow to store any kind of customer specific data.
+        /// </summary>
+        public CustomData CustomData { get; }
 
 
         /// <summary>Timestamp of the moment this message was generated at the Charging Station.
