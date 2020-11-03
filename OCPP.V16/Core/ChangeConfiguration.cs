@@ -1,7 +1,8 @@
+using OCPP.V16;
+
 namespace OCPP.V16.Core
 {
-    
-    public partial class ChangeConfigurationRequest 
+    public partial class ChangeConfigurationRequest : RequestBase<ChangeConfigurationRequest> 
     {
         //[Newtonsoft.Json.JsonProperty("key", Required = Newtonsoft.Json.Required.Always)]
         public string Key { get; set; }

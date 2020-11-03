@@ -1,9 +1,8 @@
+using OCPP.V16;
+
 namespace OCPP.V16.SmartCharging
 {
-
-
-
-    public partial class ClearChargingProfileRequest 
+    public partial class ClearChargingProfileRequest : RequestBase<ClearChargingProfileRequest> 
     {
         //[Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int Id { get; set; }

@@ -15,6 +15,7 @@
         A,
         V,
         K,
+        Celcius,
         Celsius,
         Fahrenheit,
         Percent,

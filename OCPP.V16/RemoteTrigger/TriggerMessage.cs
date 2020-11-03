@@ -1,6 +1,8 @@
+using OCPP.V16;
+
 namespace OCPP.V16.RemoteTrigger
 {
-    public partial class TriggerMessageRequest 
+    public partial class TriggerMessageRequest : RequestBase<TriggerMessageRequest> 
     {
         //[Newtonsoft.Json.JsonProperty("requestedMessage", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]

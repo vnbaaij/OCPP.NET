@@ -1,6 +1,8 @@
+using OCPP.V16;
+
 namespace OCPP.V16.Core
 {
-    public partial class BootNotificationRequest
+    public partial class BootNotificationRequest : RequestBase<BootNotificationRequest>
     {
         //[Newtonsoft.Json.JsonProperty("chargePointVendor", Required = Newtonsoft.Json.Required.Always)]
         public string ChargePointVendor { get; set; }

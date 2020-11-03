@@ -1,6 +1,8 @@
+using OCPP.V16;
+
 namespace OCPP.V16.Core
 {
-    public partial class MeterValuesRequest 
+    public partial class MeterValuesRequest : RequestBase<MeterValuesRequest> 
     {
         //[Newtonsoft.Json.JsonProperty("connectorId", Required = Newtonsoft.Json.Required.Always)]
         public int ConnectorId { get; set; }

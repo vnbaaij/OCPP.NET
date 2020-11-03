@@ -5,8 +5,4 @@
     <RootNamespace>OCPP.V201</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\OCCP.Core\OCPP.Core.csproj" />
-  </ItemGroup>
-
 </Project>

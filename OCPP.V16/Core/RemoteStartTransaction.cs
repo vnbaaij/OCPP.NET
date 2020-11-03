@@ -1,9 +1,8 @@
+using OCPP.V16;
+
 namespace OCPP.V16.Core
 {
-
-
-
-    public partial class RemoteStartTransactionRequest 
+    public partial class RemoteStartTransactionRequest : RequestBase<RemoteStartTransactionRequest> 
     {
         //[Newtonsoft.Json.JsonProperty("connectorId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int ConnectorId { get; set; }

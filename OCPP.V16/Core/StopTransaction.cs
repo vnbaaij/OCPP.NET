@@ -1,9 +1,8 @@
+using OCPP.V16;
+
 namespace OCPP.V16.Core
 {
-
-
-
-    public partial class StopTransactionRequest 
+    public partial class StopTransactionRequest : RequestBase<StopTransactionRequest> 
     {
         //[Newtonsoft.Json.JsonProperty("idTag", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string IdTag { get; set; }

@@ -1,7 +1,8 @@
+using OCPP.V16;
+
 namespace OCPP.V16.Core
 {
-
-    public partial class DataTransferRequest
+    public partial class DataTransferRequest : RequestBase<DataTransferRequest>
     {
         //[Newtonsoft.Json.JsonProperty("vendorId", Required = Newtonsoft.Json.Required.Always)]
         public string VendorId { get; set; }

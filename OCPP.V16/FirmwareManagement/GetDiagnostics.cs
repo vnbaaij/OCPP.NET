@@ -1,7 +1,8 @@
+using OCPP.V16;
+
 namespace OCPP.V16.FirmwareManagement
 {
-    
-    public partial class GetDiagnosticsRequest 
+    public partial class GetDiagnosticsRequest : RequestBase<GetDiagnosticsRequest> 
     {
         //[Newtonsoft.Json.JsonProperty("location", Required = Newtonsoft.Json.Required.Always)]
         public System.Uri Location { get; set; }

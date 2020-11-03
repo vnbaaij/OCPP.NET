@@ -1,9 +1,8 @@
+using OCPP.V16;
+
 namespace OCPP.V16.ListManagement
 {
-
-
-
-    public partial class SendLocalListRequest 
+    public partial class SendLocalListRequest : RequestBase<SendLocalListRequest> 
     {
         //[Newtonsoft.Json.JsonProperty("listVersion", Required = Newtonsoft.Json.Required.Always)]
         public int ListVersion { get; set; }
