@@ -1,8 +1,9 @@
-using OCPP.Core;
+using OCPP.V201.Core;
 
 namespace OCPP.V201
 {
-    public partial class GetInstalledCertificateIdsRequest : RequestBase<GetInstalledCertificateIdsRequest>    {
+    public partial class GetInstalledCertificateIdsRequest : RequestBase<GetInstalledCertificateIdsRequest>
+    {
         /// <summary>
         /// The custom data object to allow to store any kind of customer specific data.
         /// </summary>

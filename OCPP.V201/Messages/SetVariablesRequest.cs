@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using OCPP.Core;
+using OCPP.V201.Core;
 
 namespace OCPP.V201
 {

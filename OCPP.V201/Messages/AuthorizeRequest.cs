@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-using OCPP.Core;
+using OCPP.V201.Core;
 
 namespace OCPP.V201
 {

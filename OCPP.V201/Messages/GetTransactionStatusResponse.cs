@@ -1,6 +1,8 @@
+using OCPP.V201.Core;
+
 namespace OCPP.V201
 {
-    public partial class GetTransactionStatusResponse
+    public partial class GetTransactionStatusResponse : ResponseBase<GetTransactionStatusRequest, GetTransactionStatusResponse>
     {
         /// <summary>
         /// The custom data object to allow to store any kind of customer specific data.
@@ -15,5 +17,10 @@ namespace OCPP.V201
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("messagesInQueue", Required = Newtonsoft.Json.Required.Always)]
         public bool MessagesInQueue { get; set; }
+
+        public GetTransactionStatusResponse(GetTransactionStatusRequest request, Result result) : base(request, result)
+        {
+
+        }
     }
 }

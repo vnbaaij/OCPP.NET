@@ -1,6 +1,8 @@
+using OCPP.V201.Core;
+
 namespace OCPP.V201
 {
-    public partial class GetLocalListVersionRequest
+    public partial class GetLocalListVersionRequest : RequestBase<GetLocalListVersionRequest> 
     {
         /// <summary>
         /// The custom data object to allow to store any kind of customer specific data.

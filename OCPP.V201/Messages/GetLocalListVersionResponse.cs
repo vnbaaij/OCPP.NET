@@ -1,6 +1,8 @@
+using OCPP.V201.Core;
+
 namespace OCPP.V201
 {
-    public partial class GetLocalListVersionResponse
+    public partial class GetLocalListVersionResponse : ResponseBase<GetLocalListVersionRequest, GetLocalListVersionResponse>
     {
         /// <summary>
         /// The custom data object to allow to store any kind of customer specific data.
@@ -10,5 +12,15 @@ namespace OCPP.V201
         /// </summary>
         //[Newtonsoft.Json.JsonProperty("versionNumber", Required = Newtonsoft.Json.Required.Always)]
         public int VersionNumber { get; set; }
+
+        /// <summary>
+        /// Create an get installed certificate ids response.
+        /// </summary>
+        /// <param name="request">The get installed certificate ids request leading to this response.</param>
+        /// <param name="result">The result.</param>
+        public GetLocalListVersionResponse(GetLocalListVersionRequest request, Result result) : base(request, result)
+        {
+
+        }
     }
 }

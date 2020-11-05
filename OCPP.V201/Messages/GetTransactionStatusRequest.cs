@@ -1,6 +1,8 @@
+using OCPP.V201.Core;
+
 namespace OCPP.V201
 {
-    public partial class GetTransactionStatusRequest
+    public partial class GetTransactionStatusRequest : RequestBase<GetReportRequest>
     {
         /// <summary>
         /// The custom data object to allow to store any kind of customer specific data.
