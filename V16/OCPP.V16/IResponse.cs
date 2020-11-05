@@ -18,3 +18,4 @@ namespace OCPP.V16
         DateTime ResponseTimestamp { get; }
     }
 }
+

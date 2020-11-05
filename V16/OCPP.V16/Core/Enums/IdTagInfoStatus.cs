@@ -1,4 +1,5 @@
-﻿namespace OCPP.V16.Core
+﻿using OCPP.V16;
+namespace OCPP.V16.Core
 {
     public enum IdTagInfoStatus
     {

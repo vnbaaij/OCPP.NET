@@ -15,13 +15,12 @@ namespace OCPP.V16.Core
         public int Interval { get; set; }
 
         /// <summary>
-        /// Create an boot notification response.
+        /// Create a response.
         /// </summary>
-        /// <param name="request">The boot notification request leading to this response.</param>
+        /// <param name="request">The request leading to this response.</param>
         /// <param name="result">The result.</param>
         public BootNotificationResponse(BootNotificationRequest request, Result result) : base(request, result)
         {
-
         }
     }
 }

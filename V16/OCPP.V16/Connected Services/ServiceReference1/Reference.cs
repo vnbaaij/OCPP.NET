@@ -735,7 +735,7 @@ namespace ServiceReference1
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="authorizeResponse", WrapperNamespace="urn://Ocpp/Cs/2015/10/", IsWrapped=true)]
-    public partial class AuthorizeResponse
+    public partial class AuthorizeResponse : ResponseBase<AuthorizeRequest, AuthorizeResponse>
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn://Ocpp/Cs/2015/10/", Order=0)]
@@ -825,7 +825,7 @@ namespace ServiceReference1
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ServiceModel.MessageContractAttribute(WrapperName="bootNotificationResponse", WrapperNamespace="urn://Ocpp/Cs/2015/10/", IsWrapped=true)]
-    public partial class BootNotificationResponse
+    public partial class BootNotificationResponse : ResponseBase<BootNotificationRequest, BootNotificationResponse>
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn://Ocpp/Cs/2015/10/", Order=0)]
@@ -902,7 +902,7 @@ namespace ServiceReference1
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ServiceModel.MessageContractAttribute(WrapperName="dataTransferResponse", WrapperNamespace="urn://Ocpp/Cs/2015/10/", IsWrapped=true)]
-    public partial class DataTransferResponse
+    public partial class DataTransferResponse : ResponseBase<DataTransferRequest, DataTransferResponse>
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn://Ocpp/Cs/2015/10/", Order=0)]
@@ -969,7 +969,7 @@ namespace ServiceReference1
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="diagnosticsStatusNotificationResponse", WrapperNamespace="urn://Ocpp/Cs/2015/10/", IsWrapped=true)]
-    public partial class DiagnosticsStatusNotificationResponse
+    public partial class DiagnosticsStatusNotificationResponse : ResponseBase<DiagnosticsStatusNotificationRequest, DiagnosticsStatusNotificationResponse>
     {
         
         public DiagnosticsStatusNotificationResponse()
@@ -1033,7 +1033,7 @@ namespace ServiceReference1
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="firmwareStatusNotificationResponse", WrapperNamespace="urn://Ocpp/Cs/2015/10/", IsWrapped=true)]
-    public partial class FirmwareStatusNotificationResponse
+    public partial class FirmwareStatusNotificationResponse : ResponseBase<FirmwareStatusNotificationRequest, FirmwareStatusNotificationResponse>
     {
         
         public FirmwareStatusNotificationResponse()
@@ -1065,7 +1065,7 @@ namespace ServiceReference1
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="heartbeatResponse", WrapperNamespace="urn://Ocpp/Cs/2015/10/", IsWrapped=true)]
-    public partial class HeartbeatResponse
+    public partial class HeartbeatResponse : ResponseBase<HeartbeatRequest, HeartbeatResponse>
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn://Ocpp/Cs/2015/10/", Order=0)]
@@ -1118,7 +1118,7 @@ namespace ServiceReference1
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="meterValuesResponse", WrapperNamespace="urn://Ocpp/Cs/2015/10/", IsWrapped=true)]
-    public partial class MeterValuesResponse
+    public partial class MeterValuesResponse : ResponseBase<MeterValuesRequest, MeterValuesResponse>
     {
         
         public MeterValuesResponse()
@@ -1168,7 +1168,7 @@ namespace ServiceReference1
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ServiceModel.MessageContractAttribute(WrapperName="startTransactionResponse", WrapperNamespace="urn://Ocpp/Cs/2015/10/", IsWrapped=true)]
-    public partial class StartTransactionResponse
+    public partial class StartTransactionResponse : ResponseBase<StartTransactionRequest, StartTransactionResponse>
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn://Ocpp/Cs/2015/10/", Order=0)]
@@ -1329,7 +1329,7 @@ namespace ServiceReference1
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="statusNotificationResponse", WrapperNamespace="urn://Ocpp/Cs/2015/10/", IsWrapped=true)]
-    public partial class StatusNotificationResponse
+    public partial class StatusNotificationResponse : ResponseBase<StatusNotificationRequest, StatusNotificationResponse>
     {
         
         public StatusNotificationResponse()
@@ -1426,7 +1426,7 @@ namespace ServiceReference1
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="stopTransactionResponse", WrapperNamespace="urn://Ocpp/Cs/2015/10/", IsWrapped=true)]
-    public partial class StopTransactionResponse
+    public partial class StopTransactionResponse : ResponseBase<StopTransactionRequest, StopTransactionResponse>
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="urn://Ocpp/Cs/2015/10/", Order=0)]
