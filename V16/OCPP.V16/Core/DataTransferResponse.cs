@@ -12,10 +12,10 @@ namespace OCPP.V16.Core
         //[Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Data { get; set; }
 
-        /// <summary>
-        /// Create a response.
+         /// <summary>
+        /// Create a DataTransfer response.
         /// </summary>
-        /// <param name="request">The request leading to this response.</param>
+        /// <param name="request">The DataTransfer request leading to this response.</param>
         /// <param name="result">The result.</param>
         public DataTransferResponse(DataTransferRequest request, Result result) : base(request, result)
         {

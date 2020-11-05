@@ -14,10 +14,10 @@ namespace OCPP.V16.Core
         //[Newtonsoft.Json.JsonProperty("interval", Required = Newtonsoft.Json.Required.Always)]
         public int Interval { get; set; }
 
-        /// <summary>
-        /// Create a response.
+         /// <summary>
+        /// Create a BootNotification response.
         /// </summary>
-        /// <param name="request">The request leading to this response.</param>
+        /// <param name="request">The BootNotification request leading to this response.</param>
         /// <param name="result">The result.</param>
         public BootNotificationResponse(BootNotificationRequest request, Result result) : base(request, result)
         {

@@ -12,11 +12,11 @@ namespace OCPP.V16.Core
             get; set;
         }
         
-        /// <summary>
-         /// Create a response.
-         /// </summary>
-         /// <param name="request">The request leading to this response.</param>
-         /// <param name="result">The result.</param>
+         /// <summary>
+        /// Create a ChangeAvailability response.
+        /// </summary>
+        /// <param name="request">The ChangeAvailability request leading to this response.</param>
+        /// <param name="result">The result.</param>
         public ChangeAvailabilityResponse(ChangeAvailabilityRequest request, Result result) : base(request, result)
         {
 

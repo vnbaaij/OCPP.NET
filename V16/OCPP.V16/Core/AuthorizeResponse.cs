@@ -7,10 +7,10 @@ namespace OCPP.V16.Core
         [JsonPropertyName("idTagInfo")]
         public IdTagInfo IdTagInfo { get; set; } = new IdTagInfo();
 
-        /// <summary>
-        /// Create a response.
+         /// <summary>
+        /// Create a Authorize response.
         /// </summary>
-        /// <param name="request">The request leading to this response.</param>
+        /// <param name="request">The Authorize request leading to this response.</param>
         /// <param name="result">The result.</param>
         public AuthorizeResponse(AuthorizeRequest request, Result result) : base(request, result)
         {

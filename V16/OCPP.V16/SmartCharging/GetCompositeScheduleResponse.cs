@@ -20,10 +20,10 @@ namespace OCPP.V16.SmartCharging
         //[Newtonsoft.Json.JsonProperty("chargingSchedule", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public ChargingSchedule ChargingSchedule { get; set; }
 
-        /// <summary>
-        /// Create a response.
+         /// <summary>
+        /// Create a GetCompositeSchedule response.
         /// </summary>
-        /// <param name="request">The request leading to this response.</param>
+        /// <param name="request">The GetCompositeSchedule request leading to this response.</param>
         /// <param name="result">The result.</param>
         public GetCompositeScheduleResponse(GetCompositeScheduleRequest request, Result result) : base(request, result)
         {

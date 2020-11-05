@@ -6,10 +6,10 @@ namespace OCPP.V16.Core
         //[Newtonsoft.Json.JsonProperty("currentTime", Required = Newtonsoft.Json.Required.Always)]
         public System.DateTimeOffset CurrentTime { get; set; }
 
-        /// <summary>
-        /// Create a response.
+         /// <summary>
+        /// Create a Heartbeat response.
         /// </summary>
-        /// <param name="request">The request leading to this response.</param>
+        /// <param name="request">The Heartbeat request leading to this response.</param>
         /// <param name="result">The result.</param>
         public HeartbeatResponse(Result result) : base(result)
         {

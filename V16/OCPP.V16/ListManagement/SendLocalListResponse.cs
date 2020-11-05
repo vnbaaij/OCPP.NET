@@ -9,10 +9,10 @@ namespace OCPP.V16.ListManagement
         //[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public SendLocalListResponseStatus Status { get; set; }
 
-        /// <summary>
-        /// Create a response.
+         /// <summary>
+        /// Create a SendLocalList response.
         /// </summary>
-        /// <param name="request">The request leading to this response.</param>
+        /// <param name="request">The SendLocalList request leading to this response.</param>
         /// <param name="result">The result.</param>
         public SendLocalListResponse(SendLocalListRequest request, Result result) : base(request, result)
         {

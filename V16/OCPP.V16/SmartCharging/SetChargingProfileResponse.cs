@@ -9,10 +9,10 @@ namespace OCPP.V16.SmartCharging
         //[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public SetChargingProfileResponseStatus Status { get; set; }
         
-        /// <summary>
-        /// Create a response.
+         /// <summary>
+        /// Create a SetChargingProfile response.
         /// </summary>
-        /// <param name="request">The request leading to this response.</param>
+        /// <param name="request">The SetChargingProfile request leading to this response.</param>
         /// <param name="result">The result.</param>
         public SetChargingProfileResponse(SetChargingProfileRequest request, Result result) : base(request, result)
         {

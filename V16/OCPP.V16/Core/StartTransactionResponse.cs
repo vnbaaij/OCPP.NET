@@ -9,10 +9,10 @@ namespace OCPP.V16.Core
         ////[Newtonsoft.Json.JsonProperty("transactionId", Required = Newtonsoft.Json.Required.Always)]
         public int TransactionId { get; set; }
 
-        /// <summary>
-        /// Create a response.
+         /// <summary>
+        /// Create a StartTransaction response.
         /// </summary>
-        /// <param name="request">The request leading to this response.</param>
+        /// <param name="request">The StartTransaction request leading to this response.</param>
         /// <param name="result">The result.</param>
         public StartTransactionResponse(StartTransactionRequest request, Result result) : base(request, result)
         {
