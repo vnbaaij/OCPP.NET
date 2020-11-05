@@ -30,5 +30,23 @@ namespace OCPP.V16.Core
 
         //[Newtonsoft.Json.JsonProperty("meterSerialNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string MeterSerialNumber { get; set; }
+
+        public BootNotificationRequest()
+        {
+
+        }
+        public BootNotificationRequest(string chargePointVendor, string chargePointModel,string chargePointSerialNumber = null, string chargeBoxSerialNumber = null, string firmwareVersion = null, string iccid = null, string imsi = null, string meterType = null, string meterSerialNumber = null)
+        {
+            ChargePointVendor = chargePointVendor;
+            ChargePointModel = chargePointModel;
+            ChargePointSerialNumber = chargePointSerialNumber;
+            ChargeBoxSerialNumber = chargeBoxSerialNumber;
+            FirmwareVersion = firmwareVersion;
+            Iccid = iccid;
+            Imsi = imsi;
+            MeterType = meterType;
+            MeterSerialNumber = meterSerialNumber;
+
+        }
     }
 }

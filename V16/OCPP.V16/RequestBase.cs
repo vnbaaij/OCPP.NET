@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
-namespace OCPP.Core
+namespace OCPP.V16
 {
     /// <summary>
     /// An abstract OCPP request message base.
@@ -11,6 +12,7 @@ namespace OCPP.Core
         /// <summary>
         /// The timestamp of the request message creation.
         /// </summary>
+        [JsonIgnore]
         public DateTime RequestTimestamp { get; }
 
         /// <summary>
