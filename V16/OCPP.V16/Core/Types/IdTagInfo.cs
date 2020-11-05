@@ -9,7 +9,7 @@ namespace OCPP.V16.Core
     {
         //[Newtonsoft.Json.JsonProperty("expiryDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [JsonPropertyName("expiryDate")]
-        public System.DateTimeOffset ExpiryDate { get; set; }
+        public DateTime ExpiryDate { get; set; }
 
         //[Newtonsoft.Json.JsonProperty("parentIdTag", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [JsonPropertyName("parentIdTag")]

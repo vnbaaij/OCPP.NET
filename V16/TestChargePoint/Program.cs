@@ -27,7 +27,7 @@ namespace TestChargingStation
 
         static async Task Main()
         {
-            Console.WriteLine($"Running test for charge point with id {id}");
+            Console.WriteLine($"Running test for Ccharge P oint with id {id}");
 
             ConsoleKeyInfo cki;
 
@@ -96,7 +96,7 @@ namespace TestChargingStation
             webSocket.Options.AddSubProtocol("ocpp2.0.1");
             webSocket.Options.AddSubProtocol("ocpp1.6");
             await webSocket.ConnectAsync(new Uri(csmsUrl + id), CancellationToken.None);
-            Console.WriteLine("\r\nconnected!");
+            Console.WriteLine("\r\nConnected to Central System!");
 
             var bootNotificationRequest = new BootNotificationRequest
             {
