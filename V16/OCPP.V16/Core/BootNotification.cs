@@ -1,6 +1,3 @@
-using OCPP.V16;
-
-using OCPP.V16;
 namespace OCPP.V16.Core
 {
     public partial class BootNotificationRequest : RequestBase<BootNotificationRequest>

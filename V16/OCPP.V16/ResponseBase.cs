@@ -5,19 +5,28 @@ namespace OCPP.V16
     /// <summary>
     /// An abstract OCCP response base.
     /// </summary>
-    public abstract class ResponseBase<TRequest, TResponse> : ResponseBase<TResponse> 
-        where TRequest : class, IRequest 
+    public abstract class ResponseBase<TRequest, TResponse> : ResponseBase<TResponse>
+        where TRequest : RequestBase<TRequest>
         where TResponse : class, IResponse
     {
+        private TRequest request;
         /// <summary>
         /// The request leading to this response.
         /// </summary>
-        public TRequest Request { get; }
+        public TRequest Request
+        {
+            get { return request; }
+            set
+            {
+                request = value;
+                Runtime = ResponseTimestamp - request.RequestTimestamp;
+            }
+        }
 
         /// <summary>
         /// The runtime of the request.
         /// </summary>
-        public TimeSpan Runtime { get; }
+        public TimeSpan Runtime { get; set; }
 
         /// <summary>
         /// Create a new generic response.
@@ -28,6 +37,10 @@ namespace OCPP.V16
         {
             Request = request;
             Runtime = ResponseTimestamp - request.RequestTimestamp;
+        }
+
+        protected ResponseBase(Result result) : base(result)        
+        {
         }
     }
 

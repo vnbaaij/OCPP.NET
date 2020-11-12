@@ -4,6 +4,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using System.Threading;
 using System.Threading.Tasks;
@@ -76,8 +77,8 @@ namespace TestChargingStation
         {
             //Console.Clear();
             Console.ResetColor();
-            Console.WriteLine("Choose an action:");
-            Console.WriteLine("\t1 - Connect");
+            Console.WriteLine("Choose an action for this Charge Point:");
+            Console.WriteLine("\t1 - Connect to Central System");
             Console.WriteLine("\t2 - Authorize");
             Console.WriteLine("\t3 - Start Transaction");
             Console.WriteLine("\t4 - Stop Transaction");
@@ -98,23 +99,24 @@ namespace TestChargingStation
             await webSocket.ConnectAsync(new Uri(csmsUrl + id), CancellationToken.None);
             Console.WriteLine("\r\nConnected to Central System!");
 
-            var bootNotificationRequest = new BootNotificationRequest
+            var request = new BootNotificationRequest
             {
                 ChargePointVendor = "Baaijte",
                 ChargePointModel = "QuickCharger 11+",
-                //ChargePointSerialNumber = "bqc.001.20.1",
-                //ChargeBoxSerialNumber = "bqc.001.20.1.01",
-                //FirmwareVersion = "3.11.20",
-                //MeterType = "",
-                //MeterSerialNumber = ""
+                ChargePointSerialNumber = "bqc.001.20.1",
+                ChargeBoxSerialNumber = "bqc.001.20.1.01",
+                FirmwareVersion = "3.11.20",
+                MeterType = "Landis+Gyr E350",
+                MeterSerialNumber = "4530303035303031363935303633303135"
             };
 
-            var buffer = Compose(bootNotificationRequest);
+            await Send(request);
 
-            await Task.WhenAll(Send(buffer), Receive());
+
+             var result = await Receive<BootNotificationRequest, BootNotificationResponse>(request);
         }
 
-        private static byte[] Compose(IRequest request)
+        private static byte[] ComposeMessage(IRequest request)
         {
             var options = new JsonSerializerOptions
             {
@@ -123,46 +125,84 @@ namespace TestChargingStation
                 //WriteIndented = true
             };
 
-            string uid = Guid.NewGuid().ToString("N");
+            string messageId = Guid.NewGuid().ToString("N");
             string action = request.GetType().Name.Replace("Request", "");
             string payload = JsonSerializer.Serialize<object>(request, options);
 
-            string jsonString = $"[{(int)MessageType.CALL},\"{uid}\",\"{action}\",{payload}]";
+            string jsonString = $"[{(int)MessageType.CALL},\"{messageId}\",\"{action}\",{payload}]";
 
             return Encoding.UTF8.GetBytes(jsonString);
         }
 
-        private static async Task Send(byte[] buffer)
+        private static async Task Send(IRequest request)
         {
             if (webSocket.State == WebSocketState.Open)
             {
-                await webSocket.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
-                LogStatus(false, buffer);
+                var msg = ComposeMessage(request);
+
+                await webSocket.SendAsync(msg, WebSocketMessageType.Text, true, CancellationToken.None);
+                LogStatus(false, msg);
             }
         }
 
-        private static async Task Receive()
+        private static async Task<TResponse> Receive<TRequest, TResponse>(TRequest request)
+            where TRequest : RequestBase<TRequest>
+            where TResponse : ResponseBase<TRequest, TResponse>
+
         {
             if (webSocket.State == WebSocketState.Open)
             {
                 ArraySegment<byte> buffer = new ArraySegment<byte>(new byte[8192]);
 
+                var responseMessage = new ResponseMessage();
+
                 WebSocketReceiveResult result;
-                do
-                {
+                //do
+                //{
                     result = await webSocket.ReceiveAsync(buffer, CancellationToken.None);
+
                     if (result.MessageType == WebSocketMessageType.Close)
                         await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
                     else
                     {
-                        LogStatus(true, buffer.Slice(0,result.Count).ToArray()); ;
+                        responseMessage = ParseResponseMessage(buffer.Slice(0, result.Count));
+
                     }
-                } while (!result.EndOfMessage);
+                //} while (!result.EndOfMessage);
+
+
+                var options = new JsonSerializerOptions
+                {
+                    IgnoreNullValues = true,
+                    PropertyNameCaseInsensitive = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                };
+                options.Converters.Add(new JsonStringEnumConverter());
+
+                TResponse response = JsonSerializer.Deserialize<TResponse>(responseMessage.Payload, options);
+                response.Request = request;
+                return response;
+
             }
+            return default;
+
+        }
+
+        private static ResponseMessage ParseResponseMessage(ArraySegment<byte> result)
+        {
+            LogStatus(true, result.ToArray());
+
+            var doc = JsonDocument.Parse(result);
+
+            var x = JsonSerializer.Deserialize<ResponseMessage>(result);
+
+            return new ResponseMessage((MessageType)doc.RootElement[0].GetInt16(), doc.RootElement[1].GetString(), doc.RootElement[2].GetRawText());
+
         }
 
         private static void LogStatus(bool receiving, byte[] buffer)
         {
+
             lock (consoleLock)
             {
                 if (receiving)

@@ -44,42 +44,42 @@ namespace OCPP.V16
         /// Data accepted and processed.
         /// </summary>
         /// <param name="description">A human-readable error description.</param>
-        public static Result OK(string description = null) => new Result(ResultCodes.Unknown, description);
+        public static Result OK(string description = null) => new Result(ResultCodes.OK, description);
 
 
         /// <summary>
         /// Only part of the data was accepted.
         /// </summary>
         /// <param name="description">A human-readable error description.</param>
-        public static Result Partly(string description = null) => new Result(ResultCodes.Unknown, description);
+        public static Result Partly(string description = null) => new Result(ResultCodes.Partly, description);
 
 
         /// <summary>
         /// Wrong username and/or password.
         /// </summary>
         /// <param name="description">A human-readable error description.</param>
-        public static Result NotAuthorized(string description = null) => new Result(ResultCodes.Unknown, description);
+        public static Result NotAuthorized(string description = null) => new Result(ResultCodes.NotAuthorized, description);
 
 
         /// <summary>
         /// One or more ID (EVSE/Contract) were not valid for this user.
         /// </summary>
         /// <param name="description">A human-readable error description.</param>
-        public static Result InvalidId(string description = null) => new Result(ResultCodes.Unknown, description);
+        public static Result InvalidId(string description = null) => new Result(ResultCodes.InvalidId, description);
 
 
         /// <summary>
         /// Internal server error.
         /// </summary>
         /// <param name="description">A human-readable error description.</param>
-        public static Result Server(string description = null) => new Result(ResultCodes.Unknown, description);
+        public static Result Server(string description = null) => new Result(ResultCodes.Server, description);
 
 
         /// <summary>
         /// Data has technical errors.
         /// </summary>
         /// <param name="description">A human-readable error description.</param>
-        public static Result Format(string description = null) => new Result(ResultCodes.Unknown, description);
+        public static Result Format(string description = null) => new Result(ResultCodes.Format, description);
 
 
         #region Operator overloading
