@@ -33,7 +33,6 @@ namespace OCPP.V16
         /// Create a new generic response.
         /// </summary>
         /// <param name="Request">The request leading to this result.</param>
-        /// <param name="Result">A generic result.</param>
         public ResponseBase(TRequest request) : base()
         {
             Request = request;
@@ -53,10 +52,6 @@ namespace OCPP.V16
     public abstract class ResponseBase<TResponse> : IResponse /*, IEquatable<TResponse> */
         where TResponse : class, IResponse
     {
-        /// The machine-readable result code.
-        /// </summary>
-        //public Result Result { get; init; }
-
         /// <summary>
         /// The timestamp of the response message creation.
         /// </summary>
@@ -69,15 +64,5 @@ namespace OCPP.V16
         {
             ResponseTimestamp = DateTime.UtcNow;
         }
-
-        /// <summary>
-        /// Create a new generic response.
-        /// </summary>
-        /// <param name="Result">A generic result.</param>
-        //public ResponseBase(Result result)
-        //{
-        //    Result = result;
-        //    ResponseTimestamp = DateTime.UtcNow;
-        //}
     }
 }
