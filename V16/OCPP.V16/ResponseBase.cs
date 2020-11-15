@@ -19,7 +19,8 @@ namespace OCPP.V16
             set
             {
                 request = value;
-                Runtime = ResponseTimestamp - request.RequestTimestamp;
+                if (request != null)
+                    Runtime = ResponseTimestamp - request.RequestTimestamp;
             }
         }
 
@@ -33,13 +34,14 @@ namespace OCPP.V16
         /// </summary>
         /// <param name="Request">The request leading to this result.</param>
         /// <param name="Result">A generic result.</param>
-        public ResponseBase(TRequest request, Result result) : base(result)
+        public ResponseBase(TRequest request) : base()
         {
             Request = request;
-            Runtime = ResponseTimestamp - request.RequestTimestamp;
+            if (request != null)
+                Runtime = ResponseTimestamp - request.RequestTimestamp;
         }
 
-        protected ResponseBase(Result result) : base(result)        
+        protected ResponseBase() : base()
         {
         }
     }
@@ -53,7 +55,7 @@ namespace OCPP.V16
     {
         /// The machine-readable result code.
         /// </summary>
-        public Result Result { get; }
+        //public Result Result { get; init; }
 
         /// <summary>
         /// The timestamp of the response message creation.
@@ -63,11 +65,19 @@ namespace OCPP.V16
         /// <summary>
         /// Create a new generic response.
         /// </summary>
-        /// <param name="Result">A generic result.</param>
-        public ResponseBase(Result result)
+        public ResponseBase()
         {
-            Result = result;
             ResponseTimestamp = DateTime.UtcNow;
         }
+
+        /// <summary>
+        /// Create a new generic response.
+        /// </summary>
+        /// <param name="Result">A generic result.</param>
+        //public ResponseBase(Result result)
+        //{
+        //    Result = result;
+        //    ResponseTimestamp = DateTime.UtcNow;
+        //}
     }
 }

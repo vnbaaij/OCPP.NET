@@ -12,7 +12,7 @@ namespace OCPP.V16.Core
         /// </summary>
         /// <param name="request">The Authorize request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public AuthorizeResponse(AuthorizeRequest request, Result result) : base(request, result)
+        public AuthorizeResponse(AuthorizeRequest request) : base(request)
         {
         }
     }

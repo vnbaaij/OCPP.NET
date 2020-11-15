@@ -1,11 +1,10 @@
 ﻿using System;
-using System.IO;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.Unicode;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,7 +19,7 @@ namespace TestChargingStation
         private const string id = "CS_28_1";
         private const string csmsUrl = "ws://localhost:8180/steve/websocket/CentralSystemService/";
 
-        private static readonly object consoleLock = new object();
+        private static readonly object consoleLock = new();
         private const bool verbose = true;
 
         private static ClientWebSocket webSocket = null;
@@ -113,10 +112,10 @@ namespace TestChargingStation
             await Send(request);
 
 
-             var result = await Receive<BootNotificationRequest, BootNotificationResponse>(request);
+            var result = await Receive<BootNotificationRequest, BootNotificationResponse>(request);
         }
 
-        private static byte[] ComposeMessage(IRequest request)
+        private static OcppMessage ComposeMessage(IRequest request)
         {
             var options = new JsonSerializerOptions
             {
@@ -125,23 +124,31 @@ namespace TestChargingStation
                 //WriteIndented = true
             };
 
-            string messageId = Guid.NewGuid().ToString("N");
-            string action = request.GetType().Name.Replace("Request", "");
-            string payload = JsonSerializer.Serialize<object>(request, options);
+            var message = new OcppMessage()
+            {
+                MessageType = MessageType.CALL,
+                RequestId = Guid.NewGuid().ToString("N"),
+                Action = request.GetType().Name.Replace("Request", ""),
+                Payload = JsonSerializer.Serialize<object>(request, options)
+            };
 
-            string jsonString = $"[{(int)MessageType.CALL},\"{messageId}\",\"{action}\",{payload}]";
+            //string messageId = Guid.NewGuid().ToString("N");
+            //string action = request.GetType().Name.Replace("Request", "");
+            //string payload = JsonSerializer.Serialize<object>(request, options);
 
-            return Encoding.UTF8.GetBytes(jsonString);
+            //string jsonString = $"[{(int)MessageType.CALL},\"{messageId}\",\"{action}\",{payload}]";
+
+            return message;
         }
 
         private static async Task Send(IRequest request)
         {
             if (webSocket.State == WebSocketState.Open)
             {
-                var msg = ComposeMessage(request);
+                var message = ComposeMessage(request);
 
-                await webSocket.SendAsync(msg, WebSocketMessageType.Text, true, CancellationToken.None);
-                LogStatus(false, msg);
+                await webSocket.SendAsync(Encoding.UTF8.GetBytes(message.ToString()), WebSocketMessageType.Text, true, CancellationToken.None);
+                LogStatus(false, message);
             }
         }
 
@@ -152,22 +159,24 @@ namespace TestChargingStation
         {
             if (webSocket.State == WebSocketState.Open)
             {
-                ArraySegment<byte> buffer = new ArraySegment<byte>(new byte[8192]);
+                byte[] buffer = new byte[8192];
 
-                var responseMessage = new ResponseMessage();
+                string payload = null;
 
                 WebSocketReceiveResult result;
                 //do
                 //{
-                    result = await webSocket.ReceiveAsync(buffer, CancellationToken.None);
+                result = await webSocket.ReceiveAsync(buffer, CancellationToken.None);
 
-                    if (result.MessageType == WebSocketMessageType.Close)
-                        await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
-                    else
-                    {
-                        responseMessage = ParseResponseMessage(buffer.Slice(0, result.Count));
+                if (result.MessageType == WebSocketMessageType.Close)
+                    await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+                else
+                {
+                    var responseMessage = new OcppMessage(buffer.Take(result.Count).ToArray());
+                    LogStatus(true, responseMessage);
+                    payload = responseMessage.Payload;
 
-                    }
+                }
                 //} while (!result.EndOfMessage);
 
 
@@ -179,7 +188,7 @@ namespace TestChargingStation
                 };
                 options.Converters.Add(new JsonStringEnumConverter());
 
-                TResponse response = JsonSerializer.Deserialize<TResponse>(responseMessage.Payload, options);
+                TResponse response = JsonSerializer.Deserialize<TResponse>(payload, options);
                 response.Request = request;
                 return response;
 
@@ -188,46 +197,32 @@ namespace TestChargingStation
 
         }
 
-        private static ResponseMessage ParseResponseMessage(ArraySegment<byte> result)
-        {
-            LogStatus(true, result.ToArray());
-
-            var doc = JsonDocument.Parse(result);
-
-            var x = JsonSerializer.Deserialize<ResponseMessage>(result);
-
-            return new ResponseMessage((MessageType)doc.RootElement[0].GetInt16(), doc.RootElement[1].GetString(), doc.RootElement[2].GetRawText());
-
-        }
-
-        private static void LogStatus(bool receiving, byte[] buffer)
+        private static void LogStatus(bool receiving, OcppMessage ocppMessage)
         {
 
             lock (consoleLock)
             {
                 if (receiving)
-                    Console.ForegroundColor = ConsoleColor.Green ;
+                    Console.ForegroundColor = ConsoleColor.Green;
                 else
                     Console.ForegroundColor = ConsoleColor.Gray;
 
                 if (verbose)
                 {
 
-                    var doc = JsonDocument.Parse(buffer);
+                    //var doc = JsonDocument.Parse(buffer);
 
-                    MessageType mt = (MessageType)doc.RootElement[0].GetInt16();
+                    MessageType mt = ocppMessage.MessageType;
 
                     Console.WriteLine("----------------------------------------------------------------------");
-                    Console.WriteLine($"MessageType: {mt}, Id: {doc.RootElement[1]}");
-                    if (receiving)
-                        LogPayload(doc.RootElement[2]);
-                    else
-                    {
-                        Console.WriteLine($"Action: {doc.RootElement[2]}");
-                        LogPayload(doc.RootElement[3]);
-                    }
+                    Console.WriteLine($"MessageType: {ocppMessage.MessageType}, Id: {ocppMessage.RequestId}");
+                    if (!receiving)
+                        Console.WriteLine($"Action: {ocppMessage.Action}");
+
+                    LogPayload(ocppMessage.Payload);
+
                 }
-                Console.WriteLine($"({buffer.Length} bytes total)");
+                //Console.WriteLine($"({buffer.Length} bytes total)");
                 Console.WriteLine("----------------------------------------------------------------------");
                 Console.WriteLine();
 
@@ -235,7 +230,7 @@ namespace TestChargingStation
             }
         }
 
-        private static void LogPayload(JsonElement payload)
+        private static void LogPayload(string payload)
         {
             var options = new JsonWriterOptions
             {
@@ -243,11 +238,13 @@ namespace TestChargingStation
                 Indented = true
             };
 
+            var json = JsonDocument.Parse(payload);
+
             Console.WriteLine("Payload:");
             using var writer = new Utf8JsonWriter(Console.OpenStandardOutput(), options: options);
 
             writer.WriteStartObject();
-            foreach (JsonProperty property in payload.EnumerateObject())
+            foreach (JsonProperty property in json.RootElement.EnumerateObject())
             {
                 property.WriteTo(writer);
             }

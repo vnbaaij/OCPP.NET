@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace OCPP.V16.Core
 {
@@ -20,7 +21,8 @@ namespace OCPP.V16.Core
         /// </summary>
         /// <param name="request">The BootNotification request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public BootNotificationResponse(BootNotificationRequest request, Result result) : base(request, result)
+        [JsonConstructor]
+        public BootNotificationResponse(BootNotificationRequest request) : base(request)
         {
         }
 
@@ -29,7 +31,7 @@ namespace OCPP.V16.Core
         /// </summary>
         /// <param name="request">The BootNotification request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public BootNotificationResponse(BootNotificationRequest request, BootNotificationResponse response) : base(request, response.Result)
+        public BootNotificationResponse(BootNotificationRequest request, BootNotificationResponse response) : base(request)
         {
             Status = response.Status;
             CurrentTime = response.CurrentTime;

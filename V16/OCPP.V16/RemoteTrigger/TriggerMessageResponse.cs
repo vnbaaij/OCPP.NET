@@ -14,7 +14,7 @@ namespace OCPP.V16.RemoteTrigger
         /// </summary>
         /// <param name="request">The TriggerMessage request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public TriggerMessageResponse(TriggerMessageRequest request, Result result) : base(request, result)
+        public TriggerMessageResponse(TriggerMessageRequest request) : base(request)
         {
 
         }

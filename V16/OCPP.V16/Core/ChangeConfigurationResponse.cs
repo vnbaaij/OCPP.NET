@@ -15,7 +15,7 @@ namespace OCPP.V16.Core
         /// </summary>
         /// <param name="request">The ChangeConfiguration request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public ChangeConfigurationResponse(ChangeConfigurationRequest request, Result result) : base(request, result)
+        public ChangeConfigurationResponse(ChangeConfigurationRequest request) : base(request)
         {
         }
 

@@ -10,7 +10,7 @@ namespace OCPP.V16
         /// <summary>
         /// The machine-readable result code.
         /// </summary>
-        Result Result { get; }
+        //Result Result { get; }
 
         /// <summary>
         /// The timestamp of the response message creation.

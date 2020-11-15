@@ -13,7 +13,7 @@ namespace OCPP.V16.Reservation
         /// </summary>
         /// <param name="request">The CancelReservation request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public CancelReservationResponse(CancelReservationRequest request, Result result) : base(request, result)
+        public CancelReservationResponse(CancelReservationRequest request) : base(request)
         {
         }
     }

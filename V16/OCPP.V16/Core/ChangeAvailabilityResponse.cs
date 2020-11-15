@@ -17,7 +17,7 @@ namespace OCPP.V16.Core
         /// </summary>
         /// <param name="request">The ChangeAvailability request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public ChangeAvailabilityResponse(ChangeAvailabilityRequest request, Result result) : base(request, result)
+        public ChangeAvailabilityResponse(ChangeAvailabilityRequest request) : base(request)
         {
 
         }

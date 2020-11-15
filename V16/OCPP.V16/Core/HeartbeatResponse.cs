@@ -11,7 +11,7 @@ namespace OCPP.V16.Core
         /// </summary>
         /// <param name="request">The Heartbeat request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public HeartbeatResponse(Result result) : base(result)
+        public HeartbeatResponse() : base()
         {
 
         }

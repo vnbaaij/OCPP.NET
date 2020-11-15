@@ -11,7 +11,7 @@ namespace OCPP.V16.Core
         /// </summary>
         /// <param name="request">The Reset request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public ResetResponse(ResetRequest request, Result result) : base(request, result)
+        public ResetResponse(ResetRequest request) : base(request)
         {
 
         }

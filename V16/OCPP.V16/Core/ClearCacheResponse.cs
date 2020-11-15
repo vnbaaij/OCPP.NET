@@ -15,7 +15,7 @@ namespace OCPP.V16.Core
         /// </summary>
         /// <param name="request">The ClearCache request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public ClearCacheResponse(Result result) : base(result)
+        public ClearCacheResponse() : base()
         {
         }
     }

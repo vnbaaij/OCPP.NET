@@ -16,7 +16,7 @@ namespace OCPP.V16.Core
         /// </summary>
         /// <param name="request">The request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public GetConfigurationResponse(GetConfigurationRequest request, Result result) : base(request, result)
+        public GetConfigurationResponse(GetConfigurationRequest request) : base(request)
         {
 
         }

@@ -14,7 +14,7 @@ namespace OCPP.V16.SmartCharging
         /// </summary>
         /// <param name="request">The ClearChargingProfile request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public ClearChargingProfileResponse(ClearChargingProfileRequest request, Result result) : base(request, result)
+        public ClearChargingProfileResponse(ClearChargingProfileRequest request) : base(request)
         {
         }
     }

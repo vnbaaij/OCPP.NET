@@ -25,7 +25,7 @@ namespace OCPP.V16.SmartCharging
         /// </summary>
         /// <param name="request">The GetCompositeSchedule request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public GetCompositeScheduleResponse(GetCompositeScheduleRequest request, Result result) : base(request, result)
+        public GetCompositeScheduleResponse(GetCompositeScheduleRequest request) : base(request)
         {
 
         }

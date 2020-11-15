@@ -11,7 +11,7 @@ namespace OCPP.V16.ListManagement
         /// </summary>
         /// <param name="request">The GetLocalListVersion request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public GetLocalListVersionResponse(Result result) : base(result)
+        public GetLocalListVersionResponse() : base()
         {
 
         }

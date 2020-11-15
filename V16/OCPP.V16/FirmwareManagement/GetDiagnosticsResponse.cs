@@ -12,7 +12,7 @@ namespace OCPP.V16.FirmwareManagement
         /// </summary>
         /// <param name="request">The GetDiagnostics request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public GetDiagnosticsResponse(GetDiagnosticsRequest request, Result result) : base(request, result)
+        public GetDiagnosticsResponse(GetDiagnosticsRequest request) : base(request)
         {
 
         }

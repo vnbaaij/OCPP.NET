@@ -14,7 +14,7 @@ namespace OCPP.V16.Core
         /// </summary>
         /// <param name="request">The UnlockConnector request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public UnlockConnectorResponse(UnlockConnectorRequest request, Result result) : base(request, result)
+        public UnlockConnectorResponse(UnlockConnectorRequest request) : base(request)
         {
 
         }

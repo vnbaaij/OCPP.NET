@@ -14,7 +14,7 @@ namespace OCPP.V16.Core
         /// </summary>
         /// <param name="request">The RemoteStopTransaction request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public RemoteStopTransactionResponse(RemoteStopTransactionRequest request, Result result) : base(request, result)
+        public RemoteStopTransactionResponse(RemoteStopTransactionRequest request) : base(request)
         {
 
         }

@@ -14,7 +14,7 @@ namespace OCPP.V16.SmartCharging
         /// </summary>
         /// <param name="request">The SetChargingProfile request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public SetChargingProfileResponse(SetChargingProfileRequest request, Result result) : base(request, result)
+        public SetChargingProfileResponse(SetChargingProfileRequest request) : base(request)
         {
 
         }

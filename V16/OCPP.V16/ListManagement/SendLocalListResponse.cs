@@ -14,7 +14,7 @@ namespace OCPP.V16.ListManagement
         /// </summary>
         /// <param name="request">The SendLocalList request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public SendLocalListResponse(SendLocalListRequest request, Result result) : base(request, result)
+        public SendLocalListResponse(SendLocalListRequest request) : base(request)
         {
 
         }

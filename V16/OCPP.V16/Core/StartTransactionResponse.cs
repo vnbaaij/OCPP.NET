@@ -14,7 +14,7 @@ namespace OCPP.V16.Core
         /// </summary>
         /// <param name="request">The StartTransaction request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public StartTransactionResponse(StartTransactionRequest request, Result result) : base(request, result)
+        public StartTransactionResponse(StartTransactionRequest request) : base(request)
         {
 
         }

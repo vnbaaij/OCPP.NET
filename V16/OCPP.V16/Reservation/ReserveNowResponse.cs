@@ -11,7 +11,7 @@ namespace OCPP.V16.Reservation
         /// </summary>
         /// <param name="request">The ReserveNow request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public ReserveNowResponse(ReserveNowRequest request, Result result) : base(request, result)
+        public ReserveNowResponse(ReserveNowRequest request) : base(request)
         {
 
         }

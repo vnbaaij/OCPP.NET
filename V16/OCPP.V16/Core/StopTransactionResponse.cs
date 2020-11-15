@@ -10,7 +10,7 @@ namespace OCPP.V16.Core
         /// </summary>
         /// <param name="request">The StopTransaction request leading to this response.</param>
         /// <param name="result">The result.</param>
-        public StopTransactionResponse(StopTransactionRequest request, Result result) : base(request, result)
+        public StopTransactionResponse(StopTransactionRequest request) : base(request)
         {
 
         }
