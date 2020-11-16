@@ -13,7 +13,7 @@ namespace OCPP.V16
 
         public MessageType MessageType { get; set; }
 
-        public string RequestId { get; set; }
+        public Guid MessageId { get; set; }
 
         public string Payload { get; set; }
 
@@ -24,10 +24,10 @@ namespace OCPP.V16
 
         }
 
-        public OcppMessage(MessageType messageType,string requestId, string payload, string action = null)
+        public OcppMessage(MessageType messageType, Guid messageId, string payload, string action = null)
         {
             MessageType = messageType;
-            RequestId = requestId;
+            MessageId = messageId;
             Payload = payload;
             Action = action;
         }
@@ -47,7 +47,7 @@ namespace OCPP.V16
             var responseArray = JsonSerializer.Deserialize<object[]>(message, options);
 
             MessageType = (MessageType)int.Parse(responseArray[0].ToString());
-            RequestId = responseArray[1].ToString();
+            MessageId = Guid.Parse(responseArray[1].ToString());
 
             if (responseArray.Length == 4)
             {
@@ -64,7 +64,7 @@ namespace OCPP.V16
         public JsonDocument ToJsonDocument()
         {
 
-            string json = $"[{(int)MessageType},{RequestId},{Payload}]";
+            string json = $"[{(int)MessageType},{MessageId},{Payload}]";
 
             return JsonDocument.Parse(json);
 
@@ -74,9 +74,9 @@ namespace OCPP.V16
         {
             string jsonString;
             if (string.IsNullOrEmpty(Action))
-                jsonString = $"[{(int)MessageType},\"{RequestId}\",{Payload}]";
+                jsonString = $"[{(int)MessageType},\"{MessageId}\",{Payload}]";
             else
-                jsonString = $"[{(int)MessageType},\"{RequestId}\",\"{Action}\",{Payload}]";
+                jsonString = $"[{(int)MessageType},\"{MessageId}\",\"{Action}\",{Payload}]";
 
             return jsonString;
 

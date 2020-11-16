@@ -24,6 +24,26 @@ namespace TestChargingStation
 
         private static ClientWebSocket webSocket = null;
 
+        private static void MainMenu()
+        {
+            //Console.Clear();
+            Console.ResetColor();
+            Console.WriteLine("Choose an action for this Charge Point:");
+            Console.WriteLine("\t1 - Connect to Central System");
+            Console.WriteLine("\t2 - Authorize");
+            Console.WriteLine("\t3 - Start Transaction");
+            Console.WriteLine("\t4 - Stop Transaction");
+            Console.WriteLine("\t5 - Heartbeat");
+            Console.WriteLine("\t6 - Send Meter Values");
+            Console.WriteLine("\t7 - Status Notification");
+            Console.WriteLine("\t8 - Data Transfer");
+            Console.WriteLine("\tq - Receive Clear cache (from Central System) and accept");
+            Console.WriteLine("\tw - Receive Clear cache (from Central System) and reject");
+
+            Console.WriteLine("\tESC - Exit");
+            Console.Write("\r\nSelect an action: ");
+        }
+
 
         static async Task Main()
         {
@@ -40,10 +60,16 @@ namespace TestChargingStation
                     switch (cki.KeyChar.ToString())
                     {
                         case "1":
-                            await Connect();
+                            await ConnectAndBoot();
                             break;
                         case "2":
 
+                            break;
+                        case "q":
+                            await ClearCache(true);
+                            break;
+                        case "w":
+                            await ClearCache(false);
                             break;
                     }
 
@@ -72,24 +98,8 @@ namespace TestChargingStation
             }
         }
 
-        private static void MainMenu()
-        {
-            //Console.Clear();
-            Console.ResetColor();
-            Console.WriteLine("Choose an action for this Charge Point:");
-            Console.WriteLine("\t1 - Connect to Central System");
-            Console.WriteLine("\t2 - Authorize");
-            Console.WriteLine("\t3 - Start Transaction");
-            Console.WriteLine("\t4 - Stop Transaction");
-            Console.WriteLine("\t5 - Heartbeat");
-            Console.WriteLine("\t6 - Send Meter Values");
-            Console.WriteLine("\t7 - Status Notification");
-            Console.WriteLine("\t8 - Data Transfer");
-            Console.WriteLine("\tESC - Exit");
-            Console.Write("\r\nSelect an action: ");
-        }
 
-        public static async Task Connect()
+        public static async Task ConnectAndBoot()
         {
 
             webSocket = new ClientWebSocket();
@@ -115,33 +125,64 @@ namespace TestChargingStation
             var result = await Receive<BootNotificationRequest, BootNotificationResponse>(request);
         }
 
-        private static OcppMessage ComposeMessage(IRequest request)
+        private static async Task ClearCache(bool accepted)
+        {
+
+            var response = await Receive<ClearCacheRequest,ClearCacheResponse>();
+
+            if (accepted)
+                response.Status = ClearCacheResponseStatus.Accepted;
+            else
+                response.Status = ClearCacheResponseStatus.Rejected;
+
+            await Send(response);
+
+
+        }
+        private static JsonSerializerOptions GetSerializerOptions()
         {
             var options = new JsonSerializerOptions
             {
                 IgnoreNullValues = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                //WriteIndented = true
+                PropertyNameCaseInsensitive = true,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             };
+            options.Converters.Add(new JsonStringEnumConverter());
+            return options;
+        }
 
-            var message = new OcppMessage()
+
+        private static OcppMessage ComposeMessage<T>(T action)
+            where T : class, IAction
+        {
+            JsonSerializerOptions options = GetSerializerOptions();
+
+            var message = new OcppMessage();
+
+            if (action is IRequest)
             {
-                MessageType = MessageType.CALL,
-                RequestId = Guid.NewGuid().ToString("N"),
-                Action = request.GetType().Name.Replace("Request", ""),
-                Payload = JsonSerializer.Serialize<object>(request, options)
+                message.MessageType = MessageType.CALL;
+                message.MessageId = Guid.NewGuid();
+                message.Action = action.GetType().Name.Replace("Request", "");
+
             };
 
-            //string messageId = Guid.NewGuid().ToString("N");
-            //string action = request.GetType().Name.Replace("Request", "");
-            //string payload = JsonSerializer.Serialize<object>(request, options);
+            if (action is IResponse)
+            {
+                message.MessageType = MessageType.CALLRESULT;
+                message.MessageId = (action as IResponse).MessageId;
+                message.Action = null;
 
-            //string jsonString = $"[{(int)MessageType.CALL},\"{messageId}\",\"{action}\",{payload}]";
+            }
+
+            message.Payload = JsonSerializer.Serialize<object>(action, options);
 
             return message;
         }
 
-        private static async Task Send(IRequest request)
+        private static async Task Send<T>(T request)
+            where T : class, IAction
         {
             if (webSocket.State == WebSocketState.Open)
             {
@@ -152,7 +193,7 @@ namespace TestChargingStation
             }
         }
 
-        private static async Task<TResponse> Receive<TRequest, TResponse>(TRequest request)
+        private static async Task<TResponse> Receive<TRequest, TResponse>(TRequest request = null)
             where TRequest : RequestBase<TRequest>
             where TResponse : ResponseBase<TRequest, TResponse>
 
@@ -162,6 +203,7 @@ namespace TestChargingStation
                 byte[] buffer = new byte[8192];
 
                 string payload = null;
+                OcppMessage responseMessage = new();
 
                 WebSocketReceiveResult result;
                 //do
@@ -172,24 +214,18 @@ namespace TestChargingStation
                     await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
                 else
                 {
-                    var responseMessage = new OcppMessage(buffer.Take(result.Count).ToArray());
+                    responseMessage = new OcppMessage(buffer.Take(result.Count).ToArray());
                     LogStatus(true, responseMessage);
                     payload = responseMessage.Payload;
 
                 }
                 //} while (!result.EndOfMessage);
 
-
-                var options = new JsonSerializerOptions
-                {
-                    IgnoreNullValues = true,
-                    PropertyNameCaseInsensitive = true,
-                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                };
-                options.Converters.Add(new JsonStringEnumConverter());
+                JsonSerializerOptions options = GetSerializerOptions();
 
                 TResponse response = JsonSerializer.Deserialize<TResponse>(payload, options);
                 response.Request = request;
+                response.MessageId = responseMessage.MessageId;
                 return response;
 
             }
@@ -214,9 +250,9 @@ namespace TestChargingStation
 
                     MessageType mt = ocppMessage.MessageType;
 
-                    Console.WriteLine("----------------------------------------------------------------------");
-                    Console.WriteLine($"MessageType: {ocppMessage.MessageType}, Id: {ocppMessage.RequestId}");
-                    if (!receiving)
+                    Console.WriteLine("\n----------------------------------------------------------------------");
+                    Console.WriteLine($"MessageType: {ocppMessage.MessageType}, Id: {ocppMessage.MessageId}");
+                    if (!string.IsNullOrEmpty(ocppMessage.Action))
                         Console.WriteLine($"Action: {ocppMessage.Action}");
 
                     LogPayload(ocppMessage.Payload);

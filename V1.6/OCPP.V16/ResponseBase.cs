@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace OCPP.V16
 {
@@ -9,25 +10,27 @@ namespace OCPP.V16
         where TRequest : RequestBase<TRequest>
         where TResponse : class, IResponse
     {
-        private TRequest request;
+        private TRequest _request;
         /// <summary>
         /// The request leading to this response.
         /// </summary>
         public TRequest Request
         {
-            get { return request; }
+            get { return _request; }
             set
             {
-                request = value;
-                if (request != null)
-                    Runtime = ResponseTimestamp - request.RequestTimestamp;
+                _request = value;
+                if (_request != null)
+                    Duration = ResponseTimestamp - _request.RequestTimestamp;
             }
         }
 
         /// <summary>
         /// The runtime of the request.
         /// </summary>
-        public TimeSpan Runtime { get; set; }
+        [JsonIgnore]
+
+        public TimeSpan Duration { get; set; }
 
         /// <summary>
         /// Create a new generic response.
@@ -37,7 +40,7 @@ namespace OCPP.V16
         {
             Request = request;
             if (request != null)
-                Runtime = ResponseTimestamp - request.RequestTimestamp;
+                Duration = ResponseTimestamp - request.RequestTimestamp;
         }
 
         protected ResponseBase() : base()
@@ -55,7 +58,14 @@ namespace OCPP.V16
         /// <summary>
         /// The timestamp of the response message creation.
         /// </summary>
+        [JsonIgnore]
         public DateTime ResponseTimestamp { get; }
+
+        /// <summary>
+        /// The Id of the message coming from the CSMS
+        /// </summary>
+        [JsonIgnore]
+        public Guid MessageId { get; set; }
 
         /// <summary>
         /// Create a new generic response.

@@ -5,17 +5,17 @@ namespace OCPP.V16
     /// <summary>
     /// Common interface of a response message.
     /// </summary>
-    public interface IResponse
+    public interface IResponse : IAction
     {
-        /// <summary>
-        /// The machine-readable result code.
-        /// </summary>
-        //Result Result { get; }
-
         /// <summary>
         /// The timestamp of the response message creation.
         /// </summary>
         DateTime ResponseTimestamp { get; }
+
+        /// <summary>
+        ///  The unique Id of each message send/received
+        /// </summary>
+        Guid MessageId { get; set; }
     }
 }
 
