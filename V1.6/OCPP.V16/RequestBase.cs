@@ -6,8 +6,8 @@ namespace OCPP.V16
     /// <summary>
     /// An abstract OCPP request message base.
     /// </summary>
-    public abstract class RequestBase<T> : IRequest /*, IEquatable<T>*/ where T : class
-
+    public abstract class RequestBase<T> : IRequest /*, IEquatable<T>*/ 
+        where T : class
     {
         /// <summary>
         /// The timestamp of the request message creation.

@@ -128,7 +128,7 @@ namespace TestChargingStation
         private static async Task ClearCache(bool accepted)
         {
 
-            var response = await Receive<ClearCacheRequest,ClearCacheResponse>();
+            var response = await Receive<ClearCacheResponse>();
 
             if (accepted)
                 response.Status = ClearCacheResponseStatus.Accepted;
@@ -193,7 +193,54 @@ namespace TestChargingStation
             }
         }
 
-        private static async Task<TResponse> Receive<TRequest, TResponse>(TRequest request = null)
+        private static async Task<TResponse> Receive<TResponse>()
+            where TResponse : ResponseBase<TResponse>
+
+        {
+            //return Receive<null, TResponse>();
+
+            if (webSocket.State == WebSocketState.Open)
+            {
+                byte[] buffer = new byte[8192];
+
+                string payload = null;
+                OcppMessage responseMessage = new();
+
+                WebSocketReceiveResult result;
+                //do
+                //{
+                result = await webSocket.ReceiveAsync(buffer, CancellationToken.None);
+
+                if (result.MessageType == WebSocketMessageType.Close)
+                    await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+                else
+                {
+                    responseMessage = new OcppMessage(buffer.Take(result.Count).ToArray());
+                    LogStatus(true, responseMessage);
+                    payload = responseMessage.Payload;
+
+                }
+                //} while (!result.EndOfMessage);
+
+
+                var options = new JsonSerializerOptions
+                {
+                    IgnoreNullValues = true,
+                    PropertyNameCaseInsensitive = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                };
+                options.Converters.Add(new JsonStringEnumConverter());
+
+                TResponse response = JsonSerializer.Deserialize<TResponse>(payload, options);
+                response.MessageId = responseMessage.MessageId;
+                return response;
+
+            }
+            return default;
+
+        }
+
+        private static async Task<TResponse> Receive<TRequest, TResponse>(TRequest request=null)
             where TRequest : RequestBase<TRequest>
             where TResponse : ResponseBase<TRequest, TResponse>
 
@@ -222,6 +269,7 @@ namespace TestChargingStation
                 //} while (!result.EndOfMessage);
 
                 JsonSerializerOptions options = GetSerializerOptions();
+                
 
                 TResponse response = JsonSerializer.Deserialize<TResponse>(payload, options);
                 response.Request = request;
