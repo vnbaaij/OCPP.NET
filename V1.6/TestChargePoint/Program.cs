@@ -160,24 +160,23 @@ namespace TestChargingStation
 
             var message = new OcppMessage();
 
-            if (action is IRequest)
+            switch (action)
             {
-                message.MessageType = MessageType.CALL;
-                message.MessageId = Guid.NewGuid();
-                message.Action = action.GetType().Name.Replace("Request", "");
-
-            };
-
-            if (action is IResponse)
-            {
-                message.MessageType = MessageType.CALLRESULT;
-                message.MessageId = (action as IResponse).MessageId;
-                message.Action = null;
-
+                case IRequest request:
+                    message.MessageType = MessageType.CALL;
+                    message.MessageId = Guid.NewGuid();
+                    message.Action = request.GetType().Name.Replace("Request", "");
+                    break;
+                case IResponse response:
+                    message.MessageType = MessageType.CALLRESULT;
+                    message.MessageId = response.MessageId;
+                    message.Action = null;
+                    break;
+                default:
+                    break;
             }
 
             message.Payload = JsonSerializer.Serialize<object>(action, options);
-
             return message;
         }
 
@@ -195,56 +194,9 @@ namespace TestChargingStation
 
         private static async Task<TResponse> Receive<TResponse>()
             where TResponse : ResponseBase<TResponse>
-
         {
-            //return Receive<null, TResponse>();
-
-            if (webSocket.State == WebSocketState.Open)
-            {
-                byte[] buffer = new byte[8192];
-
-                string payload = null;
-                OcppMessage responseMessage = new();
-
-                WebSocketReceiveResult result;
-                //do
-                //{
-                result = await webSocket.ReceiveAsync(buffer, CancellationToken.None);
-
-                if (result.MessageType == WebSocketMessageType.Close)
-                    await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
-                else
-                {
-                    responseMessage = new OcppMessage(buffer.Take(result.Count).ToArray());
-                    LogStatus(true, responseMessage);
-                    payload = responseMessage.Payload;
-
-                }
-                //} while (!result.EndOfMessage);
 
 
-                var options = new JsonSerializerOptions
-                {
-                    IgnoreNullValues = true,
-                    PropertyNameCaseInsensitive = true,
-                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                };
-                options.Converters.Add(new JsonStringEnumConverter());
-
-                TResponse response = JsonSerializer.Deserialize<TResponse>(payload, options);
-                response.MessageId = responseMessage.MessageId;
-                return response;
-
-            }
-            return default;
-
-        }
-
-        private static async Task<TResponse> Receive<TRequest, TResponse>(TRequest request=null)
-            where TRequest : RequestBase<TRequest>
-            where TResponse : ResponseBase<TRequest, TResponse>
-
-        {
             if (webSocket.State == WebSocketState.Open)
             {
                 byte[] buffer = new byte[8192];
@@ -269,16 +221,24 @@ namespace TestChargingStation
                 //} while (!result.EndOfMessage);
 
                 JsonSerializerOptions options = GetSerializerOptions();
-                
 
                 TResponse response = JsonSerializer.Deserialize<TResponse>(payload, options);
-                response.Request = request;
                 response.MessageId = responseMessage.MessageId;
                 return response;
 
             }
             return default;
 
+        }
+
+        private static async Task<TResponse> Receive<TRequest, TResponse>(TRequest request=null)
+            where TRequest : RequestBase<TRequest>
+            where TResponse : ResponseBase<TRequest, TResponse>
+
+        {
+            TResponse response = await Receive<TResponse>();
+            response.Request = request;
+            return response;
         }
 
         private static void LogStatus(bool receiving, OcppMessage ocppMessage)
