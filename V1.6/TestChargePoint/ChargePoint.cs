@@ -158,6 +158,12 @@ namespace TestChargePoint
                                 case OcppOperation.ClearCache:
                                     await ReceiveClearCacheAsync(responseMessage);
                                     break;
+                                case OcppOperation.DiagnosticsStatusNotification:
+                                    ReceiveDiagnosticsStatusNotification(responseMessage);
+                                    break;
+                                case OcppOperation.DataTransfer:
+                                    ReceiveDataTransfer(responseMessage);
+                                    break;
                             }                            
                         }
                     }
@@ -199,10 +205,10 @@ namespace TestChargePoint
                                 await SendAuthorizeAsync();
                                 break;
                             case "7":
-                                await DiagnosticsStatusNotification();
+                                await SendDiagnosticsStatusNotificationAsync();
                                 break;
                             case "8":
-                                await DataTransfer();
+                                await SendDataTransferAsync();
                                 break;
                             case "r":
                                 _ = Task.Delay(5000);
@@ -221,7 +227,7 @@ namespace TestChargePoint
             }
         }
 
-        public static async Task SendBootNotificationAsync()
+        private static async Task SendBootNotificationAsync()
         {
             var request = new BootNotificationRequest
             {
@@ -237,7 +243,7 @@ namespace TestChargePoint
             await Send(request);
         }
 
-        public static async Task ReceiveBootNotificationAsync(OcppMessage responseMessage)
+        private static async Task ReceiveBootNotificationAsync(OcppMessage responseMessage)
         {
             BootNotificationResponse response = ProcessResponse<BootNotificationResponse>(responseMessage);
 
@@ -287,7 +293,7 @@ namespace TestChargePoint
         }
 
 
-        private static async Task DiagnosticsStatusNotification()
+        private static async Task SendDiagnosticsStatusNotificationAsync()
         {
 
             var request = new DiagnosticsStatusNotificationRequest
@@ -298,11 +304,18 @@ namespace TestChargePoint
 
             await Send(request);
 
-            var response = await Receive<DiagnosticsStatusNotificationRequest, DiagnosticsStatusNotificationResponse>(request);
+            
         }
 
+        private static void ReceiveDiagnosticsStatusNotification(OcppMessage responseMessage)
+        {
+            DiagnosticsStatusNotificationResponse response = ProcessResponse<DiagnosticsStatusNotificationResponse>(responseMessage);
 
-        private static async Task DataTransfer()
+            Console.WriteLine($"DiagnosticStatusNotification: {response}.");
+            Program._waitloopTokenSource.Cancel();
+        }
+
+        private static async Task SendDataTransferAsync()
         {
             var request = new DataTransferRequest
             {
@@ -314,7 +327,16 @@ namespace TestChargePoint
 
             await Send(request);
 
-            var response = Receive<DataTransferRequest, DataTransferResponse>(request);
+            
+        }
+
+        private static void ReceiveDataTransfer(OcppMessage responseMessage)
+        {
+            
+            DataTransferResponse response = ProcessResponse<DataTransferResponse>(responseMessage);
+
+            Console.WriteLine($"DataTransfer status: {response.Status}.");
+            Program._waitloopTokenSource.Cancel();
         }
 
         private static async Task SendClearCacheAsync(ClearCacheResponse response, bool accepted)
