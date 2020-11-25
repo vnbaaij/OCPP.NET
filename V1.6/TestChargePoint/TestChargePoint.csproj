@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Spectre.Console" Version="0.30.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\OCPP.V16\OCPP.V16.csproj" />
   </ItemGroup>
 

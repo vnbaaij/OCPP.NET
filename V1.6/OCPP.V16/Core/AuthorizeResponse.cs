@@ -11,7 +11,6 @@ namespace OCPP.V16.Core
         /// Create a Authorize response.
         /// </summary>
         /// <param name="request">The Authorize request leading to this response.</param>
-        /// <param name="result">The result.</param>
         public AuthorizeResponse(AuthorizeRequest request) : base(request)
         {
         }
