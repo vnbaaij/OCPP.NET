@@ -21,7 +21,7 @@ namespace TestChargePoint
         private static ClientWebSocket _socket;
 
         private static readonly BlockingCollection<string> _keyQueue = new();
-        private static readonly BlockingCollection<(Guid id, string action)> _operationQueue = new();
+        private static readonly BlockingCollection<(Guid id, OcppOperation action)> _operationQueue = new();
 
         private static CancellationTokenSource _receiveTokenSource;
         private static CancellationTokenSource _sendTokenSource;
@@ -149,10 +149,13 @@ namespace TestChargePoint
 
                             switch (responseMessage.Action)
                             {
-                                case "BootNotification":
+                                case OcppOperation.BootNotification:
                                     await ReceiveBootNotificationAsync(responseMessage);
                                     break;
-                                case "ClearCache":
+                                case OcppOperation.Authorize:
+                                    ReceiveAuthorizeAsync(responseMessage);
+                                    break;
+                                case OcppOperation.ClearCache:
                                     await ReceiveClearCacheAsync(responseMessage);
                                     break;
                             }                            
@@ -193,7 +196,7 @@ namespace TestChargePoint
                                 await SendBootNotificationAsync();
                                 break;
                             case "2":
-                                await Authorize();
+                                await SendAuthorizeAsync();
                                 break;
                             case "7":
                                 await DiagnosticsStatusNotification();
@@ -202,7 +205,7 @@ namespace TestChargePoint
                                 await DataTransfer();
                                 break;
                             case "r":
-                                //_ = Task.Delay(5000);
+                                _ = Task.Delay(5000);
                                 break;
                         }
                     }
@@ -263,17 +266,9 @@ namespace TestChargePoint
             Program._waitloopTokenSource.Cancel();
         }
 
-        private static TResponse ProcessResponse<TResponse>(OcppMessage responseMessage)
-            where TResponse : ResponseBase<TResponse>
-        {
-            JsonSerializerOptions options = GetSerializerOptions();
+       
 
-            TResponse response = JsonSerializer.Deserialize<TResponse>(responseMessage.Payload, options);
-            response.MessageId = responseMessage.MessageId;
-            return response;
-        }
-
-        private static async Task Authorize()
+        private static async Task SendAuthorizeAsync()
         {
             var request = new AuthorizeRequest
             {
@@ -281,9 +276,16 @@ namespace TestChargePoint
             };
 
             await Send(request);
-
-            var response = await Receive<AuthorizeRequest, AuthorizeResponse>(request);
         }
+
+        private static void ReceiveAuthorizeAsync(OcppMessage responseMessage)
+        {
+            AuthorizeResponse response = ProcessResponse<AuthorizeResponse>(responseMessage);
+
+            Console.WriteLine($"Authorization status: {response.IdTagInfo.Status}.");
+            Program._waitloopTokenSource.Cancel();
+        }
+
 
         private static async Task DiagnosticsStatusNotification()
         {
@@ -347,6 +349,15 @@ namespace TestChargePoint
             Program._waitloopTokenSource.Cancel();
         }
 
+        private static TResponse ProcessResponse<TResponse>(OcppMessage responseMessage)
+           where TResponse : ResponseBase<TResponse>
+        {
+            JsonSerializerOptions options = GetSerializerOptions();
+
+            TResponse response = JsonSerializer.Deserialize<TResponse>(responseMessage.Payload, options);
+            response.MessageId = responseMessage.MessageId;
+            return response;
+        }
         private static JsonSerializerOptions GetSerializerOptions()
         {
             var options = new JsonSerializerOptions
@@ -373,12 +384,13 @@ namespace TestChargePoint
                 case IRequest request:
                     message.MessageType = MessageType.CALL;
                     message.MessageId = Guid.NewGuid();
-                    message.Action = request.GetType().Name.Replace("Request", "");
+                    _ = Enum.TryParse<OcppOperation>(request.GetType().Name.Replace("Request", ""), out OcppOperation operation);
+                    message.Action = operation;
                     break;
                 case IResponse response:
                     message.MessageType = MessageType.CALLRESULT;
                     message.MessageId = response.MessageId;
-                    message.Action = null;
+                    message.Action = OcppOperation.Unknown;
                     break;
                 default:
                     break;
@@ -395,7 +407,7 @@ namespace TestChargePoint
             {
                 var message = ComposeMessage(request);
 
-                if (!string.IsNullOrEmpty(message.Action))
+                if (message.Action != OcppOperation.Unknown)
                     _operationQueue.Add((id: message.MessageId, action: message.Action));
 
                 await _socket.SendAsync(Encoding.UTF8.GetBytes(message.ToString()), WebSocketMessageType.Text, true, CancellationToken.None);
@@ -502,7 +514,7 @@ namespace TestChargePoint
             {
                 Console.WriteLine("\n----------------------------------------------------------------------");
                 Console.WriteLine($"MessageType: {ocppMessage.MessageType}, Id: {ocppMessage.MessageId}");
-                if (!string.IsNullOrEmpty(ocppMessage.Action))
+                if (ocppMessage.Action != OcppOperation.Unknown)
                     Console.WriteLine($"Action: {ocppMessage.Action}");
 
                 LogPayload(ocppMessage.Payload);

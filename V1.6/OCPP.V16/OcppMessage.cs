@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OCPP.V16.Core;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -17,14 +18,14 @@ namespace OCPP.V16
 
         public string Payload { get; set; }
 
-        public string Action { get; set; }
+        public OcppOperation Action { get; set; }
 
         public OcppMessage()
         {
 
         }
 
-        public OcppMessage(MessageType messageType, Guid messageId, string payload, string action = null)
+        public OcppMessage(MessageType messageType, Guid messageId, string payload, OcppOperation action = OcppOperation.Unknown)
         {
             MessageType = messageType;
             MessageId = messageId;
@@ -51,7 +52,8 @@ namespace OCPP.V16
 
             if (responseArray.Length == 4)
             {
-                Action = responseArray[2].ToString();
+                _ = Enum.TryParse<OcppOperation>(responseArray[2].ToString(), out OcppOperation operation);
+                Action = operation;
                 Payload = responseArray[3].ToString();
             }
             else
@@ -73,7 +75,7 @@ namespace OCPP.V16
         public override string ToString()
         {
             string jsonString;
-            if (string.IsNullOrEmpty(Action))
+            if (Action == OcppOperation.Unknown)
                 jsonString = $"[{(int)MessageType},\"{MessageId}\",{Payload}]";
             else
                 jsonString = $"[{(int)MessageType},\"{MessageId}\",\"{Action}\",{Payload}]";
