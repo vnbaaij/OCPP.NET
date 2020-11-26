@@ -1,5 +1,4 @@
-﻿using Spectre.Console;
-using System;
+﻿using System;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,6 +30,7 @@ namespace TestChargePoint
                 Console.WriteLine("\t6 - Send Meter Values");
                 Console.WriteLine("\t7 - Diagnostics Status Notification");
                 Console.WriteLine("\t8 - Data Transfer");
+                Console.WriteLine("\t9 - Status Notification");
                 Console.WriteLine("\tr - Check if message received from Central System (waits 10 seconds)");
                 Console.WriteLine("\tESC - Exit");
                 Console.Write("\r\nSelect an action: ");
@@ -53,23 +53,7 @@ namespace TestChargePoint
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("Exception: {0}", ex);
-                AnsiConsole.WriteException(ex, new ExceptionSettings
-                {
-                    Format = ExceptionFormats.ShortenEverything | ExceptionFormats.ShowLinks,
-                    Style = new ExceptionStyle
-                    {
-                        Exception = new Style().Foreground(Color.Grey),
-                        Message = new Style().Foreground(Color.White),
-                        NonEmphasized = new Style().Foreground(Color.Cornsilk1),
-                        Parenthesis = new Style().Foreground(Color.Cornsilk1),
-                        Method = new Style().Foreground(Color.Red),
-                        ParameterName = new Style().Foreground(Color.Cornsilk1),
-                        ParameterType = new Style().Foreground(Color.Red),
-                        Path = new Style().Foreground(Color.Red),
-                        LineNumber = new Style().Foreground(Color.Cornsilk1),
-                    }
-                });
+                Console.WriteLine($"Exception: {ex}");
             }
             finally
             {
@@ -96,6 +80,7 @@ namespace TestChargePoint
                     _waitloopTokenSource = new();
                     ShowMenu();
                     cki = Console.ReadKey();
+                    Console.WriteLine();
 
                     ChargePoint.QueueOperation(cki.KeyChar.ToString());
 

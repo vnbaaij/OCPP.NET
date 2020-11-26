@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Spectre.Console" Version="0.30.0" />
   </ItemGroup>
 
   <ItemGroup>

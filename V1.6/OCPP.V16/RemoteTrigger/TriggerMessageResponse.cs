@@ -1,3 +1,6 @@
+using OCPP.V16.Core;
+using System.Text.Json.Serialization;
+
 namespace OCPP.V16.RemoteTrigger
 {
 
@@ -9,6 +12,9 @@ namespace OCPP.V16.RemoteTrigger
         //[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public TriggerMessageResponseStatus Status { get; set; }
 
+        [JsonPropertyName("requestedMessage")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public OcppOperation? Operation { get; set; }
          /// <summary>
         /// Create a TriggerMessage response.
         /// </summary>
