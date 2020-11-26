@@ -34,9 +34,9 @@ namespace TestChargePoint
             get => _socket?.State ?? WebSocketState.None;
         }
 
-        public static async Task Start(string wsUri) => await Start(new Uri(wsUri));
+        public static async Task StartAsync(string wsUri) => await StartAsync(new Uri(wsUri));
 
-        public static async Task Start(Uri wsUri)
+        public static async Task StartAsync(Uri wsUri)
         {
             Console.WriteLine($"Connecting to Central System ({wsUri})...");
 
@@ -64,7 +64,7 @@ namespace TestChargePoint
             }
         }
 
-        public static async Task Stop()
+        public static async Task StopAsync()
         {
             Console.WriteLine($"\nClosing connection");
             _sendTokenSource.Cancel();
@@ -75,7 +75,7 @@ namespace TestChargePoint
 
             try
             {
-                // after this, the _socket state which change to CloseSent
+                // after this, the _socket state will change to CloseSent
                 await _socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "Closing", timeout.Token);
                 // now we wait for the server response, which will close the _socket
                 while (_socket.State != WebSocketState.Closed && !timeout.Token.IsCancellationRequested) ;
@@ -84,9 +84,8 @@ namespace TestChargePoint
             {
                 // normal upon task/token cancellation, disregard
             }
-            // whether we closed the _socket or timed out, we cancel the token causing RecieveAsync to abort the _socket
+            
             _receiveTokenSource.Cancel();
-            // the finally block at the end of the processing loop will dispose and null the _socket object
         }
 
 
@@ -229,6 +228,16 @@ namespace TestChargePoint
             }
         }
 
+        private static async Task SendAuthorizeAsync()
+        {
+            var request = new AuthorizeRequest
+            {
+                IdTag = "3060044040003000853"
+            };
+
+            await SendAsync(request);
+        }
+
         private static async Task SendBootNotificationAsync()
         {
             var request = new BootNotificationRequest
@@ -245,26 +254,14 @@ namespace TestChargePoint
             await SendAsync(request);
         }
 
-        private static async Task SendAuthorizeAsync()
+        private static async Task SendClearCacheAsync(ClearCacheResponse response, bool accepted)
         {
-            var request = new AuthorizeRequest
-            {
-                IdTag = "3060044040003000853"
-            };
+            if (accepted)
+                response.Status = ClearCacheResponseStatus.Accepted;
+            else
+                response.Status = ClearCacheResponseStatus.Rejected;
 
-            await SendAsync(request);
-        }
-
-        private static async Task SendDiagnosticsStatusNotificationAsync()
-        {
-
-            var request = new DiagnosticsStatusNotificationRequest
-            {
-                Status = DiagnosticsStatusNotificationRequestStatus.Idle
-
-            };
-
-            await SendAsync(request);
+            await SendAsync(response);
         }
 
         private static async Task SendDataTransferAsync()
@@ -280,14 +277,16 @@ namespace TestChargePoint
             await SendAsync(request);
         }
 
-        private static async Task SendClearCacheAsync(ClearCacheResponse response, bool accepted)
+        private static async Task SendDiagnosticsStatusNotificationAsync()
         {
-            if (accepted)
-                response.Status = ClearCacheResponseStatus.Accepted;
-            else
-                response.Status = ClearCacheResponseStatus.Rejected;
 
-            await SendAsync(response);
+            var request = new DiagnosticsStatusNotificationRequest
+            {
+                Status = DiagnosticsStatusNotificationRequestStatus.Idle
+
+            };
+
+            await SendAsync(request);
         }
 
         private static async Task SendFirmwareStatusNotificationAsync()
@@ -329,6 +328,7 @@ namespace TestChargePoint
 
             await SendAsync(request);
         }
+
         private static void HandleAuthorize(AuthorizeResponse response)
         {
             Console.WriteLine($"Authorization status: {response.IdTagInfo.Status}.");

@@ -43,9 +43,9 @@ namespace TestChargePoint
             try
             {
                 //_waitloopTokenSource = new CancellationTokenSource();
-                await ChargePoint.Start(csmsUrl + id);
+                await ChargePoint.StartAsync(csmsUrl + id);
                 await HandleMenu();
-                await ChargePoint.Stop();
+                await ChargePoint.StopAsync();
             }
             catch (OperationCanceledException)
             {
