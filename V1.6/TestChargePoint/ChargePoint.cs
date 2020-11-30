@@ -18,6 +18,11 @@ namespace TestChargePoint
 {
     public static class ChargePoint
     {
+
+        private const string id = "CS_28_1";
+        private const string csmsUrl = "ws://localhost:8180/steve/websocket/CentralSystemService/";
+
+        private static readonly object consoleLock = new();
         private static ClientWebSocket _socket;
 
         private static readonly BlockingCollection<string> _keyQueue = new();
@@ -25,6 +30,7 @@ namespace TestChargePoint
 
         private static CancellationTokenSource _receiveTokenSource;
         private static CancellationTokenSource _sendTokenSource;
+        private static CancellationTokenSource _menuTokenSource;
 
         private static int _heartbeatInterval = 300;
         private static DateTime _csmsDateTime;
@@ -32,6 +38,13 @@ namespace TestChargePoint
         public static WebSocketState State
         {
             get => _socket?.State ?? WebSocketState.None;
+        }
+
+        public static async Task Run()
+        {
+            await StartAsync(csmsUrl + id);
+            await HandleMenu();
+            await StopAsync();
         }
 
         public static async Task StartAsync(string wsUri) => await StartAsync(new Uri(wsUri));
@@ -88,6 +101,60 @@ namespace TestChargePoint
             _receiveTokenSource.Cancel();
         }
 
+        public static async Task HandleMenu()
+        {
+            ConsoleKeyInfo cki;
+            bool running = true;
+
+            do
+            {
+                try
+                {
+                    _menuTokenSource = new();
+                    ShowMainMenu();
+                    cki = Console.ReadKey();
+                    Console.WriteLine();
+
+                    ChargePoint.QueueOperation(cki.KeyChar.ToString());
+
+                    if (cki.Key == ConsoleKey.Escape)
+                    {
+                        running = false;
+                        _menuTokenSource.Cancel();
+                    }
+                    await Task.Run(() => Task.Delay(10000, _menuTokenSource.Token));
+
+
+                }
+                catch (OperationCanceledException)
+                {
+
+                }
+            } while (running && ChargePoint.State == WebSocketState.Open);
+            //return cki;
+        }
+
+        private static void ShowMainMenu()
+        {
+            //Console.Clear();
+            lock (consoleLock)
+            {
+                Console.ResetColor();
+                Console.WriteLine("\nChoose an action for this Charge Point:");
+                Console.WriteLine("\t1 - Boot");
+                Console.WriteLine("\t2 - Authorize");
+                Console.WriteLine("\t3 - Start Transaction");
+                Console.WriteLine("\t4 - Stop Transaction");
+                Console.WriteLine("\t5 - Heartbeat");
+                Console.WriteLine("\t6 - Send Meter Values");
+                Console.WriteLine("\t7 - Diagnostics Status Notification");
+                Console.WriteLine("\t8 - Data Transfer");
+                Console.WriteLine("\t9 - Status Notification");
+                Console.WriteLine("\tr - Check if message received from Central System (waits 10 seconds)");
+                Console.WriteLine("\tESC - Exit");
+                Console.Write("\r\nSelect an action: ");
+            }
+        }
 
         public static void QueueOperation(string operation) => _keyQueue.Add(operation);
 
@@ -204,7 +271,7 @@ namespace TestChargePoint
                                 case OcppOperation.MeterValues:
                                 case OcppOperation.UpdateFirmware:
                                     response = message.Parse<EmptyResponse>();
-                                    Program._waitloopTokenSource.Cancel();
+                                    _menuTokenSource.Cancel();
                                     break;
                             }
                         }
@@ -332,7 +399,7 @@ namespace TestChargePoint
         private static void HandleAuthorize(AuthorizeResponse response)
         {
             Console.WriteLine($"Authorization status: {response.IdTagInfo.Status}.");
-            Program._waitloopTokenSource.Cancel();
+            _menuTokenSource.Cancel();
         }
 
         private static async Task HandleBootNotificationAsync(BootNotificationResponse response)
@@ -361,7 +428,7 @@ namespace TestChargePoint
                     //await Receive<TriggerMessageRequest, TriggerMessageResponse>();
                     break;
             }
-            Program._waitloopTokenSource.Cancel();
+            _menuTokenSource.Cancel();
         }
 
         private static async Task HandleClearCacheAsync(OcppMessage message)
@@ -379,13 +446,13 @@ namespace TestChargePoint
 
             bool status = cki.KeyChar == 'a';
             await SendClearCacheAsync(response, status);
-            Program._waitloopTokenSource.Cancel();
+            _menuTokenSource.Cancel();
         }
 
         private static void HandleDataTransfer(DataTransferResponse response)
         {
             Console.WriteLine($"DataTransfer status: {response.Status}.");
-            Program._waitloopTokenSource.Cancel();
+            _menuTokenSource.Cancel();
         }
 
         private static void HandleHeartbeat(HeartbeatResponse response)
@@ -393,7 +460,7 @@ namespace TestChargePoint
             _csmsDateTime = response.CurrentTime;
 
             Console.WriteLine($"- Central System date/time: {_csmsDateTime} (UTC)\n");
-            Program._waitloopTokenSource.Cancel();
+            _menuTokenSource.Cancel();
         }
 
         private static async Task HandleTriggerMessageAsync(OcppMessage message)
@@ -449,19 +516,6 @@ namespace TestChargePoint
                         break;
                 }
             }
-        }
-
-        private static JsonSerializerOptions GetSerializerOptions()
-        {
-            var options = new JsonSerializerOptions
-            {
-                IgnoreNullValues = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                PropertyNameCaseInsensitive = true,
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            };
-            options.Converters.Add(new JsonStringEnumConverter());
-            return options;
         }
 
         private static async Task SendAsync<T>(T request)
