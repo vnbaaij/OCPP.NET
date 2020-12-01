@@ -1,7 +1,7 @@
 ﻿using OCPP.V16;
 namespace OCPP.V16.Core
 {
-    public enum SampledValuePhase
+    public enum Phase
     {
         L1,
         L2,

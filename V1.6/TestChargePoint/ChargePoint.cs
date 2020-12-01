@@ -35,7 +35,7 @@ namespace TestChargePoint
         private static int _heartbeatInterval = 300;
         private static DateTime _csmsDateTime;
 
-        private static int _transactionId;
+        private static int? _transactionId = null;
 
         public static WebSocketState State
         {
@@ -225,6 +225,7 @@ namespace TestChargePoint
                                 await SendStopTransactionAsync();
                                 break;
                             case OcppOperation.MeterValues:
+                                await SendMeterValuesAsync();
                                 break;
                             case OcppOperation.ClearCache:
                                 break;
@@ -358,7 +359,7 @@ namespace TestChargePoint
                 IdTag = "3060044040003000853"
             };
 
-            await SendAsync(request);
+            await SendMessageAsync(request);
         }
 
         private static async Task SendBootNotificationAsync()
@@ -374,7 +375,7 @@ namespace TestChargePoint
                 MeterSerialNumber = "4530303035303031363935303633303135"
             };
 
-            await SendAsync(request);
+            await SendMessageAsync(request);
         }
 
         private static async Task SendClearCacheAsync(ClearCacheResponse response, bool accepted)
@@ -384,7 +385,7 @@ namespace TestChargePoint
             else
                 response.Status = ClearCacheResponseStatus.Rejected;
 
-            await SendAsync(response);
+            await SendMessageAsync(response);
         }
 
         private static async Task SendDataTransferAsync()
@@ -397,7 +398,7 @@ namespace TestChargePoint
 
             };
 
-            await SendAsync(request);
+            await SendMessageAsync(request);
         }
 
         private static async Task SendDiagnosticsStatusNotificationAsync()
@@ -409,7 +410,7 @@ namespace TestChargePoint
 
             };
 
-            await SendAsync(request);
+            await SendMessageAsync(request);
         }
 
         private static async Task SendFirmwareStatusNotificationAsync()
@@ -420,19 +421,32 @@ namespace TestChargePoint
 
             };
 
-            await SendAsync(request);
+            await SendMessageAsync(request);
         }
 
         private static async Task SendHeartbeatAsync()
         {
             var request = new HeartbeatRequest();
 
-            await SendAsync(request);
+            await SendMessageAsync(request);
         }
 
         private static Task SendMeterValuesAsync()
         {
-            throw new NotImplementedException();
+            var request = new MeterValuesRequest
+            {
+                ConnectorId = 0,
+                TransactionId = _transactionId ?? null,
+                MeterValue = new MeterValue
+                {
+                    SampledValue = new SampledValue
+                    {
+                        Context = ReadingContext.
+                    },
+                    Timestamp = DateTime.UtcNow,
+                }
+
+            };
         }
 
         private static async Task SendStatusNotificationAsync()
@@ -449,7 +463,7 @@ namespace TestChargePoint
 
             };
 
-            await SendAsync(request);
+            await SendMessageAsync(request);
         }
 
         private static async Task SendStopTransactionAsync()
@@ -464,7 +478,7 @@ namespace TestChargePoint
             };
 
 
-            await SendAsync(request);
+            await SendMessageAsync(request);
 
         }
 
@@ -479,7 +493,7 @@ namespace TestChargePoint
             };
 
 
-            await SendAsync(request);
+            await SendMessageAsync(request);
         }
 
 
@@ -575,7 +589,7 @@ namespace TestChargePoint
             response.Operation = null;
 
             Console.WriteLine($"Sending TriggerMessage {response.Status}...");
-            await SendAsync(response);
+            await SendMessageAsync(response);
 
             if (response.Status == TriggerMessageResponseStatus.Accepted)
             {
@@ -617,10 +631,13 @@ namespace TestChargePoint
         {
             
             Console.WriteLine($"- Transaction Id: {response.IdTagInfo.Status}\n");
+
+            _transactionId = null;
+
             _menuTokenSource.Cancel();
         }
 
-        private static async Task SendAsync<T>(T request)
+        private static async Task SendMessageAsync<T>(T request)
             where T : class, IOperation
         {
             if (_socket.State == WebSocketState.Open)

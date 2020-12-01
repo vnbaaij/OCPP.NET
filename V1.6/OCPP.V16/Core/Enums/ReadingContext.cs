@@ -1,7 +1,7 @@
 ﻿using OCPP.V16;
 namespace OCPP.V16.Core
 {
-    public enum SampledValueContext
+    public enum ReadingContext
     {
         Interruption_Begin,
         Interruption_End,

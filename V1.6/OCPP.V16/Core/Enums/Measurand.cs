@@ -1,7 +1,7 @@
 ﻿using OCPP.V16;
 namespace OCPP.V16.Core
 {
-    public enum SampledValueMeasurand
+    public enum Measurand
     {
         Energy_Active_Export_Register,
         Energy_Active_Import_Register,
