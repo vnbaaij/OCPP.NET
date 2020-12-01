@@ -3,7 +3,6 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 
-
 namespace TestChargePoint
 {
     class Program

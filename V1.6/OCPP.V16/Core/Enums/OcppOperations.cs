@@ -6,14 +6,16 @@ namespace OCPP.V16.Core
         Unknown,
         BootNotification,
         Authorize,
-        ClearCache,
-        TriggerMessage,
-        DiagnosticsStatusNotification,
-        FirmwareStatusNotification,
+        StartTransaction,
+        StopTransaction,
         Heartbeat,
         MeterValues,
+        ClearCache,
+        DiagnosticsStatusNotification,
+        FirmwareStatusNotification,
         StatusNotification,
         DataTransfer,
+        TriggerMessage,
         UpdateFirmware
     }
 }

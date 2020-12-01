@@ -5,7 +5,7 @@ namespace OCPP.V16
     /// <summary>
     /// Common interface of a request message.
     /// </summary>
-    public interface IRequest : IAction
+    public interface IRequest : IOperation
     {
         /// <summary>
         /// The timestamp of the request message creation.

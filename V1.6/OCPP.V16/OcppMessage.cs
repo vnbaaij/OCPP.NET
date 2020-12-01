@@ -92,7 +92,7 @@ namespace OCPP.V16
         }
 
         public static OcppMessage Compose<T>(T action)
-            where T : class, IAction
+            where T : class, IOperation
         {
             JsonSerializerOptions options = GetSerializerOptions();
 

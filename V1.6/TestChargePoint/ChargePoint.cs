@@ -25,7 +25,7 @@ namespace TestChargePoint
         private static readonly object consoleLock = new();
         private static ClientWebSocket _socket;
 
-        private static readonly BlockingCollection<string> _keyQueue = new();
+        private static readonly BlockingCollection<OcppOperation> _menuQueue = new();
         private static readonly BlockingCollection<(Guid id, OcppOperation action)> _operationQueue = new();
 
         private static CancellationTokenSource _receiveTokenSource;
@@ -34,6 +34,8 @@ namespace TestChargePoint
 
         private static int _heartbeatInterval = 300;
         private static DateTime _csmsDateTime;
+
+        private static int _transactionId;
 
         public static WebSocketState State
         {
@@ -64,8 +66,8 @@ namespace TestChargePoint
                 await _socket.ConnectAsync(wsUri, CancellationToken.None);
                 Console.WriteLine("- Connected!");
 
-                _ = Task.Run(() => FromChargePointAsync().ConfigureAwait(false));
-                _ = Task.Run(() => FromCentralSystemAsync().ConfigureAwait(false));
+                _ = Task.Run(() => SendAsync().ConfigureAwait(false));
+                _ = Task.Run(() => ReceiveAsync().ConfigureAwait(false));
             }
             catch (OperationCanceledException)
             {
@@ -115,7 +117,38 @@ namespace TestChargePoint
                     cki = Console.ReadKey();
                     Console.WriteLine();
 
-                    ChargePoint.QueueOperation(cki.KeyChar.ToString());
+                    switch (cki.KeyChar)
+                    {
+                        case '1':
+                            _menuQueue.Add(OcppOperation.BootNotification);
+                            break;
+                        case '2':
+                            _menuQueue.Add(OcppOperation.Authorize);
+                            break;
+                        case '3':
+                            _menuQueue.Add(OcppOperation.StartTransaction);
+                            break;
+                        case '4':
+                            _menuQueue.Add(OcppOperation.StopTransaction);
+                            break;
+                        case '5':
+                            _menuQueue.Add(OcppOperation.Heartbeat);
+                            break;
+                        case '6':
+                            _menuQueue.Add(OcppOperation.MeterValues);
+                            break;
+                        case '7':
+                            _menuQueue.Add(OcppOperation.DiagnosticsStatusNotification);
+                            break;
+                        case '8':
+                            _menuQueue.Add(OcppOperation.DataTransfer);
+                            break;
+                        case '9':
+                            _menuQueue.Add(OcppOperation.StatusNotification);
+                            break;
+                        case 'r':
+                            break;
+                    }
 
                     if (cki.Key == ConsoleKey.Escape)
                     {
@@ -123,15 +156,12 @@ namespace TestChargePoint
                         _menuTokenSource.Cancel();
                     }
                     await Task.Run(() => Task.Delay(10000, _menuTokenSource.Token));
-
-
                 }
                 catch (OperationCanceledException)
                 {
 
                 }
-            } while (running && ChargePoint.State == WebSocketState.Open);
-            //return cki;
+            } while (running && State == WebSocketState.Open);
         }
 
         private static void ShowMainMenu()
@@ -156,40 +186,55 @@ namespace TestChargePoint
             }
         }
 
-        public static void QueueOperation(string operation) => _keyQueue.Add(operation);
+        //public static void QueueOperation(OcppOperation operation) => _menuQueue.Add(operation);
 
-        private static async Task FromChargePointAsync()
+        private static async Task SendAsync()
         {
             var cancellationToken = _sendTokenSource.Token;
             while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    if (_keyQueue.TryTake(out var key))
+                    if (_menuQueue.TryTake(out var operation))
                     {
 
-                        switch (key)
+                        switch (operation)
                         {
-                            case "1":
+                            case OcppOperation.BootNotification:
                                 await SendBootNotificationAsync();
                                 break;
-                            case "2":
+                            case OcppOperation.Authorize:
                                 await SendAuthorizeAsync();
                                 break;
-                            case "5":
+                            case OcppOperation.Heartbeat:
                                 await SendHeartbeatAsync();
                                 break;
-                            case "7":
+                            case OcppOperation.DiagnosticsStatusNotification:
                                 await SendDiagnosticsStatusNotificationAsync();
                                 break;
-                            case "8":
+                            case OcppOperation.DataTransfer:
                                 await SendDataTransferAsync();
                                 break;
-                            case "9":
+                            case OcppOperation.StatusNotification:
                                 await SendStatusNotificationAsync();
                                 break;
-                            case "r":
-                                _ = Task.Delay(5000);
+                            case OcppOperation.StartTransaction:
+                                await SendStartTransactionAsync();
+                                break;
+                            case OcppOperation.StopTransaction:
+                                await SendStopTransactionAsync();
+                                break;
+                            case OcppOperation.MeterValues:
+                                break;
+                            case OcppOperation.ClearCache:
+                                break;
+                            case OcppOperation.FirmwareStatusNotification:
+                                break;
+                            case OcppOperation.TriggerMessage:
+                                break;
+                            case OcppOperation.UpdateFirmware:
+                                break;
+                            case OcppOperation.Unknown:
                                 break;
                         }
                     }
@@ -205,7 +250,8 @@ namespace TestChargePoint
             }
         }
 
-        private static async Task FromCentralSystemAsync()
+        
+        private static async Task ReceiveAsync()
         {
             var cancellationToken = _receiveTokenSource.Token;
             try
@@ -273,11 +319,21 @@ namespace TestChargePoint
                                     response = message.Parse<EmptyResponse>();
                                     _menuTokenSource.Cancel();
                                     break;
+                                case OcppOperation.Unknown:
+                                    break;
+                                case OcppOperation.StartTransaction:
+                                    response = message.Parse<StartTransactionResponse>();
+                                    HandleStartTransaction(response as StartTransactionResponse);
+                                    break;
+                                case OcppOperation.StopTransaction:
+                                    response = message.Parse<StopTransactionResponse>();
+                                    HandleStopTransaction(response as StopTransactionResponse);
+                                    break;
                             }
                         }
                     }
                 }
-                Console.WriteLine($"Ending processing loop in state {_socket.State}");
+                Console.WriteLine($"Stop receiving messages from Central System (socket state: {_socket.State})");
             }
             catch (OperationCanceledException)
             {
@@ -395,6 +451,37 @@ namespace TestChargePoint
 
             await SendAsync(request);
         }
+
+        private static async Task SendStopTransactionAsync()
+        {
+            var request = new StopTransactionRequest
+            {
+                IdTag = "3060044040003000853",
+                Timestamp = DateTime.UtcNow,
+                MeterStop = 123457,
+                Reason = StopTransactionRequestReason.UnlockCommand,
+                TransactionId = _transactionId
+            };
+
+
+            await SendAsync(request);
+
+        }
+
+        private static async Task SendStartTransactionAsync()
+        {
+            var request = new StartTransactionRequest
+            {
+                ConnectorId = 1,
+                IdTag = "3060044040003000853",
+                MeterStart = 123456,
+                Timestamp = DateTime.UtcNow
+            };
+
+
+            await SendAsync(request);
+        }
+
 
         private static void HandleAuthorize(AuthorizeResponse response)
         {
@@ -518,8 +605,23 @@ namespace TestChargePoint
             }
         }
 
+        private static void HandleStartTransaction(StartTransactionResponse response)
+        {
+            _transactionId = response.TransactionId;
+
+            Console.WriteLine($"- Transaction Id: {_transactionId}\n");
+            _menuTokenSource.Cancel();
+        }
+
+        private static void HandleStopTransaction(StopTransactionResponse response)
+        {
+            
+            Console.WriteLine($"- Transaction Id: {response.IdTagInfo.Status}\n");
+            _menuTokenSource.Cancel();
+        }
+
         private static async Task SendAsync<T>(T request)
-            where T : class, IAction
+            where T : class, IOperation
         {
             if (_socket.State == WebSocketState.Open)
             {

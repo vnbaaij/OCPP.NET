@@ -16,6 +16,6 @@ namespace OCPP.V16.Core
         public int ReservationId { get; set; }
     
         //[Newtonsoft.Json.JsonProperty("timestamp", Required = Newtonsoft.Json.Required.Always)]
-        public System.DateTimeOffset Timestamp { get; set; }
+        public System.DateTime Timestamp { get; set; }
     }
 }

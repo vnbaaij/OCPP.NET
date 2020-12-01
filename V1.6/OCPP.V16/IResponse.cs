@@ -5,7 +5,7 @@ namespace OCPP.V16
     /// <summary>
     /// Common interface of a response message.
     /// </summary>
-    public interface IResponse : IAction
+    public interface IResponse : IOperation
     {
         /// <summary>
         /// The timestamp of the response message creation.
