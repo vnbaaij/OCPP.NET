@@ -49,9 +49,12 @@ namespace OCPP.V16
             MessageType = (MessageType)int.Parse(responseArray[0].ToString());
             MessageId = Guid.Parse(responseArray[1].ToString());
 
+            if (!Enum.TryParse<OcppAction>(responseArray[2].ToString(), out OcppAction action))
+                action = OcppAction.Unknown;
+
             if (responseArray.Length == 4)
             {
-                Action = Enum.Parse<OcppAction>(responseArray[2].ToString());
+                Action = action;
                 Payload = responseArray[3].ToString();
             }
             else

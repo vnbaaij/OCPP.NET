@@ -313,6 +313,17 @@ namespace TestChargePoint
                                     response = message.Parse<DataTransferResponse>();
                                     HandleDataTransfer(response as DataTransferResponse);
                                     break;
+                                case OcppAction.StartTransaction:
+                                    response = message.Parse<StartTransactionResponse>();
+                                    HandleStartTransaction(response as StartTransactionResponse);
+                                    break;
+                                case OcppAction.StopTransaction:
+                                    response = message.Parse<StopTransactionResponse>();
+                                    HandleStopTransaction(response as StopTransactionResponse);
+                                    break;
+                                case OcppAction.GetConfiguration:
+
+                                    break;
                                 case OcppAction.DiagnosticsStatusNotification:
                                 case OcppAction.FirmwareStatusNotification:
                                 case OcppAction.StatusNotification:
@@ -322,15 +333,10 @@ namespace TestChargePoint
                                     _menuTokenSource.Cancel();
                                     break;
                                 case OcppAction.Unknown:
+                                    Console.WriteLine("Unknown or unhandeled action received");
+                                    _menuTokenSource.Cancel();
                                     break;
-                                case OcppAction.StartTransaction:
-                                    response = message.Parse<StartTransactionResponse>();
-                                    HandleStartTransaction(response as StartTransactionResponse);
-                                    break;
-                                case OcppAction.StopTransaction:
-                                    response = message.Parse<StopTransactionResponse>();
-                                    HandleStopTransaction(response as StopTransactionResponse);
-                                    break;
+                                
                             }
                         }
                     }
