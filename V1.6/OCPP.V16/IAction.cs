@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OCPP.V16
 {
-    public interface IOperation
+    public interface IAction
     {
     }
 }

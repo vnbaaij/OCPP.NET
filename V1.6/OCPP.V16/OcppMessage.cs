@@ -17,14 +17,14 @@ namespace OCPP.V16
 
         public string Payload { get; set; }
 
-        public OcppOperation Action { get; set; }
+        public OcppAction Action { get; set; }
 
         public OcppMessage()
         {
 
         }
 
-        public OcppMessage(MessageType messageType, Guid messageId, string payload, OcppOperation action = OcppOperation.Unknown)
+        public OcppMessage(MessageType messageType, Guid messageId, string payload, OcppAction action = OcppAction.Unknown)
         {
             MessageType = messageType;
             MessageId = messageId;
@@ -51,7 +51,7 @@ namespace OCPP.V16
 
             if (responseArray.Length == 4)
             {
-                Action = Enum.Parse<OcppOperation>(responseArray[2].ToString());
+                Action = Enum.Parse<OcppAction>(responseArray[2].ToString());
                 Payload = responseArray[3].ToString();
             }
             else
@@ -70,7 +70,7 @@ namespace OCPP.V16
         public override string ToString()
         {
             string jsonString;
-            if (Action == OcppOperation.Unknown)
+            if (Action == OcppAction.Unknown)
                 jsonString = $"[{(int)MessageType},\"{MessageId}\",{Payload}]";
             else
                 jsonString = $"[{(int)MessageType},\"{MessageId}\",\"{Action}\",{Payload}]";
@@ -92,7 +92,7 @@ namespace OCPP.V16
         }
 
         public static OcppMessage Compose<T>(T action)
-            where T : class, IOperation
+            where T : class, IAction
         {
             JsonSerializerOptions options = GetSerializerOptions();
 
@@ -103,12 +103,12 @@ namespace OCPP.V16
                 case IRequest request:
                     message.MessageType = MessageType.CALL;
                     message.MessageId = Guid.NewGuid();
-                    message.Action = Enum.Parse<OcppOperation>(request.GetType().Name.Replace("Request", ""));
+                    message.Action = Enum.Parse<OcppAction>(request.GetType().Name.Replace("Request", ""));
                     break;
                 case IResponse response:
                     message.MessageType = MessageType.CALLRESULT;
                     message.MessageId = response.MessageId;
-                    message.Action = OcppOperation.Unknown;
+                    message.Action = OcppAction.Unknown;
                     break;
                 default:
                     break;
@@ -145,7 +145,7 @@ namespace OCPP.V16
             {
                 Console.WriteLine("----------------------------------------------------------------------");
                 Console.WriteLine($"MessageType: {MessageType}, Id: {MessageId}");
-                if (Action != OcppOperation.Unknown)
+                if (Action != OcppAction.Unknown)
                     Console.WriteLine($"Action: {Action}");
 
                 LogPayload();

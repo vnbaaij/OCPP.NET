@@ -14,7 +14,7 @@ namespace OCPP.V16.RemoteTrigger
 
         [JsonPropertyName("requestedMessage")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public OcppOperation? Operation { get; set; }
+        public OcppAction? Operation { get; set; }
          /// <summary>
         /// Create a TriggerMessage response.
         /// </summary>

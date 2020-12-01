@@ -13,7 +13,7 @@ namespace OCPP.V16.Core
         public System.DateTimeOffset Timestamp { get; set; }
     
         //[Newtonsoft.Json.JsonProperty("transactionId", Required = Newtonsoft.Json.Required.Always)]
-        public int TransactionId { get; set; }
+        public int? TransactionId { get; set; }
     
         //[Newtonsoft.Json.JsonProperty("reason", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         //[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]

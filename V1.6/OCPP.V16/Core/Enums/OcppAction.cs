@@ -1,7 +1,7 @@
 ﻿
 namespace OCPP.V16.Core
 {
-    public enum OcppOperation
+    public enum OcppAction
     {
         Unknown,
         BootNotification,
@@ -16,6 +16,7 @@ namespace OCPP.V16.Core
         StatusNotification,
         DataTransfer,
         TriggerMessage,
-        UpdateFirmware
+        UpdateFirmware,
+        GetConfiguration
     }
 }

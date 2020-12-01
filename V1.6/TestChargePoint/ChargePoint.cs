@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
@@ -25,8 +26,8 @@ namespace TestChargePoint
         private static readonly object consoleLock = new();
         private static ClientWebSocket _socket;
 
-        private static readonly BlockingCollection<OcppOperation> _menuQueue = new();
-        private static readonly BlockingCollection<(Guid id, OcppOperation action)> _operationQueue = new();
+        private static readonly BlockingCollection<OcppAction> _menuQueue = new();
+        private static readonly BlockingCollection<(Guid id, OcppAction action)> _operationQueue = new();
 
         private static CancellationTokenSource _receiveTokenSource;
         private static CancellationTokenSource _sendTokenSource;
@@ -120,31 +121,31 @@ namespace TestChargePoint
                     switch (cki.KeyChar)
                     {
                         case '1':
-                            _menuQueue.Add(OcppOperation.BootNotification);
+                            _menuQueue.Add(OcppAction.BootNotification);
                             break;
                         case '2':
-                            _menuQueue.Add(OcppOperation.Authorize);
+                            _menuQueue.Add(OcppAction.Authorize);
                             break;
                         case '3':
-                            _menuQueue.Add(OcppOperation.StartTransaction);
+                            _menuQueue.Add(OcppAction.StartTransaction);
                             break;
                         case '4':
-                            _menuQueue.Add(OcppOperation.StopTransaction);
+                            _menuQueue.Add(OcppAction.StopTransaction);
                             break;
                         case '5':
-                            _menuQueue.Add(OcppOperation.Heartbeat);
+                            _menuQueue.Add(OcppAction.Heartbeat);
                             break;
                         case '6':
-                            _menuQueue.Add(OcppOperation.MeterValues);
+                            _menuQueue.Add(OcppAction.MeterValues);
                             break;
                         case '7':
-                            _menuQueue.Add(OcppOperation.DiagnosticsStatusNotification);
+                            _menuQueue.Add(OcppAction.DiagnosticsStatusNotification);
                             break;
                         case '8':
-                            _menuQueue.Add(OcppOperation.DataTransfer);
+                            _menuQueue.Add(OcppAction.DataTransfer);
                             break;
                         case '9':
-                            _menuQueue.Add(OcppOperation.StatusNotification);
+                            _menuQueue.Add(OcppAction.StatusNotification);
                             break;
                         case 'r':
                             break;
@@ -200,42 +201,42 @@ namespace TestChargePoint
 
                         switch (operation)
                         {
-                            case OcppOperation.BootNotification:
+                            case OcppAction.BootNotification:
                                 await SendBootNotificationAsync();
                                 break;
-                            case OcppOperation.Authorize:
+                            case OcppAction.Authorize:
                                 await SendAuthorizeAsync();
                                 break;
-                            case OcppOperation.Heartbeat:
+                            case OcppAction.Heartbeat:
                                 await SendHeartbeatAsync();
                                 break;
-                            case OcppOperation.DiagnosticsStatusNotification:
+                            case OcppAction.DiagnosticsStatusNotification:
                                 await SendDiagnosticsStatusNotificationAsync();
                                 break;
-                            case OcppOperation.DataTransfer:
+                            case OcppAction.DataTransfer:
                                 await SendDataTransferAsync();
                                 break;
-                            case OcppOperation.StatusNotification:
+                            case OcppAction.StatusNotification:
                                 await SendStatusNotificationAsync();
                                 break;
-                            case OcppOperation.StartTransaction:
+                            case OcppAction.StartTransaction:
                                 await SendStartTransactionAsync();
                                 break;
-                            case OcppOperation.StopTransaction:
+                            case OcppAction.StopTransaction:
                                 await SendStopTransactionAsync();
                                 break;
-                            case OcppOperation.MeterValues:
+                            case OcppAction.MeterValues:
                                 await SendMeterValuesAsync();
                                 break;
-                            case OcppOperation.ClearCache:
+                            case OcppAction.ClearCache:
                                 break;
-                            case OcppOperation.FirmwareStatusNotification:
+                            case OcppAction.FirmwareStatusNotification:
                                 break;
-                            case OcppOperation.TriggerMessage:
+                            case OcppAction.TriggerMessage:
                                 break;
-                            case OcppOperation.UpdateFirmware:
+                            case OcppAction.UpdateFirmware:
                                 break;
-                            case OcppOperation.Unknown:
+                            case OcppAction.Unknown:
                                 break;
                         }
                     }
@@ -287,46 +288,46 @@ namespace TestChargePoint
 
                             switch (message.Action)
                             {
-                                case OcppOperation.BootNotification:
+                                case OcppAction.BootNotification:
                                     response = message.Parse<BootNotificationResponse>();
                                     await HandleBootNotificationAsync(response as BootNotificationResponse);
                                     break;
-                                case OcppOperation.Authorize:
+                                case OcppAction.Authorize:
                                     response = message.Parse<AuthorizeResponse>();
                                     HandleAuthorize(response as AuthorizeResponse);
                                     break;
-                                case OcppOperation.ClearCache:
+                                case OcppAction.ClearCache:
                                     response = message.Parse<ClearCacheResponse>();
                                     await HandleClearCacheAsync(message);
                                     break;
-                                case OcppOperation.Heartbeat:
+                                case OcppAction.Heartbeat:
                                     response = message.Parse<HeartbeatResponse>();
                                     HandleHeartbeat(response as HeartbeatResponse);
                                     break;
 
-                                case OcppOperation.TriggerMessage:
+                                case OcppAction.TriggerMessage:
                                     response = message.Parse<TriggerMessageResponse>();
                                     await HandleTriggerMessageAsync(message);
                                     break;
-                                case OcppOperation.DataTransfer:
+                                case OcppAction.DataTransfer:
                                     response = message.Parse<DataTransferResponse>();
                                     HandleDataTransfer(response as DataTransferResponse);
                                     break;
-                                case OcppOperation.DiagnosticsStatusNotification:
-                                case OcppOperation.FirmwareStatusNotification:
-                                case OcppOperation.StatusNotification:
-                                case OcppOperation.MeterValues:
-                                case OcppOperation.UpdateFirmware:
+                                case OcppAction.DiagnosticsStatusNotification:
+                                case OcppAction.FirmwareStatusNotification:
+                                case OcppAction.StatusNotification:
+                                case OcppAction.MeterValues:
+                                case OcppAction.UpdateFirmware:
                                     response = message.Parse<EmptyResponse>();
                                     _menuTokenSource.Cancel();
                                     break;
-                                case OcppOperation.Unknown:
+                                case OcppAction.Unknown:
                                     break;
-                                case OcppOperation.StartTransaction:
+                                case OcppAction.StartTransaction:
                                     response = message.Parse<StartTransactionResponse>();
                                     HandleStartTransaction(response as StartTransactionResponse);
                                     break;
-                                case OcppOperation.StopTransaction:
+                                case OcppAction.StopTransaction:
                                     response = message.Parse<StopTransactionResponse>();
                                     HandleStopTransaction(response as StopTransactionResponse);
                                     break;
@@ -431,22 +432,41 @@ namespace TestChargePoint
             await SendMessageAsync(request);
         }
 
-        private static Task SendMeterValuesAsync()
+        private static async Task SendMeterValuesAsync()
         {
+            List<MeterValue> meterValueList = new();
+
+            List<SampledValue> sampledValueList = new();
+
+            SampledValue sv = new()
+            {
+                Context = ReadingContext.Sample_Periodic,
+                Format = ValueFormat.Raw,
+                Location = Location.Outlet,
+                Measurand = Measurand.Voltage,
+                Phase = Phase.N,
+                Unit = UnitOfMeasure.V,
+                Value = "230"
+            };
+            sampledValueList.Add(sv);
+            
+
+            MeterValue mv = new()
+            {
+                SampledValue = sampledValueList,
+                Timestamp = DateTime.UtcNow,
+            };
+            meterValueList.Add(mv);
+
             var request = new MeterValuesRequest
             {
                 ConnectorId = 0,
                 TransactionId = _transactionId ?? null,
-                MeterValue = new MeterValue
-                {
-                    SampledValue = new SampledValue
-                    {
-                        Context = ReadingContext.
-                    },
-                    Timestamp = DateTime.UtcNow,
-                }
+                MeterValue = meterValueList
 
             };
+
+            await SendMessageAsync(request);
         }
 
         private static async Task SendStatusNotificationAsync()
@@ -585,7 +605,7 @@ namespace TestChargePoint
                 _ => TriggerMessageResponseStatus.NotImplemented,
             };
 
-            OcppOperation? operation = response.Operation;
+            OcppAction? operation = response.Operation;
             response.Operation = null;
 
             Console.WriteLine($"Sending TriggerMessage {response.Status}...");
@@ -595,22 +615,22 @@ namespace TestChargePoint
             {
                 switch (operation)
                 {
-                    case OcppOperation.BootNotification:
+                    case OcppAction.BootNotification:
                         await SendBootNotificationAsync();
                         break;
-                    case OcppOperation.DiagnosticsStatusNotification:
+                    case OcppAction.DiagnosticsStatusNotification:
                         await SendDiagnosticsStatusNotificationAsync();
                         break;
-                    case OcppOperation.FirmwareStatusNotification:
+                    case OcppAction.FirmwareStatusNotification:
                         await SendFirmwareStatusNotificationAsync();
                         break;
-                    case OcppOperation.Heartbeat:
+                    case OcppAction.Heartbeat:
                         await SendHeartbeatAsync();
                         break;
-                    case OcppOperation.MeterValues:
+                    case OcppAction.MeterValues:
                         await SendMeterValuesAsync();
                         break;
-                    case OcppOperation.StatusNotification:
+                    case OcppAction.StatusNotification:
                         await SendStatusNotificationAsync();
                         break;
                     default:
@@ -638,13 +658,13 @@ namespace TestChargePoint
         }
 
         private static async Task SendMessageAsync<T>(T request)
-            where T : class, IOperation
+            where T : class, IAction
         {
             if (_socket.State == WebSocketState.Open)
             {
                 var message = OcppMessage.Compose(request);
 
-                if (message.Action != OcppOperation.Unknown)
+                if (message.Action != OcppAction.Unknown)
                     _operationQueue.Add((id: message.MessageId, action: message.Action));
 
                 await _socket.SendAsync(Encoding.UTF8.GetBytes(message.ToString()), WebSocketMessageType.Text, true, CancellationToken.None);
