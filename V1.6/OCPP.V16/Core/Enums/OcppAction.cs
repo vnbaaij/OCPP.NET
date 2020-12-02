@@ -17,6 +17,12 @@ namespace OCPP.V16.Core
         DataTransfer,
         TriggerMessage,
         UpdateFirmware,
-        GetConfiguration
+        GetConfiguration,
+        UnlockConnector,
+        Reset,
+        RemoteStartTransaction,
+        RemoteStopTransaction,
+        ChangeConfiguration,
+        ChangeAvailability
     }
 }

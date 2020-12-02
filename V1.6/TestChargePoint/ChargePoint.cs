@@ -322,6 +322,28 @@ namespace TestChargePoint
                                     HandleStopTransaction(response as StopTransactionResponse);
                                     break;
                                 case OcppAction.GetConfiguration:
+                                    response = message.Parse<GetConfigurationResponse>();
+
+                                    break;
+                                case OcppAction.UnlockConnector:
+                                    response = message.Parse<UnlockConnectorResponse>();
+                                    break;
+                                case OcppAction.Reset:
+                                    response = message.Parse<ResetResponse>();
+                                    break;
+                                case OcppAction.RemoteStartTransaction:
+                                    response = message.Parse<RemoteStartTransactionResponse>();
+                                    break;
+                                case OcppAction.RemoteStopTransaction:
+                                    response = message.Parse<RemoteStopTransactionResponse>();
+
+                                    break;
+                                case OcppAction.ChangeConfiguration:
+                                    response = message.Parse<ChangeConfigurationResponse>();
+
+                                    break;
+                                case OcppAction.ChangeAvailability:
+                                    response = message.Parse<ChangeAvailabilityResponse>();
 
                                     break;
                                 case OcppAction.DiagnosticsStatusNotification:
@@ -336,7 +358,6 @@ namespace TestChargePoint
                                     Console.WriteLine("Unknown or unhandeled action received");
                                     _menuTokenSource.Cancel();
                                     break;
-                                
                             }
                         }
                     }
