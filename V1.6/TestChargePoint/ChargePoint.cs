@@ -452,24 +452,23 @@ namespace TestChargePoint
 
             List<SampledValue> sampledValueList = new();
 
-            SampledValue sv = new()
-            {
-                Context = ReadingContext.Sample_Periodic,
-                Format = ValueFormat.Raw,
-                Location = Location.Outlet,
-                Measurand = Measurand.Voltage,
-                Phase = Phase.N,
-                Unit = UnitOfMeasure.V,
-                Value = "230"
-            };
+            SampledValue sv = new(
+                Context: ReadingContext.Sample_Periodic,
+                Format: ValueFormat.Raw,
+                Location: Location.Outlet,
+                Measurand: Measurand.Voltage,
+                Phase: Phase.N,
+                Unit: UnitOfMeasure.V,
+                Value: "230"
+            );
             sampledValueList.Add(sv);
             
 
-            MeterValue mv = new()
-            {
-                SampledValue = sampledValueList,
-                Timestamp = DateTime.UtcNow,
-            };
+            MeterValue mv = new
+            (
+                SampledValue: sampledValueList,
+                Timestamp: DateTime.UtcNow
+            );
             meterValueList.Add(mv);
 
             var request = new MeterValuesRequest(

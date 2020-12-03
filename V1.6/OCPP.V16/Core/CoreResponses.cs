@@ -9,7 +9,7 @@ namespace OCPP.V16.Core
     public record ChangeConfigurationResponse(ChangeConfigurationRequest Request, ConfigurationStatus Status) : ResponseBase<ChangeConfigurationRequest, ChangeConfigurationResponse>(Request);
     public record ClearCacheResponse(ClearCacheStatus Status) : ResponseBase<ClearCacheResponse>;
     public record DataTransferResponse(DataTransferRequest Request, DataTransferStatus Status, string Data) : ResponseBase<DataTransferRequest, DataTransferResponse>(Request);
-    public record GetConfigurationResponse(GetConfigurationRequest Request, ICollection<ConfigurationKey> ConfigurationKey, ICollection<string> UnknownKey) : ResponseBase<GetConfigurationRequest, GetConfigurationResponse>(Request);
+    public record GetConfigurationResponse(GetConfigurationRequest Request, ICollection<KeyValue> ConfigurationKey, ICollection<string> UnknownKey) : ResponseBase<GetConfigurationRequest, GetConfigurationResponse>(Request);
     public record HeartbeatResponse(DateTime CurrentTime) : ResponseBase<HeartbeatResponse>;
     public record RemoteStartTransactionResponse(RemoteStartTransactionRequest Request, RemoteStartStopStatus Status) : ResponseBase<RemoteStartTransactionRequest, RemoteStartTransactionResponse>(Request);
     public record RemoteStopTransactionResponse(RemoteStopTransactionRequest Request, RemoteStartStopStatus Status) : ResponseBase<RemoteStopTransactionRequest, RemoteStopTransactionResponse>(Request);
