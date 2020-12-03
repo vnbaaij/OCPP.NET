@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using OCPP.V16;
 namespace OCPP.V16.Core
 {
     public partial class ChargingSchedule 

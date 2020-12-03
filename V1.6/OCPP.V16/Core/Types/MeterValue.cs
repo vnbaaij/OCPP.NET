@@ -1,5 +1,4 @@
-﻿using OCPP.V16;
-namespace OCPP.V16.Core
+﻿namespace OCPP.V16.Core
 {
     public partial class MeterValue 
     {
