@@ -27,7 +27,7 @@ namespace TestChargePoint
         private static ClientWebSocket _socket;
 
         private static readonly BlockingCollection<OcppAction> _menuQueue = new();
-        private static readonly BlockingCollection<(Guid id, OcppAction action)> _operationQueue = new();
+        private static readonly BlockingCollection<(Guid id, OcppAction action, IRequest request)> _operationQueue = new();
 
         private static CancellationTokenSource _receiveTokenSource;
         private static CancellationTokenSource _sendTokenSource;
@@ -289,11 +289,11 @@ namespace TestChargePoint
                             switch (message.Action)
                             {
                                 case OcppAction.BootNotification:
-                                    response = message.Parse<BootNotificationResponse>();
+                                    response = message.Parse<BootNotificationRequest, BootNotificationResponse>(operation.request as BootNotificationRequest);
                                     await HandleBootNotificationAsync(response as BootNotificationResponse);
                                     break;
                                 case OcppAction.Authorize:
-                                    response = message.Parse<AuthorizeResponse>();
+                                    response = message.Parse<AuthorizeRequest, AuthorizeResponse>(operation.request as AuthorizeRequest);
                                     HandleAuthorize(response as AuthorizeResponse);
                                     break;
                                 case OcppAction.ClearCache:
@@ -306,45 +306,48 @@ namespace TestChargePoint
                                     break;
 
                                 case OcppAction.TriggerMessage:
-                                    response = message.Parse<TriggerMessageResponse>();
+                                    response = message.Parse<TriggerMessageRequest,TriggerMessageResponse>(operation.request as TriggerMessageRequest);
                                     await HandleTriggerMessageAsync(message);
                                     break;
                                 case OcppAction.DataTransfer:
-                                    response = message.Parse<DataTransferResponse>();
+                                    response = message.Parse<DataTransferRequest, DataTransferResponse>(operation.request as DataTransferRequest);
                                     HandleDataTransfer(response as DataTransferResponse);
                                     break;
                                 case OcppAction.StartTransaction:
-                                    response = message.Parse<StartTransactionResponse>();
+                                    response = message.Parse<StartTransactionRequest, StartTransactionResponse>(operation.request as StartTransactionRequest);
                                     HandleStartTransaction(response as StartTransactionResponse);
                                     break;
                                 case OcppAction.StopTransaction:
-                                    response = message.Parse<StopTransactionResponse>();
+                                    response = message.Parse<StopTransactionRequest, StopTransactionResponse>(operation.request as StopTransactionRequest);
                                     HandleStopTransaction(response as StopTransactionResponse);
                                     break;
                                 case OcppAction.GetConfiguration:
-                                    response = message.Parse<GetConfigurationResponse>();
-
+                                    response = message.Parse<GetConfigurationRequest, GetConfigurationResponse>(operation.request as GetConfigurationRequest);
+                                    // ToDo: HandleGetConfiguration
                                     break;
                                 case OcppAction.UnlockConnector:
-                                    response = message.Parse<UnlockConnectorResponse>();
+                                    response = message.Parse<UnlockConnectorRequest, UnlockConnectorResponse>(operation.request as UnlockConnectorRequest);
+                                    // ToDo: HandleUnlockConnector
                                     break;
                                 case OcppAction.Reset:
-                                    response = message.Parse<ResetResponse>();
+                                    response = message.Parse<ResetRequest, ResetResponse>(operation.request as ResetRequest);
+                                    // ToDo: HandleReset
                                     break;
                                 case OcppAction.RemoteStartTransaction:
-                                    response = message.Parse<RemoteStartTransactionResponse>();
+                                    response = message.Parse<RemoteStartTransactionRequest, RemoteStartTransactionResponse>(operation.request as RemoteStartTransactionRequest);
+                                    // ToDo: HandleRemoteStartTransaction
                                     break;
                                 case OcppAction.RemoteStopTransaction:
-                                    response = message.Parse<RemoteStopTransactionResponse>();
-
+                                    response = message.Parse<RemoteStopTransactionRequest, RemoteStopTransactionResponse>(operation.request as RemoteStopTransactionRequest);
+                                    // ToDo: HandleRemoteStopTransaction
                                     break;
                                 case OcppAction.ChangeConfiguration:
-                                    response = message.Parse<ChangeConfigurationResponse>();
-
+                                    response = message.Parse<ChangeConfigurationRequest, ChangeConfigurationResponse>(operation.request as ChangeConfigurationRequest);
+                                    // ToDo: HandleChangeConfiguration
                                     break;
                                 case OcppAction.ChangeAvailability:
-                                    response = message.Parse<ChangeAvailabilityResponse>();
-
+                                    response = message.Parse<ChangeAvailabilityRequest, ChangeAvailabilityResponse>(operation.request as ChangeAvailabilityRequest);
+                                    // ToDo: HandleChangeAvailability
                                     break;
                                 case OcppAction.DiagnosticsStatusNotification:
                                 case OcppAction.FirmwareStatusNotification:
@@ -441,7 +444,7 @@ namespace TestChargePoint
 
         private static async Task SendHeartbeatAsync()
         {
-            var request = new HeartbeatRequest();
+            var request = new EmptyRequest();
 
             await SendMessageAsync(request);
         }
@@ -561,7 +564,7 @@ namespace TestChargePoint
 
         private static async Task HandleClearCacheAsync(OcppMessage message)
         {
-            ClearCacheResponse response = message.Parse<ClearCacheResponse>();
+            ClearCacheResponse response = null; // message.Parse<ClearCacheResponse>();
 
             ConsoleKeyInfo cki;
 
@@ -593,7 +596,7 @@ namespace TestChargePoint
 
         private static async Task HandleTriggerMessageAsync(OcppMessage message)
         {
-            TriggerMessageResponse response = message.Parse<TriggerMessageResponse>();
+            TriggerMessageResponse response = null; //message.Parse<TriggerMessageResponse>();
 
             ConsoleKeyInfo cki;
 
@@ -676,7 +679,7 @@ namespace TestChargePoint
                 var message = OcppMessage.Compose(request);
 
                 if (message.Action != OcppAction.Unknown)
-                    _operationQueue.Add((id: message.MessageId, action: message.Action));
+                    _operationQueue.Add((id: message.MessageId, action: message.Action, request as IRequest));
 
                 await _socket.SendAsync(Encoding.UTF8.GetBytes(message.ToString()), WebSocketMessageType.Text, true, CancellationToken.None);
                 message.Log(false);

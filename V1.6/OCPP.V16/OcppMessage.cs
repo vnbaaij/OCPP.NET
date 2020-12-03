@@ -88,6 +88,21 @@ namespace OCPP.V16
 
             TResponse response = JsonSerializer.Deserialize<TResponse>(Payload, options);
             response.MessageId = MessageId;
+
+            Log(receiving);
+
+            return response;
+        }
+
+        public TResponse Parse<TRequest, TResponse>(TRequest request, bool receiving = true)
+            where TRequest : RequestBase<TRequest>
+            where TResponse : ResponseBase<TRequest, TResponse>
+        {
+            JsonSerializerOptions options = GetSerializerOptions();
+
+            TResponse response = JsonSerializer.Deserialize<TResponse>(Payload, options);
+            response.MessageId = MessageId;
+            response.Request = request;
             
             Log(receiving);
 

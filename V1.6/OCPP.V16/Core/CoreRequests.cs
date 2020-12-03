@@ -9,7 +9,7 @@ namespace OCPP.V16.Core
     public record ChangeConfigurationRequest(string Key, string Value) : RequestBase<ChangeConfigurationRequest>;
     public record DataTransferRequest(string VendorId, string MessageId = null, string Data = null) : RequestBase<DataTransferRequest>;
     public record GetConfigurationRequest(ICollection<string> Key = null) : RequestBase<GetConfigurationRequest>;
-    public record HeartbeatRequest() : RequestBase<HeartbeatRequest>;
+    //public record HeartbeatRequest() : RequestBase<HeartbeatRequest>;
     public record MeterValuesRequest(int ConnectorId, ICollection<MeterValue> MeterValues, int? TransactionId = null) : RequestBase<MeterValuesRequest>;
     public record RemoteStartTransactionRequest(string IdTag, int? ConnectorId = null, ChargingProfile ChargingProfile = null) : RequestBase<RemoteStartTransactionRequest>;
     public record RemoteStopTransactionRequest(int TransactionId) : RequestBase<RemoteStopTransactionRequest>;
