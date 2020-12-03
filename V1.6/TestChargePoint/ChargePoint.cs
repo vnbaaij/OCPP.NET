@@ -405,9 +405,9 @@ namespace TestChargePoint
         private static async Task SendClearCacheAsync(ClearCacheResponse response, bool accepted)
         {
             if (accepted)
-                response.Status = ClearCacheResponseStatus.Accepted;
+                response = response with { Status = ClearCacheStatus.Accepted };
             else
-                response.Status = ClearCacheResponseStatus.Rejected;
+                response = response with { Status = ClearCacheStatus.Rejected };
 
             await SendMessageAsync(response);
         }
@@ -606,12 +606,16 @@ namespace TestChargePoint
 
             cki = Console.ReadKey();
 
-            response.Status = cki.KeyChar switch
+            response = response with
             {
-                'a' => TriggerMessageStatus.Accepted,
-                'r' => TriggerMessageStatus.Rejected,
-                _ => TriggerMessageStatus.NotImplemented,
+                Status = cki.KeyChar switch
+                {
+                    'a' => TriggerMessageStatus.Accepted,
+                    'r' => TriggerMessageStatus.Rejected,
+                    _ => TriggerMessageStatus.NotImplemented,
+                }
             };
+            
 
             OcppAction? operation = response.Operation;
             response.Operation = null;

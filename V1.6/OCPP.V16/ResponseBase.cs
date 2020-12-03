@@ -6,11 +6,12 @@ namespace OCPP.V16
     /// <summary>
     /// An abstract OCCP response base.
     /// </summary>
-    public abstract class ResponseBase<TRequest, TResponse> : ResponseBase<TResponse>
+    public abstract record ResponseBase<TRequest, TResponse> : ResponseBase<TResponse>
         where TRequest : RequestBase<TRequest>
         where TResponse : class, IResponse
     {
         private TRequest _request;
+        
         /// <summary>
         /// The request leading to this response.
         /// </summary>
@@ -20,13 +21,12 @@ namespace OCPP.V16
             set
             {
                 _request = value;
-                if (_request != null)
-                    Duration = ResponseTimestamp - _request.RequestTimestamp;
+                if (_request != null) Duration = ResponseTimestamp - _request.RequestTimestamp;
             }
         }
 
         /// <summary>
-        /// The runtime of the request.
+        /// The time taken by request and response.
         /// </summary>
         [JsonIgnore]
 
@@ -42,37 +42,25 @@ namespace OCPP.V16
             if (request != null)
                 Duration = ResponseTimestamp - request.RequestTimestamp;
         }
-
-        protected ResponseBase() : base()
-        {
-        }
     }
 
 
     /// <summary>
     /// An abstract OCPP response base.
     /// </summary>
-    public abstract class ResponseBase<TResponse> : IResponse /*, IEquatable<TResponse> */
+    public abstract record ResponseBase<TResponse> : IResponse /*, IEquatable<TResponse> */
         where TResponse : class, IResponse
     {
         /// <summary>
         /// The timestamp of the response message creation.
         /// </summary>
         [JsonIgnore]
-        public DateTime ResponseTimestamp { get; }
+        public DateTime ResponseTimestamp { get; init; } = DateTime.UtcNow;
 
         /// <summary>
         /// The Id of the message coming from the CSMS
         /// </summary>
         [JsonIgnore]
         public Guid MessageId { get; set; }
-
-        /// <summary>
-        /// Create a new generic response.
-        /// </summary>
-        public ResponseBase()
-        {
-            ResponseTimestamp = DateTime.UtcNow;
-        }
     }
 }

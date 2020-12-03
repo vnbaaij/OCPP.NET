@@ -8,7 +8,7 @@ namespace OCPP.V16
     public interface IRequest : IAction
     {
         /// <summary>
-        /// The timestamp of the request message creation.
+        /// Timestamp of the request creation.
         /// </summary>
         DateTime  RequestTimestamp { get; }
     }

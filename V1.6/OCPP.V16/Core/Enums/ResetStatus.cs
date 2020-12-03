@@ -1,9 +1,8 @@
 ﻿using OCPP.V16;
 namespace OCPP.V16.Core
 {
-    public enum ClearCacheResponseStatus
+    public enum ResetStatus
     {
-        Unknown,
         Accepted,
         Rejected,
     }

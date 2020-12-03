@@ -8,7 +8,7 @@ namespace OCPP.V16
     public interface IResponse : IAction
     {
         /// <summary>
-        /// The timestamp of the response action creation.
+        /// Timestamp of the response creation.
         /// </summary>
         DateTime ResponseTimestamp { get; }
 

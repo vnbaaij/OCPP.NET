@@ -13,14 +13,6 @@ namespace OCPP.V16
         /// The timestamp of the request message creation.
         /// </summary>
         [JsonIgnore]
-        public DateTime RequestTimestamp { get; } = DateTime.UtcNow;
-
-        ///// <summary>
-        ///// Create a new generic OCPP request message.
-        ///// </summary>
-        //public RequestBase()
-        //{
-        //    RequestTimestamp = DateTime.UtcNow;
-        //}
+        public DateTime RequestTimestamp { get; init; } = DateTime.UtcNow;
     }
 }

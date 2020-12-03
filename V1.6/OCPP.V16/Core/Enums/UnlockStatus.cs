@@ -1,7 +1,7 @@
 ﻿using OCPP.V16;
 namespace OCPP.V16.Core
 {
-    public enum UnlockConnectorResponseStatus
+    public enum UnlockStatus
     {
         Unlocked,
         UnlockFailed,
