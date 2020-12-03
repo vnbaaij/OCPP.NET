@@ -7,7 +7,7 @@ namespace OCPP.V16.Core
     {
         //[Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public RemoteStopTransactionResponseStatus Status { get; set; }
+        public RemoteStartStopStatus Status { get; set; }
 
          /// <summary>
         /// Create a RemoteStopTransaction response.

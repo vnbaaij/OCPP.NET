@@ -1,8 +1,6 @@
+using System.Collections.Generic;
 namespace OCPP.V16.Core
 {
-    public partial class GetConfigurationRequest : RequestBase<GetConfigurationRequest> 
-    {
-        //[Newtonsoft.Json.JsonProperty("key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<string> Key { get; set; }
-    }
+    public record GetConfigurationRequest(ICollection<string> Key = null) : RequestBase<GetConfigurationRequest>; 
+    
 }

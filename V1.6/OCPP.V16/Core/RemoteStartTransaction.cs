@@ -1,15 +1,6 @@
 
 namespace OCPP.V16.Core
 {
-    public partial class RemoteStartTransactionRequest : RequestBase<RemoteStartTransactionRequest> 
-    {
-        //[Newtonsoft.Json.JsonProperty("connectorId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int ConnectorId { get; set; }
-    
-        //[Newtonsoft.Json.JsonProperty("idTag", Required = Newtonsoft.Json.Required.Always)]
-        public string IdTag { get; set; }
-    
-        //[Newtonsoft.Json.JsonProperty("chargingProfile", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ChargingProfile ChargingProfile { get; set; }
-    }
+    public record RemoteStartTransactionRequest(string IdTag, int? ConnectorId = null, ChargingProfile ChargingProfile = null) : RequestBase<RemoteStartTransactionRequest>; 
+   
 }

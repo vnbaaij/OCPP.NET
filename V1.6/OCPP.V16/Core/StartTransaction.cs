@@ -1,21 +1,7 @@
+using System;
 
 namespace OCPP.V16.Core
 {
-    public partial class StartTransactionRequest : RequestBase<StartTransactionRequest> 
-    {
-        //[Newtonsoft.Json.JsonProperty("connectorId", Required = Newtonsoft.Json.Required.Always)]
-        public int ConnectorId { get; set; }
+    public record StartTransactionRequest(int ConnectorId, string IdTag, int MeterStart, DateTime Timestamp, int? ReservationId = null) : RequestBase<StartTransactionRequest>; 
     
-        //[Newtonsoft.Json.JsonProperty("idTag", Required = Newtonsoft.Json.Required.Always)]
-        public string IdTag { get; set; }
-    
-        //[Newtonsoft.Json.JsonProperty("meterStart", Required = Newtonsoft.Json.Required.Always)]
-        public int MeterStart { get; set; }
-    
-        //[Newtonsoft.Json.JsonProperty("reservationId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int ReservationId { get; set; }
-    
-        //[Newtonsoft.Json.JsonProperty("timestamp", Required = Newtonsoft.Json.Required.Always)]
-        public System.DateTime Timestamp { get; set; }
-    }
 }

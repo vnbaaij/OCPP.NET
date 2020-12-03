@@ -3,12 +3,12 @@
 namespace OCPP.V16
 {
     /// <summary>
-    /// Common interface of a response message.
+    /// Common interface of a response action.
     /// </summary>
     public interface IResponse : IAction
     {
         /// <summary>
-        /// The timestamp of the response message creation.
+        /// The timestamp of the response action creation.
         /// </summary>
         DateTime ResponseTimestamp { get; }
 

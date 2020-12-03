@@ -1,10 +1,10 @@
 ﻿using OCPP.V16;
 namespace OCPP.V16.Core
 {
-    public enum BootNotificationResponseStatus
+    public enum AvailabilityStatus
     {
         Accepted,
-        Pending,
         Rejected,
+        Scheduled,
     }
 }

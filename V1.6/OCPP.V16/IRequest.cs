@@ -3,7 +3,7 @@
 namespace OCPP.V16
 {
     /// <summary>
-    /// Common interface of a request message.
+    /// Common interface of a request action.
     /// </summary>
     public interface IRequest : IAction
     {

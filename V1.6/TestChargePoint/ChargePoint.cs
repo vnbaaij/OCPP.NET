@@ -382,26 +382,22 @@ namespace TestChargePoint
 
         private static async Task SendAuthorizeAsync()
         {
-            var request = new AuthorizeRequest
-            {
-                IdTag = "3060044040003000853"
-            };
-
+            var request = new AuthorizeRequest(IdTag: "3060044040003000853");
+            
             await SendMessageAsync(request);
         }
 
         private static async Task SendBootNotificationAsync()
         {
-            var request = new BootNotificationRequest
-            {
-                ChargePointVendor = "Baaijte",
-                ChargePointModel = "QuickCharger 11+",
-                ChargePointSerialNumber = "bqc.001.20.1",
-                ChargeBoxSerialNumber = "bqc.001.20.1.01",
-                FirmwareVersion = "3.11.20",
-                MeterType = "Landis+Gyr E350",
-                MeterSerialNumber = "4530303035303031363935303633303135"
-            };
+            var request = new BootNotificationRequest(
+                ChargePointVendor: "Baaijte",
+                ChargePointModel: "QuickCharger 11+",
+                ChargePointSerialNumber: "bqc.001.20.1",
+                ChargeBoxSerialNumber: "bqc.001.20.1.01",
+                FirmwareVersion: "3.11.20",
+                MeterType: "Landis+Gyr E350",
+                MeterSerialNumber: "4530303035303031363935303633303135"
+            );
 
             await SendMessageAsync(request);
         }
@@ -501,9 +497,9 @@ namespace TestChargePoint
             var request = new StatusNotificationRequest
             {
                 ConnectorId = 1,
-                ErrorCode = StatusNotificationRequestErrorCode.NoError,
+                ErrorCode = ChargePointErrorCode.NoError,
                 Info = "Bla",
-                Status = StatusNotificationRequestStatus.Available,
+                Status = ChargePointStatus.Available,
                 Timestamp = DateTime.UtcNow,
                 VendorErrorCode = "My Vendor ErrorCode",
                 VendorId = "My Vendor Id"
@@ -520,7 +516,7 @@ namespace TestChargePoint
                 IdTag = "3060044040003000853",
                 Timestamp = DateTime.UtcNow,
                 MeterStop = 123457,
-                Reason = StopTransactionRequestReason.UnlockCommand,
+                Reason = Reason.UnlockCommand,
                 TransactionId = _transactionId
             };
 
@@ -560,18 +556,18 @@ namespace TestChargePoint
             Console.WriteLine($"BootNotification {response.Status}.");
             switch (response.Status)
             {
-                case BootNotificationResponseStatus.Accepted:
+                case RegistrationStatus.Accepted:
                     _csmsDateTime = response.CurrentTime;
 
                     Console.WriteLine($"- Heartbeat interval: {_heartbeatInterval / 60} min(s)");
                     Console.WriteLine($"- Central System date/time: {_csmsDateTime} (UTC)\n");
                     break;
-                case BootNotificationResponseStatus.Rejected:
+                case RegistrationStatus.Rejected:
                     Console.WriteLine($"- Waiting {response.Interval} seconds before reattempt");
                     Thread.Sleep(response.Interval * 100);
                     await SendBootNotificationAsync();
                     break;
-                case BootNotificationResponseStatus.Pending:
+                case RegistrationStatus.Pending:
 
                     //await Receive<TriggerMessageRequest, TriggerMessageResponse>();
                     break;

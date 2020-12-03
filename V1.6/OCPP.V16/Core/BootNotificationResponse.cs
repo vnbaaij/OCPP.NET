@@ -5,7 +5,7 @@ namespace OCPP.V16.Core
 {
     public partial class BootNotificationResponse : ResponseBase<BootNotificationRequest, BootNotificationResponse>
     {
-        public BootNotificationResponseStatus Status { get; set; }
+        public RegistrationStatus Status { get; set; }
 
         public DateTime CurrentTime { get; set; }
 

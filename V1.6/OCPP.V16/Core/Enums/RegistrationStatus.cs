@@ -1,10 +1,10 @@
 ﻿using OCPP.V16;
 namespace OCPP.V16.Core
 {
-    public enum ChangeAvailabilityResponseStatus
+    public enum RegistrationStatus
     {
         Accepted,
+        Pending,
         Rejected,
-        Scheduled,
     }
 }

@@ -1,7 +1,7 @@
 ﻿using OCPP.V16;
 namespace OCPP.V16.Core
 {
-    public enum StatusNotificationRequestErrorCode
+    public enum ChargePointErrorCode
     {
         ConnectorLockFailure,
         EVCommunicationError,

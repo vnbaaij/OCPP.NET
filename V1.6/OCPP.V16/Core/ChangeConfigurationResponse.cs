@@ -8,7 +8,7 @@ namespace OCPP.V16.Core
     {
         //[Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ChangeConfigurationResponseStatus Status { get; set; }
+        public ConfigurationStatus Status { get; set; }
         
          /// <summary>
         /// Create a ChangeConfiguration response.
