@@ -1,6 +1,6 @@
 ﻿namespace OCPP.V16.SmartCharging
 {
-    public enum SetChargingProfileResponseStatus
+    public enum ChargingProfileStatus
     {
         Accepted,
         Rejected,

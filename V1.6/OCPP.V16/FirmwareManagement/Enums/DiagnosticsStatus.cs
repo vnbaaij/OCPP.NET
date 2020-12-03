@@ -1,6 +1,6 @@
 ﻿namespace OCPP.V16.FirmwareManagement
 {
-    public enum DiagnosticsStatusNotificationRequestStatus
+    public enum DiagnosticsStatus
     {
         Idle,
         Uploaded,

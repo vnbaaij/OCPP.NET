@@ -1,7 +1,7 @@
 ﻿
 namespace OCPP.V16.SmartCharging
 {
-    public enum GetCompositeScheduleResponseStatus
+    public enum GetCompositeScheduleStatus
     {
         Accepted,
         Rejected,

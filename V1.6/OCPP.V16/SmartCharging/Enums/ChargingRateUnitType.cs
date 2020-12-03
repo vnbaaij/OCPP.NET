@@ -1,6 +1,6 @@
 ﻿namespace OCPP.V16.SmartCharging
 {
-    public enum GetCompositeScheduleRequestChargingRateUnit
+    public enum ChargingRateUnitType
     {
         A,
         W,

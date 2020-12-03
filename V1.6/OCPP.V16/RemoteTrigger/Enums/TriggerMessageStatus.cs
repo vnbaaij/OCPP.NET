@@ -1,6 +1,6 @@
 ﻿namespace OCPP.V16.RemoteTrigger
 {
-    public enum TriggerMessageResponseStatus
+    public enum TriggerMessageStatus
     {        
         Accepted,
         Rejected,

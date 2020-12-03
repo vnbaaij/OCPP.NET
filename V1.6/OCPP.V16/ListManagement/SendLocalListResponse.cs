@@ -7,7 +7,7 @@ namespace OCPP.V16.ListManagement
     {
         //[Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public SendLocalListResponseStatus Status { get; set; }
+        public UpdateStatus Status { get; set; }
 
          /// <summary>
         /// Create a SendLocalList response.

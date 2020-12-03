@@ -1,6 +1,6 @@
 ﻿namespace OCPP.V16.RemoteTrigger
 {
-    public enum TriggerMessageRequestRequestedMessage
+    public enum MessageTrigger
     {
         BootNotification,
         DiagnosticsStatusNotification,

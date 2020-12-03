@@ -2,7 +2,7 @@ using OCPP.V16;
 
 namespace OCPP.V16.Reservation
 {
-    public partial class ReserveNowRequest : RequestBase<ReserveNowRequest>
+    public record ReserveNowRequest : RequestBase<ReserveNowRequest>
     {
         //[Newtonsoft.Json.JsonProperty("connectorId", Required = Newtonsoft.Json.Required.Always)]
         public int ConnectorId { get; set; }

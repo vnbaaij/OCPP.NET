@@ -10,7 +10,7 @@ namespace OCPP.V16.RemoteTrigger
     {
         //[Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
         //[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public TriggerMessageResponseStatus Status { get; set; }
+        public TriggerMessageStatus Status { get; set; }
 
         [JsonPropertyName("requestedMessage")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

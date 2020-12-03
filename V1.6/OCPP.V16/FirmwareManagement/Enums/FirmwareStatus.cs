@@ -1,6 +1,6 @@
 ﻿namespace OCPP.V16.FirmwareManagement
 {
-    public enum FirmwareStatusNotificationRequestStatus
+    public enum FirmwareStatus
     {
         Downloaded,
         DownloadFailed,

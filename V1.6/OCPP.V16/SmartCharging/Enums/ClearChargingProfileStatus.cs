@@ -1,6 +1,6 @@
 ﻿namespace OCPP.V16.SmartCharging
 {
-    public enum ClearChargingProfileResponseStatus
+    public enum ClearChargingProfileStatus
     {
         Accepted,
         Unknown,

@@ -1,6 +1,6 @@
 ﻿namespace OCPP.V16.Reservation
 {
-    public enum ReserveNowResponseStatus
+    public enum ReservationStatus
     {
         Accepted,
         Faulted,

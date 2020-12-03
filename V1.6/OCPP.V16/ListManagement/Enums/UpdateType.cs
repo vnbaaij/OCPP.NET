@@ -1,6 +1,6 @@
 ﻿namespace OCPP.V16.ListManagement
 {
-    public enum SendLocalListRequestUpdateType
+    public enum UpdateType
     {
         Differential,
         Full,

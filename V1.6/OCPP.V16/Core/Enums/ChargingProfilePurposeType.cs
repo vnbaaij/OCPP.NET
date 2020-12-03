@@ -1,7 +1,6 @@
-﻿using OCPP.V16;
-namespace OCPP.V16.Core
+﻿namespace OCPP.V16.Core
 {
-    public enum ChargingProfilePurpose
+    public enum ChargingProfilePurposeType
     {
         ChargePointMaxProfile,
         TxDefaultProfile,

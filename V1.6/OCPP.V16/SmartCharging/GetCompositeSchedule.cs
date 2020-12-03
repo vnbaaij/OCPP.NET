@@ -2,7 +2,7 @@ using OCPP.V16;
 
 namespace OCPP.V16.SmartCharging
 {
-    public partial class GetCompositeScheduleRequest : RequestBase<GetCompositeScheduleRequest> 
+    public record GetCompositeScheduleRequest : RequestBase<GetCompositeScheduleRequest> 
     {
         //[Newtonsoft.Json.JsonProperty("connectorId", Required = Newtonsoft.Json.Required.Always)]
         public int ConnectorId { get; set; }
@@ -12,6 +12,6 @@ namespace OCPP.V16.SmartCharging
     
         //[Newtonsoft.Json.JsonProperty("chargingRateUnit", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         //[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public GetCompositeScheduleRequestChargingRateUnit ChargingRateUnit { get; set; }
+        public ChargingRateUnitType ChargingRateUnit { get; set; }
     }
 }

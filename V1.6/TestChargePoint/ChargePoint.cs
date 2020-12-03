@@ -430,7 +430,7 @@ namespace TestChargePoint
 
             var request = new DiagnosticsStatusNotificationRequest
             {
-                Status = DiagnosticsStatusNotificationRequestStatus.Idle
+                Status = DiagnosticsStatus.Idle
 
             };
 
@@ -441,7 +441,7 @@ namespace TestChargePoint
         {
             var request = new FirmwareStatusNotificationRequest
             {
-                Status = FirmwareStatusNotificationRequestStatus.Idle
+                Status = FirmwareStatus.Idle
 
             };
 
@@ -623,9 +623,9 @@ namespace TestChargePoint
 
             response.Status = cki.KeyChar switch
             {
-                'a' => TriggerMessageResponseStatus.Accepted,
-                'r' => TriggerMessageResponseStatus.Rejected,
-                _ => TriggerMessageResponseStatus.NotImplemented,
+                'a' => TriggerMessageStatus.Accepted,
+                'r' => TriggerMessageStatus.Rejected,
+                _ => TriggerMessageStatus.NotImplemented,
             };
 
             OcppAction? operation = response.Operation;
@@ -634,7 +634,7 @@ namespace TestChargePoint
             Console.WriteLine($"Sending TriggerMessage {response.Status}...");
             await SendMessageAsync(response);
 
-            if (response.Status == TriggerMessageResponseStatus.Accepted)
+            if (response.Status == TriggerMessageStatus.Accepted)
             {
                 switch (operation)
                 {
