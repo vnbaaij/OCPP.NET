@@ -36,7 +36,7 @@ namespace TestChargePoint
         private static int _heartbeatInterval = 300;
         private static DateTime _csmsDateTime;
 
-        private static int? _transactionId = null;
+        private static int _transactionId;
 
         public static WebSocketState State
         {
@@ -414,13 +414,12 @@ namespace TestChargePoint
 
         private static async Task SendDataTransferAsync()
         {
-            var request = new DataTransferRequest
-            {
-                VendorId = "",
-                Data = "Just some random extra data",
-                MessageId = ""
+            var request = new DataTransferRequest(
+                VendorId: "",
+                Data: "Just some random extra data",
+                MessageId: ""
 
-            };
+            );
 
             await SendMessageAsync(request);
         }
@@ -428,22 +427,14 @@ namespace TestChargePoint
         private static async Task SendDiagnosticsStatusNotificationAsync()
         {
 
-            var request = new DiagnosticsStatusNotificationRequest
-            {
-                Status = DiagnosticsStatus.Idle
-
-            };
+            var request = new DiagnosticsStatusNotificationRequest(Status: DiagnosticsStatus.Idle);
 
             await SendMessageAsync(request);
         }
 
         private static async Task SendFirmwareStatusNotificationAsync()
         {
-            var request = new FirmwareStatusNotificationRequest
-            {
-                Status = FirmwareStatus.Idle
-
-            };
+            var request = new FirmwareStatusNotificationRequest(Status: FirmwareStatus.Idle);
 
             await SendMessageAsync(request);
         }
@@ -481,44 +472,39 @@ namespace TestChargePoint
             };
             meterValueList.Add(mv);
 
-            var request = new MeterValuesRequest
-            {
-                ConnectorId = 0,
-                TransactionId = _transactionId ?? null,
-                MeterValue = meterValueList
-
-            };
+            var request = new MeterValuesRequest(
+                ConnectorId: 0,
+                TransactionId: _transactionId != 0 ? _transactionId : null,
+                MeterValues: meterValueList
+            );
 
             await SendMessageAsync(request);
         }
 
         private static async Task SendStatusNotificationAsync()
         {
-            var request = new StatusNotificationRequest
-            {
-                ConnectorId = 1,
-                ErrorCode = ChargePointErrorCode.NoError,
-                Info = "Bla",
-                Status = ChargePointStatus.Available,
-                Timestamp = DateTime.UtcNow,
-                VendorErrorCode = "My Vendor ErrorCode",
-                VendorId = "My Vendor Id"
-
-            };
+            var request = new StatusNotificationRequest(
+                ConnectorId: 1,
+                ErrorCode: ChargePointErrorCode.NoError,
+                Info: "Bla",
+                Status: ChargePointStatus.Available,
+                Timestamp: DateTime.UtcNow,
+                VendorErrorCode: "My Vendor ErrorCode",
+                VendorId: "My Vendor Id"
+         );
 
             await SendMessageAsync(request);
         }
 
         private static async Task SendStopTransactionAsync()
         {
-            var request = new StopTransactionRequest
-            {
-                IdTag = "3060044040003000853",
-                Timestamp = DateTime.UtcNow,
-                MeterStop = 123457,
-                Reason = Reason.UnlockCommand,
-                TransactionId = _transactionId
-            };
+            var request = new StopTransactionRequest(
+                IdTag: "3060044040003000853",
+                Timestamp: DateTime.UtcNow,
+                MeterStop: 123457,
+                Reason: Reason.UnlockCommand,
+                TransactionId: _transactionId
+            );
 
 
             await SendMessageAsync(request);
@@ -527,13 +513,12 @@ namespace TestChargePoint
 
         private static async Task SendStartTransactionAsync()
         {
-            var request = new StartTransactionRequest
-            {
-                ConnectorId = 1,
-                IdTag = "3060044040003000853",
-                MeterStart = 123456,
-                Timestamp = DateTime.UtcNow
-            };
+            var request = new StartTransactionRequest(
+                ConnectorId: 1,
+                IdTag: "3060044040003000853",
+                MeterStart: 123456,
+                Timestamp: DateTime.UtcNow
+            );
 
 
             await SendMessageAsync(request);
@@ -675,7 +660,7 @@ namespace TestChargePoint
             
             Console.WriteLine($"- Transaction Id: {response.IdTagInfo.Status}\n");
 
-            _transactionId = null;
+            _transactionId = 0;
 
             _menuTokenSource.Cancel();
         }

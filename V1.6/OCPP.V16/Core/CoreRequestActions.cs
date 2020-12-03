@@ -19,6 +19,6 @@ namespace OCPP.V16.Core
     public record ResetRequest(ResetType Type) : RequestBase<ResetRequest>;
     public record StartTransactionRequest(int ConnectorId, string IdTag, int MeterStart, DateTime Timestamp, int? ReservationId = null) : RequestBase<StartTransactionRequest>;
     public record StatusNotificationRequest(int ConnectorId, ChargePointErrorCode ErrorCode, ChargePointStatus Status, string Info = null, DateTime? Timestamp = null, string VendorId = null, string VendorErrorCode = null) : RequestBase<StatusNotificationRequest>;
-    public record StopTransactionRequest(int MeterStop, DateTime Timestamp, int TransactionId, string IdTag, Reason Reason, ICollection<MeterValue> TransactionData) : RequestBase<StopTransactionRequest>;
+    public record StopTransactionRequest(int MeterStop, DateTime Timestamp, int TransactionId, string IdTag, Reason? Reason = null, ICollection<MeterValue> TransactionData = null) : RequestBase<StopTransactionRequest>;
     public record UnlockConnectorRequest(int ConnectorId) : RequestBase<UnlockConnectorRequest>;
 }
