@@ -10,7 +10,21 @@ namespace OCPP.V16.Core
     public record ChargingSchedule(ChargingRateUnitType ChargingRateUnit, ICollection<ChargingSchedulePeriod> ChargingSchedulePeriod, int Duration, DateTime StartSchedule, double MinChargingRate);
     public record ChargingSchedulePeriod(int StartPeriod, double Limit, int? NumberPhases = null);
     public record IdTagInfo(DateTime ExpiryDate, string ParentIdTag, AuthorizationStatus Status);
-    public record KeyValue(string Key, bool Readonly, string Value = null);
     public record MeterValue(DateTime Timestamp, ICollection<SampledValue> SampledValue);
     public record SampledValue(string Value, ReadingContext? Context = null, ValueFormat? Format = null, Measurand? Measurand = null, Phase? Phase = null, Location? Location = null, UnitOfMeasure? Unit = null);
+
+
+    public record KeyValue(string Name, bool Required, bool ReadOnly);
+    public record KeyValue<T>(string Key, bool Required, bool Readonly, T Value) : KeyValue(Key, Required, Readonly)
+    {
+        public Type Type
+        {
+            get
+            {
+                return typeof(T);
+            }
+        }
+    }
+    
+    
 }

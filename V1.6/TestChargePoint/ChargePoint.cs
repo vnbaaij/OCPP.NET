@@ -323,31 +323,31 @@ namespace TestChargePoint
                                     break;
                                 case OcppAction.GetConfiguration:
                                     response = message.Parse<GetConfigurationRequest, GetConfigurationResponse>(operation.request as GetConfigurationRequest);
-                                    // ToDo: HandleGetConfiguration
+                                    HandleGetConfiguration(response as GetConfigurationResponse);
                                     break;
                                 case OcppAction.UnlockConnector:
                                     response = message.Parse<UnlockConnectorRequest, UnlockConnectorResponse>(operation.request as UnlockConnectorRequest);
-                                    // ToDo: HandleUnlockConnector
+                                    HandleUnlockConnector(response as UnlockConnectorResponse);
                                     break;
                                 case OcppAction.Reset:
                                     response = message.Parse<ResetRequest, ResetResponse>(operation.request as ResetRequest);
-                                    // ToDo: HandleReset
+                                    HandleReset(response as ResetResponse);
                                     break;
                                 case OcppAction.RemoteStartTransaction:
                                     response = message.Parse<RemoteStartTransactionRequest, RemoteStartTransactionResponse>(operation.request as RemoteStartTransactionRequest);
-                                    // ToDo: HandleRemoteStartTransaction
+                                    HandleRemoteStartTransaction(response as RemoteStartTransactionResponse);
                                     break;
                                 case OcppAction.RemoteStopTransaction:
                                     response = message.Parse<RemoteStopTransactionRequest, RemoteStopTransactionResponse>(operation.request as RemoteStopTransactionRequest);
-                                    // ToDo: HandleRemoteStopTransaction
+                                    HandleRemoteStopTransaction(response as RemoteStopTransactionResponse);
                                     break;
                                 case OcppAction.ChangeConfiguration:
                                     response = message.Parse<ChangeConfigurationRequest, ChangeConfigurationResponse>(operation.request as ChangeConfigurationRequest);
-                                    // ToDo: HandleChangeConfiguration
+                                    HandleChangeConfiguration(response as ChangeConfigurationResponse);
                                     break;
                                 case OcppAction.ChangeAvailability:
                                     response = message.Parse<ChangeAvailabilityRequest, ChangeAvailabilityResponse>(operation.request as ChangeAvailabilityRequest);
-                                    // ToDo: HandleChangeAvailability
+                                    HandleChangeAvailability(response as ChangeAvailabilityResponse);
                                     break;
                                 case OcppAction.DiagnosticsStatusNotification:
                                 case OcppAction.FirmwareStatusNotification:
@@ -663,12 +663,48 @@ namespace TestChargePoint
 
         private static void HandleStopTransaction(StopTransactionResponse response)
         {
-            
             Console.WriteLine($"- Transaction Id: {response.IdTagInfo.Status}\n");
 
             _transactionId = 0;
 
             _menuTokenSource.Cancel();
+        }
+
+        private static void HandleUnlockConnector(UnlockConnectorResponse response)
+        {
+            Console.WriteLine($"- Status: {response.Status}\n");
+
+            _menuTokenSource.Cancel();
+        }
+
+        private static void HandleGetConfiguration(GetConfigurationResponse getConfigurationResponse)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void HandleChangeAvailability(ChangeAvailabilityResponse changeAvailabilityResponse)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void HandleChangeConfiguration(ChangeConfigurationResponse changeConfigurationResponse)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void HandleRemoteStopTransaction(RemoteStopTransactionResponse remoteStopTransactionResponse)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void HandleRemoteStartTransaction(RemoteStartTransactionResponse remoteStartTransactionResponse)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void HandleReset(ResetResponse resetResponse)
+        {
+            throw new NotImplementedException();
         }
 
         private static async Task SendMessageAsync<T>(T request)
