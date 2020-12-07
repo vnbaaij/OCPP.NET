@@ -34,14 +34,6 @@ namespace OCPP.V16
 
         public OcppMessage(ArraySegment<byte> message)
         {
-            //var options = new JsonSerializerOptions
-            //{
-            //    IgnoreNullValues = true,
-            //    PropertyNameCaseInsensitive = true,
-            //    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            //};
-            //options.Converters.Add(new JsonStringEnumConverter());
-
             JsonSerializerOptions options = GetSerializerOptions();
 
             var responseArray = JsonSerializer.Deserialize<object[]>(message, options);
@@ -61,7 +53,6 @@ namespace OCPP.V16
             {
                 Payload = responseArray[2].ToString();
             }
-
         }
 
         public JsonDocument ToJsonDocument()
@@ -151,7 +142,6 @@ namespace OCPP.V16
 
         public void Log(bool receiving)
         {
-            
             if (receiving)
                 Console.ForegroundColor = ConsoleColor.Green;
             else
@@ -173,7 +163,6 @@ namespace OCPP.V16
             Console.WriteLine();
 
             Console.ResetColor();
-
         }
 
         private void LogPayload()

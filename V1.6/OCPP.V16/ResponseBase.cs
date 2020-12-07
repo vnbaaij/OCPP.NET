@@ -29,7 +29,6 @@ namespace OCPP.V16
         /// The time taken by request and response.
         /// </summary>
         [JsonIgnore]
-
         public TimeSpan Duration { get; set; }
 
         /// <summary>
@@ -44,11 +43,10 @@ namespace OCPP.V16
         }
     }
 
-
     /// <summary>
     /// An abstract OCPP response base.
     /// </summary>
-    public abstract record ResponseBase<TResponse> : IResponse /*, IEquatable<TResponse> */
+    public abstract record ResponseBase<TResponse> : IResponse 
         where TResponse : class, IResponse
     {
         /// <summary>

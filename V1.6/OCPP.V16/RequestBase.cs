@@ -7,7 +7,7 @@ namespace OCPP.V16
     /// An abstract OCPP request message base.
     /// </summary>
     public abstract record RequestBase<T> : IRequest 
-        where T : class
+        where T : class, IRequest
     {
         /// <summary>
         /// The timestamp of the request message creation.

@@ -10,7 +10,7 @@ namespace OCPP.V16
         /// <summary>
         /// Timestamp of the response creation.
         /// </summary>
-        DateTime ResponseTimestamp { get; }
+        DateTime ResponseTimestamp { get; init; }
 
         /// <summary>
         ///  The unique Id of each message send/received

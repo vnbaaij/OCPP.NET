@@ -418,7 +418,7 @@ namespace TestChargePoint
         private static async Task SendDataTransferAsync()
         {
             var request = new DataTransferRequest(
-                VendorId: "",
+                VendorId: "bbbbb",
                 Data: "Just some random extra data",
                 MessageId: ""
 
@@ -564,7 +564,7 @@ namespace TestChargePoint
 
         private static async Task HandleClearCacheAsync(OcppMessage message)
         {
-            ClearCacheResponse response = null; // message.Parse<ClearCacheResponse>();
+            ClearCacheResponse response = message.Parse<ClearCacheResponse>();
 
             ConsoleKeyInfo cki;
 
@@ -596,14 +596,14 @@ namespace TestChargePoint
 
         private static async Task HandleTriggerMessageAsync(OcppMessage message)
         {
-            TriggerMessageResponse response = null; //message.Parse<TriggerMessageResponse>();
+            TriggerMessageResponse response = message.Parse<TriggerMessageResponse>();
 
             ConsoleKeyInfo cki;
 
             Console.ResetColor();
             Console.WriteLine($"TriggerMessage operation received for {response.Operation}. Choose an action to continue:");
-            Console.WriteLine("\tA - Accept message");
-            Console.WriteLine("\tR - Reject message");
+            Console.WriteLine("\ta - Accept message");
+            Console.WriteLine("\tr - Reject message");
             Console.Write("\r\nSelect an action: ");
 
             cki = Console.ReadKey();
