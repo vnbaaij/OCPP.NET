@@ -284,77 +284,77 @@ namespace TestChargePoint
                                 }
                             }
 
-                            IResponse response;
+                            IAction action;
 
                             switch (message.Action)
                             {
                                 case OcppAction.BootNotification:
-                                    response = message.Parse<BootNotificationRequest, BootNotificationResponse>(operation.request as BootNotificationRequest);
-                                    await HandleBootNotificationAsync(response as BootNotificationResponse);
+                                    action = message.Parse<BootNotificationRequest, BootNotificationResponse>(operation.request as BootNotificationRequest);
+                                    await HandleBootNotificationAsync(action as BootNotificationResponse);
                                     break;
                                 case OcppAction.Authorize:
-                                    response = message.Parse<AuthorizeRequest, AuthorizeResponse>(operation.request as AuthorizeRequest);
-                                    HandleAuthorize(response as AuthorizeResponse);
+                                    action = message.Parse<AuthorizeRequest, AuthorizeResponse>(operation.request as AuthorizeRequest);
+                                    HandleAuthorize(action as AuthorizeResponse);
                                     break;
                                 case OcppAction.ClearCache:
-                                    response = message.Parse<ClearCacheResponse>();
+                                    action = message.Parse<ClearCacheResponse>();
                                     await HandleClearCacheAsync(message);
                                     break;
                                 case OcppAction.Heartbeat:
-                                    response = message.Parse<HeartbeatResponse>();
-                                    HandleHeartbeat(response as HeartbeatResponse);
+                                    action = message.Parse<HeartbeatResponse>();
+                                    HandleHeartbeat(action as HeartbeatResponse);
                                     break;
 
                                 case OcppAction.TriggerMessage:
-                                    response = message.Parse<TriggerMessageRequest,TriggerMessageResponse>(operation.request as TriggerMessageRequest);
+                                    action = message.Parse<TriggerMessageRequest,TriggerMessageResponse>(operation.request as TriggerMessageRequest);
                                     await HandleTriggerMessageAsync(message);
                                     break;
                                 case OcppAction.DataTransfer:
-                                    response = message.Parse<DataTransferRequest, DataTransferResponse>(operation.request as DataTransferRequest);
-                                    HandleDataTransfer(response as DataTransferResponse);
+                                    action = message.Parse<DataTransferRequest, DataTransferResponse>(operation.request as DataTransferRequest);
+                                    HandleDataTransfer(action as DataTransferResponse);
                                     break;
                                 case OcppAction.StartTransaction:
-                                    response = message.Parse<StartTransactionRequest, StartTransactionResponse>(operation.request as StartTransactionRequest);
-                                    HandleStartTransaction(response as StartTransactionResponse);
+                                    action = message.Parse<StartTransactionRequest, StartTransactionResponse>(operation.request as StartTransactionRequest);
+                                    HandleStartTransaction(action as StartTransactionResponse);
                                     break;
                                 case OcppAction.StopTransaction:
-                                    response = message.Parse<StopTransactionRequest, StopTransactionResponse>(operation.request as StopTransactionRequest);
-                                    HandleStopTransaction(response as StopTransactionResponse);
+                                    action = message.Parse<StopTransactionRequest, StopTransactionResponse>(operation.request as StopTransactionRequest);
+                                    HandleStopTransaction(action as StopTransactionResponse);
                                     break;
                                 case OcppAction.GetConfiguration:
-                                    response = message.Parse<GetConfigurationRequest, GetConfigurationResponse>(operation.request as GetConfigurationRequest);
-                                    HandleGetConfiguration(response as GetConfigurationResponse);
+                                    action = message.Parse<GetConfigurationRequest>(false);
+                                    HandleGetConfiguration(action as GetConfigurationRequest);
                                     break;
                                 case OcppAction.UnlockConnector:
-                                    response = message.Parse<UnlockConnectorRequest, UnlockConnectorResponse>(operation.request as UnlockConnectorRequest);
-                                    HandleUnlockConnector(response as UnlockConnectorResponse);
+                                    action = message.Parse<UnlockConnectorRequest, UnlockConnectorResponse>(operation.request as UnlockConnectorRequest);
+                                    HandleUnlockConnector(action as UnlockConnectorResponse);
                                     break;
                                 case OcppAction.Reset:
-                                    response = message.Parse<ResetRequest, ResetResponse>(operation.request as ResetRequest);
-                                    HandleReset(response as ResetResponse);
+                                    action = message.Parse<ResetRequest, ResetResponse>(operation.request as ResetRequest);
+                                    HandleReset(action as ResetResponse);
                                     break;
                                 case OcppAction.RemoteStartTransaction:
-                                    response = message.Parse<RemoteStartTransactionRequest, RemoteStartTransactionResponse>(operation.request as RemoteStartTransactionRequest);
-                                    HandleRemoteStartTransaction(response as RemoteStartTransactionResponse);
+                                    action = message.Parse<RemoteStartTransactionRequest, RemoteStartTransactionResponse>(operation.request as RemoteStartTransactionRequest);
+                                    HandleRemoteStartTransaction(action as RemoteStartTransactionResponse);
                                     break;
                                 case OcppAction.RemoteStopTransaction:
-                                    response = message.Parse<RemoteStopTransactionRequest, RemoteStopTransactionResponse>(operation.request as RemoteStopTransactionRequest);
-                                    HandleRemoteStopTransaction(response as RemoteStopTransactionResponse);
+                                    action = message.Parse<RemoteStopTransactionRequest, RemoteStopTransactionResponse>(operation.request as RemoteStopTransactionRequest);
+                                    HandleRemoteStopTransaction(action as RemoteStopTransactionResponse);
                                     break;
                                 case OcppAction.ChangeConfiguration:
-                                    response = message.Parse<ChangeConfigurationRequest, ChangeConfigurationResponse>(operation.request as ChangeConfigurationRequest);
-                                    HandleChangeConfiguration(response as ChangeConfigurationResponse);
+                                    action = message.Parse<ChangeConfigurationRequest, ChangeConfigurationResponse>(operation.request as ChangeConfigurationRequest);
+                                    HandleChangeConfiguration(action as ChangeConfigurationResponse);
                                     break;
                                 case OcppAction.ChangeAvailability:
-                                    response = message.Parse<ChangeAvailabilityRequest, ChangeAvailabilityResponse>(operation.request as ChangeAvailabilityRequest);
-                                    HandleChangeAvailability(response as ChangeAvailabilityResponse);
+                                    action = message.Parse<ChangeAvailabilityRequest, ChangeAvailabilityResponse>(operation.request as ChangeAvailabilityRequest);
+                                    HandleChangeAvailability(action as ChangeAvailabilityResponse);
                                     break;
                                 case OcppAction.DiagnosticsStatusNotification:
                                 case OcppAction.FirmwareStatusNotification:
                                 case OcppAction.StatusNotification:
                                 case OcppAction.MeterValues:
                                 case OcppAction.UpdateFirmware:
-                                    response = message.Parse<EmptyResponse>();
+                                    action = message.Parse<EmptyResponse>();
                                     _menuTokenSource.Cancel();
                                     break;
                                 case OcppAction.Unknown:
@@ -420,7 +420,7 @@ namespace TestChargePoint
             var request = new DataTransferRequest(
                 VendorId: "bbbbb",
                 Data: "Just some random extra data",
-                MessageId: ""
+                VendorMessageId: ""
 
             );
 
@@ -677,32 +677,32 @@ namespace TestChargePoint
             _menuTokenSource.Cancel();
         }
 
-        private static void HandleGetConfiguration(GetConfigurationResponse getConfigurationResponse)
+        private static void HandleGetConfiguration(GetConfigurationRequest request)
+        {
+            Console.WriteLine($"{request}");
+        }
+
+        private static void HandleChangeAvailability(ChangeAvailabilityResponse response)
         {
             throw new NotImplementedException();
         }
 
-        private static void HandleChangeAvailability(ChangeAvailabilityResponse changeAvailabilityResponse)
+        private static void HandleChangeConfiguration(ChangeConfigurationResponse response)
         {
             throw new NotImplementedException();
         }
 
-        private static void HandleChangeConfiguration(ChangeConfigurationResponse changeConfigurationResponse)
+        private static void HandleRemoteStopTransaction(RemoteStopTransactionResponse response)
         {
             throw new NotImplementedException();
         }
 
-        private static void HandleRemoteStopTransaction(RemoteStopTransactionResponse remoteStopTransactionResponse)
+        private static void HandleRemoteStartTransaction(RemoteStartTransactionResponse response)
         {
             throw new NotImplementedException();
         }
 
-        private static void HandleRemoteStartTransaction(RemoteStartTransactionResponse remoteStartTransactionResponse)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void HandleReset(ResetResponse resetResponse)
+        private static void HandleReset(ResetResponse response)
         {
             throw new NotImplementedException();
         }

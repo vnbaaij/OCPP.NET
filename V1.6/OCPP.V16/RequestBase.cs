@@ -14,5 +14,11 @@ namespace OCPP.V16
         /// </summary>
         [JsonIgnore]
         public DateTime RequestTimestamp { get; init; } = DateTime.UtcNow;
+
+        /// <summary>
+        /// The Id of the message coming from the CSMS
+        /// </summary>
+        [JsonIgnore]
+        public Guid MessageId { get; set; } = Guid.NewGuid();
     }
 }

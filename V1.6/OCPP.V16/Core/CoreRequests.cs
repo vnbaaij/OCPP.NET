@@ -7,7 +7,7 @@ namespace OCPP.V16.Core
     public record BootNotificationRequest(string ChargePointVendor, string ChargePointModel, string ChargePointSerialNumber = null, string ChargeBoxSerialNumber = null, string FirmwareVersion = null, string Iccid = null, string Imsi = null, string MeterType = null, string MeterSerialNumber = null) : RequestBase<BootNotificationRequest>;
     public record ChangeAvailabilityRequest(int ConnectorId, AvailabilityType Type) : RequestBase<ChangeAvailabilityRequest>;
     public record ChangeConfigurationRequest(string Key, string Value) : RequestBase<ChangeConfigurationRequest>;
-    public record DataTransferRequest(string VendorId, string MessageId = null, string Data = null) : RequestBase<DataTransferRequest>;
+    public record DataTransferRequest(string VendorId, string VendorMessageId = null, string Data = null) : RequestBase<DataTransferRequest>;
     public record GetConfigurationRequest(ICollection<string> Key = null) : RequestBase<GetConfigurationRequest>;
     //public record HeartbeatRequest() : RequestBase<HeartbeatRequest>;
     public record MeterValuesRequest(int ConnectorId, ICollection<MeterValue> MeterValues, int? TransactionId = null) : RequestBase<MeterValuesRequest>;

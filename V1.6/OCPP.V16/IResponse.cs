@@ -12,10 +12,7 @@ namespace OCPP.V16
         /// </summary>
         DateTime ResponseTimestamp { get; init; }
 
-        /// <summary>
-        ///  The unique Id of each message send/received
-        /// </summary>
-        Guid MessageId { get; set; }
+        
     }
 }
 

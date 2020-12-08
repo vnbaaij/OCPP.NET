@@ -72,12 +72,12 @@ namespace OCPP.V16
             return jsonString;
         }
 
-        public TResponse Parse<TResponse>(bool receiving = true)
-            where TResponse : ResponseBase<TResponse>
+        public TAction Parse<TAction>(bool receiving = true)
+            where TAction : IAction
         {
             JsonSerializerOptions options = GetSerializerOptions();
 
-            TResponse response = JsonSerializer.Deserialize<TResponse>(Payload, options);
+            TAction response = JsonSerializer.Deserialize<TAction>(Payload, options);
             response.MessageId = MessageId;
 
             Log(receiving);
@@ -100,6 +100,19 @@ namespace OCPP.V16
             return response;
         }
 
+        //public TRequest Parse<TRequest>()
+        //    where TRequest : RequestBase<TRequest>
+        //{
+        //    JsonSerializerOptions options = GetSerializerOptions();
+
+        //    TRequest request = JsonSerializer.Deserialize<TRequest>(Payload, options);
+        //    request.MessageId = MessageId;
+
+        //    Log(false);
+
+        //    return request;
+        //}
+
         public static OcppMessage Compose<T>(T action)
             where T : class, IAction
         {
@@ -111,7 +124,7 @@ namespace OCPP.V16
             {
                 case IRequest request:
                     message.MessageType = MessageType.CALL;
-                    message.MessageId = Guid.NewGuid();
+                    message.MessageId = action.MessageId;
                     message.Action = Enum.Parse<OcppAction>(request.GetType().Name.Replace("Request", ""));
                     break;
                 case IResponse response:
