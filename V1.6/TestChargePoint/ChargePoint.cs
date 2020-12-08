@@ -69,6 +69,7 @@ namespace TestChargePoint
 
                 _ = Task.Run(() => SendAsync().ConfigureAwait(false));
                 _ = Task.Run(() => ReceiveAsync().ConfigureAwait(false));
+
             }
             catch (OperationCanceledException)
             {
@@ -82,7 +83,7 @@ namespace TestChargePoint
 
         public static async Task StopAsync()
         {
-            Console.WriteLine($"\nClosing connection");
+            Console.WriteLine($"Closing connection");
             _sendTokenSource.Cancel();
             if (_socket == null || _socket.State != WebSocketState.Open) return;
 
@@ -100,7 +101,7 @@ namespace TestChargePoint
             {
                 // normal upon task/token cancellation, disregard
             }
-            
+
             _receiveTokenSource.Cancel();
         }
 
@@ -113,10 +114,11 @@ namespace TestChargePoint
             {
                 try
                 {
+
                     _menuTokenSource = new();
                     ShowMainMenu();
-                    cki = Console.ReadKey();
-                    Console.WriteLine();
+                    cki = Console.ReadKey(false);
+                    //Console.WriteLine();
 
                     switch (cki.KeyChar)
                     {
@@ -154,9 +156,12 @@ namespace TestChargePoint
                     if (cki.Key == ConsoleKey.Escape)
                     {
                         running = false;
+                        Console.WriteLine();
                         _menuTokenSource.Cancel();
                     }
-                    await Task.Run(() => Task.Delay(10000, _menuTokenSource.Token));
+                    await Task.Run(() => Task.Delay(20000, _menuTokenSource.Token));
+
+
                 }
                 catch (OperationCanceledException)
                 {
@@ -252,7 +257,7 @@ namespace TestChargePoint
             }
         }
 
-        
+
         private static async Task ReceiveAsync()
         {
             var cancellationToken = _receiveTokenSource.Token;
@@ -296,15 +301,11 @@ namespace TestChargePoint
                                     action = message.Parse<AuthorizeRequest, AuthorizeResponse>(operation.request as AuthorizeRequest);
                                     HandleAuthorize(action as AuthorizeResponse);
                                     break;
-                                case OcppAction.ClearCache:
-                                    action = message.Parse<ClearCacheResponse>();
-                                    await HandleClearCacheAsync(message);
-                                    break;
+
                                 case OcppAction.Heartbeat:
                                     action = message.Parse<HeartbeatResponse>();
                                     HandleHeartbeat(action as HeartbeatResponse);
                                     break;
-
                                 case OcppAction.TriggerMessage:
                                     action = message.Parse<TriggerMessageRequest,TriggerMessageResponse>(operation.request as TriggerMessageRequest);
                                     await HandleTriggerMessageAsync(message);
@@ -321,34 +322,41 @@ namespace TestChargePoint
                                     action = message.Parse<StopTransactionRequest, StopTransactionResponse>(operation.request as StopTransactionRequest);
                                     HandleStopTransaction(action as StopTransactionResponse);
                                     break;
-                                case OcppAction.GetConfiguration:
-                                    action = message.Parse<GetConfigurationRequest>(false);
-                                    HandleGetConfiguration(action as GetConfigurationRequest);
-                                    break;
-                                case OcppAction.UnlockConnector:
-                                    action = message.Parse<UnlockConnectorRequest, UnlockConnectorResponse>(operation.request as UnlockConnectorRequest);
-                                    HandleUnlockConnector(action as UnlockConnectorResponse);
-                                    break;
-                                case OcppAction.Reset:
-                                    action = message.Parse<ResetRequest, ResetResponse>(operation.request as ResetRequest);
-                                    HandleReset(action as ResetResponse);
-                                    break;
-                                case OcppAction.RemoteStartTransaction:
-                                    action = message.Parse<RemoteStartTransactionRequest, RemoteStartTransactionResponse>(operation.request as RemoteStartTransactionRequest);
-                                    HandleRemoteStartTransaction(action as RemoteStartTransactionResponse);
-                                    break;
-                                case OcppAction.RemoteStopTransaction:
-                                    action = message.Parse<RemoteStopTransactionRequest, RemoteStopTransactionResponse>(operation.request as RemoteStopTransactionRequest);
-                                    HandleRemoteStopTransaction(action as RemoteStopTransactionResponse);
+
+                                case OcppAction.ChangeAvailability:
+                                    action = message.Parse<ChangeAvailabilityRequest>(false);
+                                    await HandleChangeAvailability(action as ChangeAvailabilityRequest);
                                     break;
                                 case OcppAction.ChangeConfiguration:
                                     action = message.Parse<ChangeConfigurationRequest, ChangeConfigurationResponse>(operation.request as ChangeConfigurationRequest);
                                     HandleChangeConfiguration(action as ChangeConfigurationResponse);
                                     break;
-                                case OcppAction.ChangeAvailability:
-                                    action = message.Parse<ChangeAvailabilityRequest, ChangeAvailabilityResponse>(operation.request as ChangeAvailabilityRequest);
-                                    HandleChangeAvailability(action as ChangeAvailabilityResponse);
+                                case OcppAction.ClearCache:
+                                    action = message.Parse<ClearCacheResponse>();
+                                    await HandleClearCacheAsync(message);
                                     break;
+
+                                case OcppAction.GetConfiguration:
+                                    action = message.Parse<GetConfigurationRequest>(false);
+                                    HandleGetConfiguration(action as GetConfigurationRequest);
+                                    break;
+                                case OcppAction.UnlockConnector:
+                                    action = message.Parse<UnlockConnectorRequest>(false);
+                                    await HandleUnlockConnector(action as UnlockConnectorRequest);
+                                    break;
+                                case OcppAction.Reset:
+                                    action = message.Parse<ResetRequest>(true);
+                                    await HandleReset(action as ResetRequest);
+                                    break;
+                                case OcppAction.RemoteStartTransaction:
+                                    action = message.Parse<RemoteStartTransactionRequest>(false);
+                                    await HandleRemoteStartTransaction(action as RemoteStartTransactionRequest);
+                                    break;
+                                case OcppAction.RemoteStopTransaction:
+                                    action = message.Parse<RemoteStopTransactionRequest>(false);
+                                    await HandleRemoteStopTransaction(action as RemoteStopTransactionRequest);
+                                    break;
+
                                 case OcppAction.DiagnosticsStatusNotification:
                                 case OcppAction.FirmwareStatusNotification:
                                 case OcppAction.StatusNotification:
@@ -383,10 +391,14 @@ namespace TestChargePoint
             }
         }
 
-        private static async Task SendAuthorizeAsync()
+        private static async Task SendAuthorizeAsync(string idTag = null)
         {
-            var request = new AuthorizeRequest(IdTag: "3060044040003000853");
-            
+
+            if (idTag is null)
+                idTag = Configuration.GetConfigurationValue<string>(Configuration.Settings, "IdTag");
+
+            var request = new AuthorizeRequest(IdTag: idTag);
+
             await SendMessageAsync(request);
         }
 
@@ -465,7 +477,7 @@ namespace TestChargePoint
                 Value: "230"
             );
             sampledValueList.Add(sv);
-            
+
 
             MeterValue mv = new
             (
@@ -498,32 +510,35 @@ namespace TestChargePoint
             await SendMessageAsync(request);
         }
 
-        private static async Task SendStopTransactionAsync()
-        {
-            var request = new StopTransactionRequest(
-                IdTag: "3060044040003000853",
-                Timestamp: DateTime.UtcNow,
-                MeterStop: 123457,
-                Reason: Reason.UnlockCommand,
-                TransactionId: _transactionId
-            );
-
-
-            await SendMessageAsync(request);
-
-        }
-
         private static async Task SendStartTransactionAsync()
         {
             var request = new StartTransactionRequest(
                 ConnectorId: 1,
-                IdTag: "3060044040003000853",
-                MeterStart: 123456,
+                IdTag: Configuration.GetConfigurationValue<string>(Configuration.Settings, "IdTag"),
+                MeterStart: Configuration.GetConfigurationValue<int>(Configuration.Settings, "MeterStart"),
                 Timestamp: DateTime.UtcNow
             );
 
 
             await SendMessageAsync(request);
+        }
+
+        private static async Task SendStopTransactionAsync(int? transactionId = null)
+        {
+            if (transactionId is null)
+                transactionId = _transactionId;
+
+            var request = new StopTransactionRequest(
+                IdTag: Configuration.GetConfigurationValue<string>(Configuration.Settings, "IdTag"),
+                Timestamp: DateTime.UtcNow,
+                MeterStop: Configuration.GetConfigurationValue<int>(Configuration.Settings, "MeterStop"),
+                Reason: Reason.UnlockCommand,
+                TransactionId: (int)transactionId
+            );
+
+
+            await SendMessageAsync(request);
+
         }
 
 
@@ -562,23 +577,7 @@ namespace TestChargePoint
             _menuTokenSource.Cancel();
         }
 
-        private static async Task HandleClearCacheAsync(OcppMessage message)
-        {
-            ClearCacheResponse response = message.Parse<ClearCacheResponse>();
 
-            ConsoleKeyInfo cki;
-
-            Console.ResetColor();
-            Console.WriteLine("ClearCache operation received. ");
-            Console.WriteLine("\tPress 'a' to accept or any other key reject");
-            Console.Write("\r\nSelect an action: ");
-
-            cki = Console.ReadKey();
-
-            bool status = cki.KeyChar == 'a';
-            await SendClearCacheAsync(response, status);
-            _menuTokenSource.Cancel();
-        }
 
         private static void HandleDataTransfer(DataTransferResponse response)
         {
@@ -617,7 +616,7 @@ namespace TestChargePoint
                     _ => TriggerMessageStatus.NotImplemented,
                 }
             };
-            
+
 
             OcppAction? operation = response.Operation;
             response.Operation = null;
@@ -670,21 +669,38 @@ namespace TestChargePoint
             _menuTokenSource.Cancel();
         }
 
-        private static void HandleUnlockConnector(UnlockConnectorResponse response)
-        {
-            Console.WriteLine($"- Status: {response.Status}\n");
-
-            _menuTokenSource.Cancel();
-        }
 
         private static void HandleGetConfiguration(GetConfigurationRequest request)
         {
             Console.WriteLine($"{request}");
         }
 
-        private static void HandleChangeAvailability(ChangeAvailabilityResponse response)
+        private static async Task HandleChangeAvailability(ChangeAvailabilityRequest request)
         {
-            throw new NotImplementedException();
+            ConsoleKeyInfo cki;
+
+            Console.ResetColor();
+            Console.WriteLine("ChangeAvailability request operation received. Choose how to respond:");
+            Console.WriteLine("\t1 - Unlock message");
+            Console.WriteLine("\t2 - Unlock failed message");
+            Console.WriteLine("\t3 - Not Supported message");
+            Console.Write("\r\nSelect an action: ");
+
+            cki = Console.ReadKey();
+
+            var response = new ChangeAvailabilityResponse(request, Status: cki.KeyChar switch
+            {
+                '1' => AvailabilityStatus.Accepted,
+                '2' => AvailabilityStatus.Scheduled,
+                _ => AvailabilityStatus.Rejected
+            });
+
+
+            Console.WriteLine($"\nSending UnlockConnectorResponse with status '{response.Status}'...");
+
+            await SendMessageAsync(response);
+
+            _menuTokenSource.Cancel();
         }
 
         private static void HandleChangeConfiguration(ChangeConfigurationResponse response)
@@ -692,20 +708,127 @@ namespace TestChargePoint
             throw new NotImplementedException();
         }
 
-        private static void HandleRemoteStopTransaction(RemoteStopTransactionResponse response)
+        private static async Task HandleClearCacheAsync(OcppMessage message)
         {
-            throw new NotImplementedException();
+            ClearCacheResponse response = message.Parse<ClearCacheResponse>();
+
+            ConsoleKeyInfo cki;
+
+            Console.ResetColor();
+            Console.WriteLine("ClearCache operation received. ");
+            Console.WriteLine("\tPress 'a' to accept or any other key reject");
+            Console.Write("\r\nSelect an action: ");
+
+            cki = Console.ReadKey();
+
+            await SendClearCacheAsync(response, cki.KeyChar == 'a');
+            _menuTokenSource.Cancel();
         }
 
-        private static void HandleRemoteStartTransaction(RemoteStartTransactionResponse response)
+        private static async Task HandleRemoteStartTransaction(RemoteStartTransactionRequest request)
         {
-            throw new NotImplementedException();
+            bool authorizeRemoteTxRequests = Configuration.GetConfigurationValue<bool>(Configuration.Core, "AuthorizeRemoteTxRequests");
+
+            if (request.ConnectorId is null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("No connector id supplied. Remote start rejected!");
+                Console.ResetColor();
+                return;
+            }
+
+            if (authorizeRemoteTxRequests)
+            {
+                //1) Local AuthorizationList
+                //2) Authorization Cache
+                //3) Authorize
+                await SendAuthorizeAsync(request.IdTag);
+
+            }
+
+            await SendStartTransactionAsync();
+
+            _menuTokenSource.Cancel();
         }
 
-        private static void HandleReset(ResetResponse response)
+        private static async Task HandleRemoteStopTransaction(RemoteStopTransactionRequest request)
         {
-            throw new NotImplementedException();
+            ConsoleKeyInfo cki;
+
+            Console.ResetColor();
+            Console.WriteLine("RemoteStopTransaction request operation received. Choose how to respond:");
+            Console.WriteLine("\ta - Accept");
+            Console.WriteLine("\tr - Reject");
+            Console.Write("\r\nSelect an action: ");
+
+            cki = Console.ReadKey();
+
+            var response = new RemoteStopTransactionResponse(request, Status: cki.KeyChar switch
+            {
+                'a' => RemoteStartStopStatus.Accepted,
+                _ => RemoteStartStopStatus.Rejected
+            });
+
+            await SendMessageAsync(response);
+
+            await SendStopTransactionAsync();
+
+            _menuTokenSource.Cancel();
         }
+
+        private static async Task HandleReset(ResetRequest request)
+        {
+            ConsoleKeyInfo cki;
+
+            Console.ResetColor();
+            Console.WriteLine("Reset request operation received. ");
+            Console.WriteLine("\tPress 'a' to accept or any other key reject");
+            Console.Write("\r\nSelect an action: ");
+
+            cki = Console.ReadKey();
+
+            var response = new ResetResponse(request, Status: cki.KeyChar switch
+            {
+                'a' => ResetStatus.Accepted,
+                _ => ResetStatus.Rejected
+            });
+
+            Console.WriteLine($"\nSending ResetResponse with status '{response.Status}'...");
+
+            await SendMessageAsync(response);
+
+            _menuTokenSource.Cancel();
+        }
+
+        private static async Task HandleUnlockConnector(UnlockConnectorRequest request)
+        {
+            Console.WriteLine($"- Status: {request}\n");
+
+            ConsoleKeyInfo cki;
+
+            Console.ResetColor();
+            Console.WriteLine("UnlockConnector request operation received. Choose how to respond:");
+            Console.WriteLine("\t1 - Unlock message");
+            Console.WriteLine("\t2 - Unlock failed message");
+            Console.WriteLine("\t3 - Not Supported message");
+            Console.Write("\r\nSelect an action: ");
+
+            cki = Console.ReadKey();
+
+            var response = new UnlockConnectorResponse(request, Status: cki.KeyChar switch
+            {
+                '1' => UnlockStatus.Unlocked,
+                '2' => UnlockStatus.UnlockFailed,
+                _ => UnlockStatus.NotSupported
+            });
+
+            Console.WriteLine($"\nSending UnlockConnectorResponse with status '{response.Status}'...");
+
+            await SendMessageAsync(response);
+
+            _menuTokenSource.Cancel();
+        }
+
 
         private static async Task SendMessageAsync<T>(T request)
             where T : class, IAction

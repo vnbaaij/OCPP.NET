@@ -11,10 +11,11 @@ namespace OCPP.V16
         where TResponse : class, IResponse
     {
         private TRequest _request;
-        
+
         /// <summary>
         /// The request leading to this response.
         /// </summary>
+        [JsonIgnore]
         public TRequest Request
         {
             get { return _request; }
@@ -39,7 +40,11 @@ namespace OCPP.V16
         {
             Request = request;
             if (request != null)
+            {
                 Duration = ResponseTimestamp - request.RequestTimestamp;
+                MessageId = request.MessageId;
+                Name = request.GetType().Name.Replace("Request", "");
+            }
         }
     }
 
@@ -60,5 +65,11 @@ namespace OCPP.V16
         /// </summary>
         [JsonIgnore]
         public Guid MessageId { get; set; }
+
+        /// <summary>
+        /// The Name of the response (without the Response suffix)
+        /// </summary>
+        [JsonIgnore]
+        public string Name { get; set; }
     }
 }

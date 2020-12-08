@@ -19,17 +19,20 @@ namespace OCPP.V16
 
         public OcppAction Action { get; set; }
 
+        public string Name { get; set; }
+
         public OcppMessage()
         {
 
         }
 
-        public OcppMessage(MessageType messageType, Guid messageId, string payload, OcppAction action = OcppAction.Unknown)
+        public OcppMessage(MessageType messageType, Guid messageId, string payload, OcppAction action = OcppAction.Unknown, string name = null)
         {
             MessageType = messageType;
             MessageId = messageId;
             Payload = payload;
             Action = action;
+            Name = name;
         }
 
         public OcppMessage(ArraySegment<byte> message)
@@ -79,6 +82,7 @@ namespace OCPP.V16
 
             TAction response = JsonSerializer.Deserialize<TAction>(Payload, options);
             response.MessageId = MessageId;
+            //Name = Name;
 
             Log(receiving);
 
@@ -94,6 +98,7 @@ namespace OCPP.V16
             TResponse response = JsonSerializer.Deserialize<TResponse>(Payload, options);
             response.MessageId = MessageId;
             response.Request = request;
+            Name = request?.Name;
             
             Log(receiving);
 
@@ -125,12 +130,14 @@ namespace OCPP.V16
                 case IRequest request:
                     message.MessageType = MessageType.CALL;
                     message.MessageId = action.MessageId;
-                    message.Action = Enum.Parse<OcppAction>(request.GetType().Name.Replace("Request", ""));
+                    message.Action = Enum.Parse<OcppAction>(request.Name);
+                    message.Name = request.Name;
                     break;
                 case IResponse response:
                     message.MessageType = MessageType.CALLRESULT;
                     message.MessageId = response.MessageId;
                     message.Action = OcppAction.Unknown;
+                    message.Name = response.Name;
                     break;
                 default:
                     break;
@@ -160,7 +167,7 @@ namespace OCPP.V16
             else
                 Console.ForegroundColor = ConsoleColor.Gray;
             
-            Console.WriteLine($"\nMessage {(receiving ? "received" : "sent")} : '{Action}{(receiving ? ".conf" : ".req")}'");
+            Console.WriteLine($"\nMessage {(receiving ? "received" : "sent")} : '{Name}{(MessageType == MessageType.CALL ? ".req" : ".conf")}'");
 
             if (logVerbose)
             {

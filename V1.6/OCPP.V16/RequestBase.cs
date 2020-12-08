@@ -20,5 +20,11 @@ namespace OCPP.V16
         /// </summary>
         [JsonIgnore]
         public Guid MessageId { get; set; } = Guid.NewGuid();
+
+        /// <summary>
+        /// The Name of the request (without the Request suffix)
+        /// </summary>
+        [JsonIgnore]
+        public string Name { get; set; } = typeof(T).Name.Replace("Request", "");
     }
 }

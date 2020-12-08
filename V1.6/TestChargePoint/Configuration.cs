@@ -8,14 +8,16 @@ using OCPP.V16.Core;
 
 namespace TestChargePoint
 {
-    public class Configuration
+    public static class Configuration
     {
-        public List<KeyValue> Core { get; set; }
+        public static List<KeyValue> Core { get; set; } = new();
         //public List<KeyValue> FirmwareManagement { get; set; }
-        public List<KeyValue> ListManagement { get; set; }
+        public static List<KeyValue> ListManagement { get; set; } = new();
         //public List<KeyValue> RemoteTrigger { get; set; }
-        public List<KeyValue> Reservation { get; set; }
-        public List<KeyValue> SmartCharging { get; set; }
+        public static List<KeyValue> Reservation { get; set; } = new();
+        public static List<KeyValue> SmartCharging { get; set; } = new();
+
+        public static List<KeyValue> Settings { get; set; } = new();
 
         //For optional Configuration Keys with a boolean type, the following rules apply for the configuration key in the
         //response to a GetConfiguration.req without a list of keys:
@@ -28,7 +30,7 @@ namespace TestChargePoint
         //not write it.In case the accessibility is read-write, the Central System can also write the value for the key using
         //ChangeConfiguration.
 
-        public Configuration()
+        static Configuration()
         {
             Core.AddRange(new List<KeyValue> {
                 new KeyValue<bool>("AllowOfflineTxForUnknownId", false, false, true),
@@ -87,6 +89,16 @@ namespace TestChargePoint
                 new KeyValue<int>("ChargingScheduleMaxPeriods", true, true, 30),
                 new KeyValue<bool>("ConnectorSwitch3to1PhaseSupported", false, true, true),
                 new KeyValue<int>("MaxChargingProfilesInstalled", true, true, 15)
+            });
+
+            Settings.AddRange(new List<KeyValue>
+            {
+                //new KeyValue<int>("", false, false, 10),
+                //new KeyValue<string>("", false, false, ""),
+                //new KeyValue<bool>("", false, false, true),
+                new KeyValue<string>("IdTag", false, false, "3060044040003000853"),
+                new KeyValue<int>("MeterStart", false, false, 123400),
+                new KeyValue<int>("MeterStop", false, false, 12358),
             });
         }
 
