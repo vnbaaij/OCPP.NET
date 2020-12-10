@@ -99,24 +99,11 @@ namespace OCPP.V16
             response.MessageId = MessageId;
             response.Request = request;
             Name = request?.Name;
-            
+
             Log(receiving);
 
             return response;
         }
-
-        //public TRequest Parse<TRequest>()
-        //    where TRequest : RequestBase<TRequest>
-        //{
-        //    JsonSerializerOptions options = GetSerializerOptions();
-
-        //    TRequest request = JsonSerializer.Deserialize<TRequest>(Payload, options);
-        //    request.MessageId = MessageId;
-
-        //    Log(false);
-
-        //    return request;
-        //}
 
         public static OcppMessage Compose<T>(T action)
             where T : class, IAction
@@ -149,7 +136,7 @@ namespace OCPP.V16
 
         internal static JsonSerializerOptions GetSerializerOptions()
         {
-            var options = new JsonSerializerOptions
+            JsonSerializerOptions options = new()
             {
                 IgnoreNullValues = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -166,7 +153,7 @@ namespace OCPP.V16
                 Console.ForegroundColor = ConsoleColor.Green;
             else
                 Console.ForegroundColor = ConsoleColor.Gray;
-            
+
             Console.WriteLine($"\nMessage {(receiving ? "received" : "sent")} : '{Name}{(MessageType == MessageType.CALL ? ".req" : ".conf")}'");
 
             if (logVerbose)
