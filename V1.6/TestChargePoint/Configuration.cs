@@ -74,14 +74,14 @@ namespace TestChargePoint
                 new KeyValue<bool>("LocalAuthListEnabled", true, false, true),
                 new KeyValue<int>("LocalAuthListMaxLength", true, true, 256),
                 new KeyValue<int>("SendLocalListMaxLength", true, true, 256)
-                
+
             });
 
             Reservation.AddRange(new List<KeyValue>
             {
                 new KeyValue<bool>("ReserveConnectorZeroSupported", false, true, true)
             });
-            
+
             SmartCharging.AddRange(new List<KeyValue>
             {
                 new KeyValue<int>("ChargeProfileMaxStackLevel", true, true, 10),
@@ -99,6 +99,8 @@ namespace TestChargePoint
                 new KeyValue<string>("IdTag", false, false, "3060044040003000853"),
                 new KeyValue<int>("MeterStart", false, false, 123400),
                 new KeyValue<int>("MeterStop", false, false, 12358),
+                new KeyValue<int>("HeartbeatInterval", false, false, 300),
+                new KeyValue<DateTime>("CsmsDateTime", false, false, DateTime.UtcNow),
             });
         }
 
@@ -109,6 +111,18 @@ namespace TestChargePoint
             result = setting.Value;
 
             return result;
+        }
+
+        public static void SetConfigurationValue<T>(List<KeyValue> list, string name, T value)
+        {
+            KeyValue setting = list.First(s => s.Name.Equals(name));
+            if (list.Remove(setting))
+            {
+                KeyValue<T> newsetting = new(name, false, false, value);
+                list.Add(newsetting);
+            }
+
+            return;
         }
     }
 }

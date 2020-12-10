@@ -33,10 +33,9 @@ namespace TestChargePoint
         private static CancellationTokenSource _sendTokenSource;
         private static CancellationTokenSource _menuTokenSource;
 
-        private static int _heartbeatInterval = 300;
-        private static DateTime _csmsDateTime;
-
-        private static int _transactionId;
+        //private static int _heartbeatInterval = 300;
+        //private static DateTime _csmsDateTime;
+        //private static int _transactionId;
 
         public static WebSocketState State
         {
@@ -486,9 +485,10 @@ namespace TestChargePoint
             );
             meterValueList.Add(mv);
 
+            int transactionId = Configuration.GetConfigurationValue<int>(Configuration.Settings, "TransactionId");
             var request = new MeterValuesRequest(
                 ConnectorId: 0,
-                TransactionId: _transactionId != 0 ? _transactionId : null,
+                TransactionId: transactionId != 0 ? transactionId : null,
                 MeterValues: meterValueList
             );
 
@@ -526,7 +526,7 @@ namespace TestChargePoint
         private static async Task SendStopTransactionAsync(int? transactionId = null)
         {
             if (transactionId is null)
-                transactionId = _transactionId;
+                transactionId = Configuration.GetConfigurationValue<int>(Configuration.Settings, "TransactionId"); ;
 
             var request = new StopTransactionRequest(
                 IdTag: Configuration.GetConfigurationValue<string>(Configuration.Settings, "IdTag"),
@@ -536,9 +536,7 @@ namespace TestChargePoint
                 TransactionId: (int)transactionId
             );
 
-
             await SendMessageAsync(request);
-
         }
 
 
@@ -553,16 +551,19 @@ namespace TestChargePoint
             //BootNotificationResponse response = ProcessResponseMessage<BootNotificationResponse>(message);
 
             if (response.Interval != 0)
-                _heartbeatInterval = response.Interval;
+                Configuration.SetConfigurationValue(Configuration.Settings, "HearbeatInterval", response.Interval);
+                //_heartbeatInterval = response.Interval;
 
             Console.WriteLine($"BootNotification {response.Status}.");
             switch (response.Status)
             {
                 case RegistrationStatus.Accepted:
-                    _csmsDateTime = response.CurrentTime;
+                    Configuration.SetConfigurationValue(Configuration.Settings, "CsmsDateTime", response.CurrentTime);
+                    //_csmsDateTime = response.CurrentTime;
 
-                    Console.WriteLine($"- Heartbeat interval: {_heartbeatInterval / 60} min(s)");
-                    Console.WriteLine($"- Central System date/time: {_csmsDateTime} (UTC)\n");
+
+                    Console.WriteLine($"- Heartbeat interval: {response.Interval / 60} min(s)");
+                    Console.WriteLine($"- Central System date/time: {response.CurrentTime} (UTC)\n");
                     break;
                 case RegistrationStatus.Rejected:
                     Console.WriteLine($"- Waiting {response.Interval} seconds before reattempt");
@@ -587,9 +588,10 @@ namespace TestChargePoint
 
         private static void HandleHeartbeat(HeartbeatResponse response)
         {
-            _csmsDateTime = response.CurrentTime;
+            Configuration.SetConfigurationValue(Configuration.Settings, "CsmsDateTime", response.CurrentTime);
+            //_csmsDateTime = response.CurrentTime;
 
-            Console.WriteLine($"- Central System date/time: {_csmsDateTime} (UTC)\n");
+            Console.WriteLine($"- Central System date/time: {response.CurrentTime} (UTC)\n");
             _menuTokenSource.Cancel();
         }
 
@@ -654,9 +656,10 @@ namespace TestChargePoint
 
         private static void HandleStartTransaction(StartTransactionResponse response)
         {
-            _transactionId = response.TransactionId;
+            Configuration.SetConfigurationValue(Configuration.Settings, "TransactionId", response.TransactionId);
+            //_transactionId = ;
 
-            Console.WriteLine($"- Transaction Id: {_transactionId}\n");
+            Console.WriteLine($"- Transaction Id: {response.TransactionId}\n");
             _menuTokenSource.Cancel();
         }
 
@@ -664,7 +667,8 @@ namespace TestChargePoint
         {
             Console.WriteLine($"- Transaction Id: {response.IdTagInfo.Status}\n");
 
-            _transactionId = 0;
+            Configuration.SetConfigurationValue(Configuration.Settings, "TransactionId", 0);
+            //_transactionId = 0;
 
             _menuTokenSource.Cancel();
         }
