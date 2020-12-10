@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OCPP.V16.Core
+﻿namespace OCPP.V16.Core
 {
     public enum AuthorizationStatus
     {
@@ -21,7 +15,7 @@ namespace OCPP.V16.Core
         Rejected,
         Scheduled,
     }
-    
+
     public enum AvailabilityType
     {
         Inoperative,
