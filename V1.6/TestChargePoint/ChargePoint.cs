@@ -31,11 +31,7 @@ namespace TestChargePoint
 
         private static CancellationTokenSource _receiveTokenSource;
         private static CancellationTokenSource _sendTokenSource;
-        private static CancellationTokenSource _menuTokenSource;
-
-        //private static int _heartbeatInterval = 300;
-        //private static DateTime _csmsDateTime;
-        //private static int _transactionId;
+        private static CancellationTokenSource _menuTimeoutTokenSource;
 
         public static WebSocketState State
         {
@@ -70,10 +66,6 @@ namespace TestChargePoint
                 _ = Task.Run(() => ReceiveAsync().ConfigureAwait(false));
 
             }
-            catch (OperationCanceledException)
-            {
-                // normal upon task/token cancellation, disregard
-            }
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception: {ex}");
@@ -87,7 +79,7 @@ namespace TestChargePoint
             if (_socket == null || _socket.State != WebSocketState.Open) return;
 
             // close the _socket first, because ReceiveAsync leaves an invalid _socket (state = aborted) when the token is cancelled
-            var timeout = new CancellationTokenSource(5000);
+            CancellationTokenSource timeout = new(5000);
 
             try
             {
@@ -100,7 +92,6 @@ namespace TestChargePoint
             {
                 // normal upon task/token cancellation, disregard
             }
-
             _receiveTokenSource.Cancel();
         }
 
@@ -113,8 +104,7 @@ namespace TestChargePoint
             {
                 try
                 {
-
-                    _menuTokenSource = new();
+                    _menuTimeoutTokenSource = new();
                     ShowMainMenu();
                     cki = Console.ReadKey(false);
                     //Console.WriteLine();
@@ -156,9 +146,9 @@ namespace TestChargePoint
                     {
                         running = false;
                         Console.WriteLine();
-                        _menuTokenSource.Cancel();
+                        _menuTimeoutTokenSource.Cancel();
                     }
-                    await Task.Run(() => Task.Delay(20000, _menuTokenSource.Token));
+                    await Task.Run(() => Task.Delay(20000, _menuTimeoutTokenSource.Token));
 
 
                 }
@@ -191,8 +181,6 @@ namespace TestChargePoint
             }
         }
 
-        //public static void QueueOperation(OcppOperation operation) => _menuQueue.Add(operation);
-
         private static async Task SendAsync()
         {
             var cancellationToken = _sendTokenSource.Token;
@@ -200,7 +188,7 @@ namespace TestChargePoint
             {
                 try
                 {
-                    if (_menuQueue.TryTake(out var operation))
+                    if (_menuQueue.TryTake(out OcppAction operation))
                     {
 
                         switch (operation)
@@ -231,10 +219,6 @@ namespace TestChargePoint
                                 break;
                             case OcppAction.MeterValues:
                                 await SendMeterValuesAsync();
-                                break;
-                            case OcppAction.ClearCache:
-                                break;
-                            case OcppAction.FirmwareStatusNotification:
                                 break;
                             case OcppAction.TriggerMessage:
                                 break;
@@ -362,11 +346,11 @@ namespace TestChargePoint
                                 case OcppAction.MeterValues:
                                 case OcppAction.UpdateFirmware:
                                     action = message.Parse<EmptyResponse>();
-                                    _menuTokenSource.Cancel();
+                                    _menuTimeoutTokenSource.Cancel();
                                     break;
                                 case OcppAction.Unknown:
                                     Console.WriteLine("Unknown or unhandeled action received");
-                                    _menuTokenSource.Cancel();
+                                    _menuTimeoutTokenSource.Cancel();
                                     break;
                             }
                         }
@@ -543,7 +527,7 @@ namespace TestChargePoint
         private static void HandleAuthorize(AuthorizeResponse response)
         {
             Console.WriteLine($"Authorization status: {response.IdTagInfo.Status}.");
-            _menuTokenSource.Cancel();
+            _menuTimeoutTokenSource.Cancel();
         }
 
         private static async Task HandleBootNotificationAsync(BootNotificationResponse response)
@@ -575,7 +559,7 @@ namespace TestChargePoint
                     //await Receive<TriggerMessageRequest, TriggerMessageResponse>();
                     break;
             }
-            _menuTokenSource.Cancel();
+            _menuTimeoutTokenSource.Cancel();
         }
 
 
@@ -583,7 +567,7 @@ namespace TestChargePoint
         private static void HandleDataTransfer(DataTransferResponse response)
         {
             Console.WriteLine($"DataTransfer status: {response.Status}.");
-            _menuTokenSource.Cancel();
+            _menuTimeoutTokenSource.Cancel();
         }
 
         private static void HandleHeartbeat(HeartbeatResponse response)
@@ -592,7 +576,7 @@ namespace TestChargePoint
             //_csmsDateTime = response.CurrentTime;
 
             Console.WriteLine($"- Central System date/time: {response.CurrentTime} (UTC)\n");
-            _menuTokenSource.Cancel();
+            _menuTimeoutTokenSource.Cancel();
         }
 
         private static async Task HandleTriggerMessageAsync(OcppMessage message)
@@ -660,7 +644,7 @@ namespace TestChargePoint
             //_transactionId = ;
 
             Console.WriteLine($"- Transaction Id: {response.TransactionId}\n");
-            _menuTokenSource.Cancel();
+            _menuTimeoutTokenSource.Cancel();
         }
 
         private static void HandleStopTransaction(StopTransactionResponse response)
@@ -670,7 +654,7 @@ namespace TestChargePoint
             Configuration.SetConfigurationValue(Configuration.Settings, "TransactionId", 0);
             //_transactionId = 0;
 
-            _menuTokenSource.Cancel();
+            _menuTimeoutTokenSource.Cancel();
         }
 
 
@@ -704,7 +688,7 @@ namespace TestChargePoint
 
             await SendMessageAsync(response);
 
-            _menuTokenSource.Cancel();
+            _menuTimeoutTokenSource.Cancel();
         }
 
         private static void HandleChangeConfiguration(ChangeConfigurationResponse response)
@@ -726,7 +710,7 @@ namespace TestChargePoint
             cki = Console.ReadKey();
 
             await SendClearCacheAsync(response, cki.KeyChar == 'a');
-            _menuTokenSource.Cancel();
+            _menuTimeoutTokenSource.Cancel();
         }
 
         private static async Task HandleRemoteStartTransaction(RemoteStartTransactionRequest request)
@@ -752,7 +736,7 @@ namespace TestChargePoint
 
             await SendStartTransactionAsync();
 
-            _menuTokenSource.Cancel();
+            _menuTimeoutTokenSource.Cancel();
         }
 
         private static async Task HandleRemoteStopTransaction(RemoteStopTransactionRequest request)
@@ -777,7 +761,7 @@ namespace TestChargePoint
 
             await SendStopTransactionAsync();
 
-            _menuTokenSource.Cancel();
+            _menuTimeoutTokenSource.Cancel();
         }
 
         private static async Task HandleReset(ResetRequest request)
@@ -801,7 +785,7 @@ namespace TestChargePoint
 
             await SendMessageAsync(response);
 
-            _menuTokenSource.Cancel();
+            _menuTimeoutTokenSource.Cancel();
         }
 
         private static async Task HandleUnlockConnector(UnlockConnectorRequest request)
@@ -830,7 +814,7 @@ namespace TestChargePoint
 
             await SendMessageAsync(response);
 
-            _menuTokenSource.Cancel();
+            _menuTimeoutTokenSource.Cancel();
         }
 
 
