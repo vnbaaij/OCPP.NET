@@ -1,0 +1,10 @@
+﻿<div class="dialog-title">
+    <h2>@Message.Action</h2>
+    <p>A '@Message.Action' operation has been received to for @(Message.Payload). Choose how to continue.</p>
+</div>
+<form class="dialog-body">
+</form>
+<div class="dialog-buttons">
+    <button class="btn btn-secondary mr-auto" @onclick="OnReject">Reject</button>
+    <button class="btn btn-success ml-auto" @onclick="OnAccept">Accept</button>
+</div>
