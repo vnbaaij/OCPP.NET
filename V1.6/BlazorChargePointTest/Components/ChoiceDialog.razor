@@ -1,0 +1,22 @@
+﻿@using OCPP.V16
+
+@if (Show)
+{
+    <div class="dialog-container">
+        <div class="dialog">
+            <div class="dialog-title">
+                <h2>@OcppMessage.Action</h2>
+                <p>@UserMessage</p>
+                <p>Choose how to continue.</p>
+            </div>
+            <form class="dialog-body">
+            </form>
+            <div class="dialog-buttons">
+                <button class="btn btn-secondary mr-auto" @onclick="OnReject">Reject</button>
+                <button class="btn btn-success ml-auto" @onclick="OnAccept">Accept</button>
+            </div>
+
+        </div>
+    </div>
+}
+

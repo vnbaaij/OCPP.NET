@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -19,20 +21,17 @@ namespace OCPP.V16
 
         public OcppAction Action { get; set; }
 
-        public string Name { get; set; }
-
         public OcppMessage()
         {
 
         }
 
-        public OcppMessage(MessageType messageType, Guid messageId, string payload, OcppAction action = OcppAction.Unknown, string name = null)
+        public OcppMessage(MessageType messageType, Guid messageId, string payload, OcppAction action = OcppAction.Unknown) //, string name = null)
         {
             MessageType = messageType;
             MessageId = messageId;
             Payload = payload;
             Action = action;
-            Name = name;
         }
 
         public OcppMessage(ArraySegment<byte> message)
@@ -82,7 +81,6 @@ namespace OCPP.V16
 
             TAction response = JsonSerializer.Deserialize<TAction>(Payload, options);
             response.MessageId = MessageId;
-            //Name = Name;
 
             Log(receiving);
 
@@ -98,9 +96,6 @@ namespace OCPP.V16
             TResponse response = JsonSerializer.Deserialize<TResponse>(Payload, options);
             response.MessageId = MessageId;
             response.Request = request;
-            Name = request?.Name;
-
-            Log(receiving);
 
             return response;
         }
@@ -118,13 +113,11 @@ namespace OCPP.V16
                     message.MessageType = MessageType.CALL;
                     message.MessageId = action.MessageId;
                     message.Action = Enum.Parse<OcppAction>(request.Name);
-                    message.Name = request.Name;
                     break;
                 case IResponse response:
                     message.MessageType = MessageType.CALLRESULT;
                     message.MessageId = response.MessageId;
                     message.Action = OcppAction.Unknown;
-                    message.Name = response.Name;
                     break;
                 default:
                     break;
@@ -142,59 +135,38 @@ namespace OCPP.V16
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 PropertyNameCaseInsensitive = true,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
             };
             options.Converters.Add(new JsonStringEnumConverter());
             return options;
         }
 
-        public void Log(bool receiving)
+        public string Log(bool receiving, string responseAction = null)
         {
-            if (receiving)
-                Console.ForegroundColor = ConsoleColor.Green;
-            else
-                Console.ForegroundColor = ConsoleColor.Gray;
+            StringBuilder output = new();
 
-            Console.WriteLine($"\nMessage {(receiving ? "received" : "sent")} : '{Name}{(MessageType == MessageType.CALL ? ".req" : ".conf")}'");
+            //if (receiving)
+            //    Console.ForegroundColor = ConsoleColor.Green;
+            //else
+            //    Console.ForegroundColor = ConsoleColor.Gray;
+
+            output.Append($"Message {(receiving ? "received" : "sent")} : '{(Action is not OcppAction.Unknown ? Action : responseAction )}{(MessageType == MessageType.CALL ? ".req" : ".conf")}'\n");
 
             if (logVerbose)
             {
-                Console.WriteLine("----------------------------------------------------------------------");
-                Console.WriteLine($"MessageType: {MessageType}, Id: {MessageId}");
+                 output.Append("----------------------------------------------------------------------\n");
+                 output.Append($"MessageType: {MessageType}, Id: {MessageId}\n");
                 if (Action != OcppAction.Unknown)
-                    Console.WriteLine($"Action: {Action}");
+                     output.Append($"Action: {Action}\n");
 
-                LogPayload();
+                //output.Append(LogPayload());
+                output.Append($"Payload:\n{Payload}\n");
             }
 
-            Console.WriteLine("----------------------------------------------------------------------");
-            Console.WriteLine();
+             output.Append("----------------------------------------------------------------------\n");
 
-            Console.ResetColor();
-        }
-
-        private void LogPayload()
-        {
-            var options = new JsonWriterOptions
-            {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                Indented = true
-            };
-
-            var json = JsonDocument.Parse(Payload);
-
-            Console.WriteLine("Payload:");
-            using var writer = new Utf8JsonWriter(Console.OpenStandardOutput(), options: options);
-
-            writer.WriteStartObject();
-            foreach (JsonProperty property in json.RootElement.EnumerateObject())
-            {
-                property.WriteTo(writer);
-            }
-            writer.WriteEndObject();
-
-            writer.Flush();
-
-            Console.WriteLine();
+            return output.ToString();
+            //Console.ResetColor();
         }
     }
 }

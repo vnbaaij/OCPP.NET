@@ -15,7 +15,7 @@ namespace OCPP.V16.Core
 
 
     public record KeyValue(string Name, bool Required, bool ReadOnly);
-    public record KeyValue<T>(string Key, bool Required, bool Readonly, T Value) : KeyValue(Key, Required, Readonly)
+    public record KeyValue<T>(string Name, bool Required, bool Readonly, T Value) : KeyValue(Name, Required, Readonly)
     {
         public Type Type
         {

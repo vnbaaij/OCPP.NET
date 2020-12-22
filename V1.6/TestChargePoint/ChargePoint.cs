@@ -57,7 +57,6 @@ namespace TestChargePoint
             try
             {
                 _socket = new ClientWebSocket();
-                //_socket.Options.AddSubProtocol("ocpp2.0.1");
                 _socket.Options.AddSubProtocol("ocpp1.6");
                 await _socket.ConnectAsync(wsUri, CancellationToken.None);
                 Console.WriteLine("- Connected!");

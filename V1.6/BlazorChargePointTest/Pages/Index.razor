@@ -1,0 +1,58 @@
+﻿@page "/"
+@using System.Net.WebSockets
+@using BlazorChargePointTest.Components
+@using System.Text
+@using System.Threading
+@using OCPP.V16
+@implements IDisposable
+
+
+
+
+<h1>Charge Point Test</h1>
+<h3>State: @_socket.State</h3>
+
+@if (_socket.State == WebSocketState.Open)
+{
+    //<form @onsubmit="@SendMessageAsync">
+
+    <p>Choose an action for this Charge Point:</p>
+    <button @onclick="@(async () => await SendBootNotificationAsync())">Boot</button>
+    <br />
+    <button @onclick="@(async () => await SendAuthorizeAsync())">Authorize</button>
+    <br />
+    <button @onclick="@(async () => await SendStartTransactionAsync())">Start Transaction</button>
+    <br />
+    <button @onclick="@(async () => await SendStopTransactionAsync())">Stop Transaction</button>
+    <br />
+    <button @onclick="@(async () => await SendHeartbeatAsync())">Heartbeat</button>
+    <br />
+    <button @onclick="@(async () => await SendMeterValuesAsync())">Send Meter values</button>
+    <br />
+    <button @onclick="@(async () => await SendStatusNotificationAsync())">Status Notification</button>
+    <br />
+    <button @onclick="@(async () => await SendDiagnosticsStatusNotificationAsync())">Diagnostic Status Notification</button>
+    <br />
+    <button @onclick="@(async () => await SendDataTransferAsync())">Data Transfer</button>
+    <br />
+    <hr />
+
+
+        @*<TemplatedChoice Show="Configuration.ShowingChoiceDialog">
+            <CascadingValue Value="Configuration.Message">
+                <TriggerMessageChoice OnReject="RejectTriggerMesssage" OnAccept="AcceptTriggerMessage"/>
+            </CascadingValue>
+        </TemplatedChoice>*@
+
+        <ChoiceDialog Show="Configuration.ShowingChoiceDialog" OcppMessage="Configuration.OcppMessage" UserMessage="@Configuration.UserMessage" Action="Configuration.Action" OnReject="RejectMesssage" OnAccept="AcceptMessage"></ChoiceDialog>
+
+    <hr />
+
+    <div id="listitem" style="width:900px;max-height:26px;position:relative;margin:5px">
+        @foreach (var item in Log)
+        {
+            <LogViewer Message="@item" Parent="@this" />
+        }
+    </div>
+}
+

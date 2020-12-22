@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace OCPP.V16.Core
 {
@@ -7,9 +8,14 @@ namespace OCPP.V16.Core
     public record BootNotificationRequest(string ChargePointVendor, string ChargePointModel, string ChargePointSerialNumber = null, string ChargeBoxSerialNumber = null, string FirmwareVersion = null, string Iccid = null, string Imsi = null, string MeterType = null, string MeterSerialNumber = null) : RequestBase<BootNotificationRequest>;
     public record ChangeAvailabilityRequest(int ConnectorId, AvailabilityType Type) : RequestBase<ChangeAvailabilityRequest>;
     public record ChangeConfigurationRequest(string Key, string Value) : RequestBase<ChangeConfigurationRequest>;
-    public record DataTransferRequest(string VendorId, string VendorMessageId = null, string Data = null) : RequestBase<DataTransferRequest>;
+    public record DataTransferRequest(string VendorId, string Data = null) : RequestBase<DataTransferRequest>
+    {
+        [JsonPropertyName("messageId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string VendorMessageId { get; set; }
+    }
     public record GetConfigurationRequest(ICollection<string> Key = null) : RequestBase<GetConfigurationRequest>;
-    //public record HeartbeatRequest() : RequestBase<HeartbeatRequest>;
+    public record HeartbeatRequest() : RequestBase<HeartbeatRequest>;
     public record MeterValuesRequest(int ConnectorId, ICollection<MeterValue> MeterValues, int? TransactionId = null) : RequestBase<MeterValuesRequest>;
     public record RemoteStartTransactionRequest(string IdTag, int? ConnectorId = null, ChargingProfile ChargingProfile = null) : RequestBase<RemoteStartTransactionRequest>;
     public record RemoteStopTransactionRequest(int TransactionId) : RequestBase<RemoteStopTransactionRequest>;
