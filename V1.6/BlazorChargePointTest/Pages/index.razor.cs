@@ -264,8 +264,8 @@ namespace BlazorChargePointTest.Pages
                                 case OcppAction.DataTransfer:
                                     if (message.MessageType == MessageType.CALLRESULT)
                                     {
-                                        action = message.Parse<DataTransferRequest, DataTransferResponse>(operation.request as DataTransferRequest);
-                                        HandleDataTransfer(action as DataTransferResponse);
+                                    action = message.Parse<DataTransferRequest, DataTransferResponse>(operation.request as DataTransferRequest);
+                                    HandleDataTransfer(action as DataTransferResponse);
                                     }
                                     else
                                         HandleDataTransferRequest(message);
@@ -281,7 +281,7 @@ namespace BlazorChargePointTest.Pages
 
                                 case OcppAction.ChangeAvailability:
                                     action = message.Parse<ChangeAvailabilityRequest>(false);
-                                    await HandleChangeAvailabilityAsync(action as ChangeAvailabilityRequest);
+                                    await HandleChangeAvailability(action as ChangeAvailabilityRequest);
                                     break;
                                 case OcppAction.ChangeConfiguration:
                                     action = message.Parse<ChangeConfigurationRequest, ChangeConfigurationResponse>(operation.request as ChangeConfigurationRequest);
@@ -464,7 +464,32 @@ namespace BlazorChargePointTest.Pages
             Log.Add($"{request}");
         }
 
+        private async Task HandleChangeAvailability(ChangeAvailabilityRequest request)
+        {
+            //ConsoleKeyInfo cki;
 
+            //Log.Add("ChangeAvailability request operation received. Choose how to respond:");
+            //Log.Add("\t1 - Unlock message");
+            //Log.Add("\t2 - Unlock failed message");
+            //Log.Add("\t3 - Not Supported message");
+            //Console.Write("\r\nSelect an action: ");
+
+
+            //var response = new ChangeAvailabilityResponse(request, Status: cki.KeyChar switch
+            //{
+            //    '1' => AvailabilityStatus.Accepted,
+            //    '2' => AvailabilityStatus.Scheduled,
+            //    _ => AvailabilityStatus.Rejected
+            //});
+
+            ChangeAvailabilityResponse response = new(request, Status: AvailabilityStatus.Accepted);
+
+            Log.Add($"Sending UnlockConnectorResponse with status '{response.Status}'...");
+
+            await SendMessageAsync(response);
+
+
+        }
 
         private void HandleChangeConfiguration(ChangeConfigurationResponse response)
         {
